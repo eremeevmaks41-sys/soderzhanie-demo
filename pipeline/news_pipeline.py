@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-«Содержание» · новостной конвейер
+«Оглавление телеграм-канала» · новостной конвейер
 =================================
 GitHub Actions запускает скрипт по расписанию (4 раза в сутки):
 
@@ -287,7 +287,8 @@ def main():
         posts.append({
             "id": msg_id, "date": date_s, "time": time_s,
             "title": trim(item["title"], 110), "preview": trim(item["summary"], 180),
-            "tags": tags, "url": f"https://t.me/{chat}/{msg_id}", "src": item["src"],
+            "tags": tags, "kind": "text",
+            "url": f"https://t.me/{chat}/{msg_id}", "src": item["src"],
         })
         seen[item["hash"]] = date_s
         added += 1
@@ -298,7 +299,7 @@ def main():
         posts_doc["posts"] = posts[:1500]
         posts_doc["updated_at"] = datetime.now(MSK).isoformat(timespec="seconds")
         if isinstance(posts_doc.get("channel"), dict) and chat:
-            posts_doc["channel"].setdefault("url", f"https://t.me/{chat}")
+            posts_doc["channel"]["url"] = f"https://t.me/{chat}"
         save_json(args.posts, posts_doc)
         seen_doc["seen"] = dict(sorted(seen.items(), key=lambda kv: kv[1], reverse=True)[:5000])
         save_json(args.seen, seen_doc)
