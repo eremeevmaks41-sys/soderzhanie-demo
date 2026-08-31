@@ -1,11 +1,24 @@
 {
   "version": 1,
-  "updated_at": "2026-08-31T22:21:30+03:00",
+  "updated_at": "2026-08-31T22:26:39+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 15,
+      "date": "2026-08-31",
+      "time": "21:44",
+      "title": "Взрыв на фабрике фейерверков в Индии: погибли 8 детей",
+      "preview": "Взрыв на фабрике фейерверков в Индии унёс жизни восьмерых детей. На кадрах видны разрушенные дома и спешные спасательные работы. Это уже третий подобной инцидент на фабрике…",
+      "tags": [
+        "#мировыеновости"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/15",
+      "src": "https://www.aljazeera.com/news/2026/8/31/firecracker-factory-blast-in-india-kills-8-children?traffic_source=rss"
+    },
     {
       "id": 14,
       "date": "2026-08-31",
