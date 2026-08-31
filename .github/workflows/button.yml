@@ -2,7 +2,9 @@
 # «Содержание» · кнопка «Оглавление» в канале
 # Публикует пост с кнопкой мини-аппа и закрепляет его.
 # Запуск: Actions → «Кнопка оглавления» → Run workflow →
-#         введите адрес Pages (https://ЛОГИН.github.io/РЕПО/).
+#         введите адрес Pages (https://ЛОГИН.github.io/РЕПО/) и,
+#         при наличии, прямую ссылку Direct-Link Mini App (t.me/БОТ/ИМЯ,
+#         создаётся в BotFather через /newapp — см. гайд, раздел 7).
 # Требует секреты: BOT_TOKEN, CHANNEL_USERNAME.
 # ═══════════════════════════════════════════════════════════════
 name: Кнопка оглавления
@@ -13,6 +15,10 @@ on:
       pages_url:
         description: "Адрес мини-аппа (https://логин.github.io/репо/)"
         required: true
+        default: ""
+      app_link:
+        description: "Прямая ссылка мини-аппа (https://t.me/БОТ/ИМЯ, из BotFather /newapp) — необязательно"
+        required: false
         default: ""
       button_text:
         description: "Надпись на кнопке"
@@ -27,9 +33,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
@@ -40,4 +46,5 @@ jobs:
         run: |
           python pipeline/toc_button.py \
             --url "${{ inputs.pages_url }}" \
+            --app-link "${{ inputs.app_link }}" \
             --text "${{ inputs.button_text || '📖 Оглавление' }}"
