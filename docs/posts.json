@@ -1,9 +1,75 @@
 {
   "version": 1,
-  "updated_at": "2026-08-31T12:00:00+03:00",
+  "updated_at": "2026-08-31T11:49:17+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/dobrye_vesti_demo"
   },
-  "posts": []
+  "posts": [
+    {
+      "id": 2,
+      "date": "2026-08-31",
+      "time": "11:09",
+      "title": "В сентябре начнется строительство надземной части храма Царственных страстотерпцев в Ясеневе",
+      "preview": "Семиглавый трехапсидный собор с колокольней спроектирован в традициях московского зодчества XVI века.",
+      "tags": [
+        "#добрыеновости",
+        "#общество"
+      ],
+      "url": "https://t.me/daily_news_digest/2",
+      "src": "https://foma.ru/v-sentyabre-nachnetsya-stroitelstvo-nadzemnoj-chasti-hrama-czarstvennyh-strastoterpczev-v-yaseneve.html"
+    },
+    {
+      "id": 3,
+      "date": "2026-08-31",
+      "time": "10:38",
+      "title": "До 27 сентября в трех храмах Москвы и Подмосковья будет пребывать Тихвинская икона Божией Матери",
+      "preview": "Святыня принесена из Тихвинского Богородичного Успенского мужского монастыря города Тихвин Ленинградской области.",
+      "tags": [
+        "#добрыеновости",
+        "#семья"
+      ],
+      "url": "https://t.me/daily_news_digest/3",
+      "src": "https://foma.ru/do-27-sentyabrya-v-treh-hramah-moskvy-i-podmoskovya-budet-prebyvat-tihvinskaya-ikona-bozhiej-materi.html"
+    },
+    {
+      "id": 4,
+      "date": "2026-08-31",
+      "time": "10:00",
+      "title": "Наставники. «Человек без отечества и семейства есть пропащее существо… От этого избави вас Боже, Тургенев!»",
+      "preview": "“Римские каникулы”, которые Тургенев провёл со Станкевичем, открыли для него целый мир искусства и глубоких чувств",
+      "tags": [
+        "#добрыеновости",
+        "#общество"
+      ],
+      "url": "https://t.me/daily_news_digest/4",
+      "src": "https://godliteratury.ru/articles/2026/08/31/nastavniki-chelovek-bez-otechestva-i-semejstva-est-propashchee-sushchestvo-ot-etogo-izbavi-vas-bozhe-turgenev"
+    },
+    {
+      "id": 5,
+      "date": "2026-08-31",
+      "time": "10:00",
+      "title": "Цао Вэньсюань: «Детская литература по сути не слишком отличается от взрослой»",
+      "preview": "В состав китайской делегации на ММКЯ входит Цао Вэньсюань, единственный китайский лауреат Премии имени Андерсена; он ответил на несколько наших вопросов",
+      "tags": [
+        "#добрыеновости",
+        "#семья"
+      ],
+      "url": "https://t.me/daily_news_digest/5",
+      "src": "https://godliteratury.ru/articles/2026/08/31/cao-vensiuan-detskaia-literatura-po-suti-ne-slishkom-otlichaetsia-ot-vzrosloj"
+    },
+    {
+      "id": 6,
+      "date": "2026-08-31",
+      "time": "09:09",
+      "title": "Что изменится в ЕГЭ-2027? Главное из проекта",
+      "preview": "Финальная версия появится в ноябре",
+      "tags": [
+        "#добрыеновости",
+        "#общество"
+      ],
+      "url": "https://t.me/daily_news_digest/6",
+      "src": "https://www.pravmir.ru/chto-izmenitsya-v-ege-2027-glavnoe-iz-proekta/"
+    }
+  ]
 }
