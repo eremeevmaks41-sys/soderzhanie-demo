@@ -1,21 +1,24 @@
 # ═══════════════════════════════════════════════════════════════
-# «Содержание» · новостной конвейер
-# 4 раза в сутки: RSS → анонс в канал → обновление оглавления.
-# Требует секреты: BOT_TOKEN, CHANNEL_USERNAME (Settings → Secrets).
-# Запуск вручную: вкладка Actions → «Новостной конвейер» → Run.
+# «Содержание» · новостной конвейер v2 (ИИ-карточки)
+# Каждые 2 часа: RSS → фото → ИИ-выжимка (Groq) → карточка в канал
+# → обновление оглавления. До 10 постов в сутки (--daily-cap).
+# Требует секреты (Settings → Secrets and variables → Actions):
+#   BOT_TOKEN, CHANNEL_USERNAME, GROQ_API_KEY (groq.com, бесплатно)
+# Запуск вручную: вкладка Actions → «Новостной конвейер» → Run
+#   (dry_run=true — показать карточки без публикации)
 # ═══════════════════════════════════════════════════════════════
 name: Новостной конвейер
 
 on:
   schedule:
-    # 05:23 / 11:23 / 17:23 / 23:23 по Москве (UTC+3 вычтен)
-    - cron: "23 2,8,14,20 * * *"
+    # каждые 2 часа: 00:07 / 02:07 / … / 22:07 UTC (≈ 1–2 поста за запуск)
+    - cron: "7 */2 * * *"
   workflow_dispatch:
     inputs:
       max_posts:
-        description: "Сколько новостей опубликовать за запуск (по умолчанию 3)"
+        description: "Сколько новостей опубликовать за запуск (по умолчанию 1)"
         required: false
-        default: "3"
+        default: "1"
       dry_run:
         description: "Только показать новости, не публиковать (true/false)"
         required: false
@@ -33,9 +36,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
@@ -46,10 +49,13 @@ jobs:
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           CHANNEL_USERNAME: ${{ secrets.CHANNEL_USERNAME }}
-        run: python pipeline/news_pipeline.py --mode publish --max ${{ inputs.max_posts || '3' }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: python pipeline/news_pipeline.py --mode publish --max ${{ inputs.max_posts || '1' }} --daily-cap 10
 
       - name: Конвейер (пробный запуск без публикации)
         if: ${{ inputs.dry_run == 'true' }}
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
         run: python pipeline/news_pipeline.py --mode dry --max ${{ inputs.max_posts || '3' }}
 
       - name: Коммит обновлённого оглавления
