@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-«Содержание» · импорт истории канала
+«Оглавление телеграм-канала» · импорт истории
 ====================================
 Превращает экспорт Telegram Desktop (result.json) в docs/posts.json.
 
@@ -20,7 +20,8 @@
                 [включён по умолчанию]
     --replace   полностью заменить оглавление экспортом
 
-Посты без текста (только фото/видео) получают заголовок «📷 Фотопост» и т.п.
+Посты без текста (только фото/видео/аудио) получают заголовок «📷 Фотопост» и т.п.
+Опросы подписываются вопросом: «📊 <вопрос>».
 Записи-сервисы (участник присоединился и т.п.) пропускаются.
 """
 import argparse
@@ -34,7 +35,9 @@ from datetime import datetime, timedelta, timezone
 MSK = timezone(timedelta(hours=3))
 PHOTO_TITLE = "📷 Фотопост"
 VIDEO_TITLE = "🎬 Видеопост"
+AUDIO_TITLE = "🎧 Аудио"
 FILE_TITLE = "📎 Файл"
+POLL_TITLE = "📊 Опрос"
 
 def log(m): print(m, flush=True)
 
@@ -69,28 +72,57 @@ def split_title(line, limit=100):
         return cut[:sp].rstrip(" ,;:-") + "…", line[sp:].strip()
     return cut.rstrip(" ,;:-") + "…", ""
 
+def clean_line(l):
+    """Чистит ОДНУ строку: сжимает пробелы, но сохраняет переводы строк."""
+    return re.sub(r"[ \t\u00a0]+", " ", l or "").strip()
+
 def first_meaningful_line(body):
-    """Индекс первой содержательной строки (не пустой и не из одних хэштегов)."""
-    lines = [clean(l) for l in (body or "").splitlines()]
+    """Индекс первой содержательной строки (не пустой, не из одних хэштегов
+    и не только из эмодзи/символов — заголовку нужна буква или цифра)."""
+    lines = [clean_line(l) for l in (body or "").splitlines()]
     for i, line in enumerate(lines):
         if not line:
             continue
         if re.fullmatch(r"#[\wа-яё]+(\s+#[\wа-яё]+)*", line, flags=re.I):
             continue  # строка из одних хэштегов — берём следующую
+        if not re.search(r"[0-9a-zа-яё]", line, flags=re.I):
+            continue  # строка только из эмодзи («🌿») — заголовком быть не может
         return i, lines
     return -1, lines
 
+def detect_kind(msg):
+    """Тип контента для универсальной группировки оглавления."""
+    if (msg.get("poll") or {}).get("question"):
+        return "poll"
+    if msg.get("photo"):
+        return "photo"
+    if msg.get("media_type") in ("video_file", "video_message"):
+        return "video"
+    if msg.get("media_type") == "audio_file":
+        return "audio"
+    if msg.get("sticker_emoji"):
+        return "sticker"
+    if msg.get("file"):
+        return "file"
+    return "text"
+
 def build_entry(msg, username):
-    body = clean(extract_text(msg.get("text")))
-    hashtags = re.findall(r"#([\wа-яё]+)", body, flags=re.I)
-    i0, lines = first_meaningful_line(body)
+    raw_text = extract_text(msg.get("text"))
+    hashtags = re.findall(r"#([\wа-яё]+)", raw_text, flags=re.I)
+    i0, lines = first_meaningful_line(raw_text)
     has_media = any(msg.get(k) for k in ("photo", "video_file", "media_type", "file"))
     if i0 < 0:
-        # текстового заголовка нет — подписываем медиа
-        if msg.get("photo"):
+        # текстового заголовка нет — подписываем медиа/опрос
+        poll_q = clean((msg.get("poll") or {}).get("question") or "")
+        if poll_q:
+            title, _ = split_title(POLL_TITLE + " «" + poll_q + "»", 110)
+            rest_line = ""
+        elif msg.get("photo"):
             title, rest_line = PHOTO_TITLE, ""
-        elif msg.get("video_file") or msg.get("media_type") == "video_message":
+        elif msg.get("media_type") in ("video_file", "video_message"):
             title, rest_line = VIDEO_TITLE, ""
+        elif msg.get("media_type") == "audio_file":
+            title, rest_line = AUDIO_TITLE, ""
         elif msg.get("file"):
             title, rest_line = FILE_TITLE, ""
         elif hashtags:
@@ -114,6 +146,7 @@ def build_entry(msg, username):
         "title": title,
         "preview": preview[:180],
         "tags": tags,
+        "kind": detect_kind(msg),
         "url": f"https://t.me/{username}/{msg.get('id')}",
         "src": "",  # у постов канала нет внешнего источника
     }
