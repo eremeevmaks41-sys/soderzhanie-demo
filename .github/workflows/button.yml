@@ -1,0 +1,43 @@
+# ═══════════════════════════════════════════════════════════════
+# «Содержание» · кнопка «Оглавление» в канале
+# Публикует пост с кнопкой мини-аппа и закрепляет его.
+# Запуск: Actions → «Кнопка оглавления» → Run workflow →
+#         введите адрес Pages (https://ЛОГИН.github.io/РЕПО/).
+# Требует секреты: BOT_TOKEN, CHANNEL_USERNAME.
+# ═══════════════════════════════════════════════════════════════
+name: Кнопка оглавления
+
+on:
+  workflow_dispatch:
+    inputs:
+      pages_url:
+        description: "Адрес мини-аппа (https://логин.github.io/репо/)"
+        required: true
+        default: ""
+      button_text:
+        description: "Надпись на кнопке"
+        required: false
+        default: "📖 Оглавление"
+
+permissions:
+  contents: read
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Публикация и закрепление кнопки
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          CHANNEL_USERNAME: ${{ secrets.CHANNEL_USERNAME }}
+        run: |
+          python pipeline/toc_button.py \
+            --url "${{ inputs.pages_url }}" \
+            --text "${{ inputs.button_text || '📖 Оглавление' }}"
