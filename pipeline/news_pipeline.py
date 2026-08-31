@@ -1,23 +1,35 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-«Оглавление телеграм-канала» · новостной конвейер
-=================================
-GitHub Actions запускает скрипт по расписанию (4 раза в сутки):
+«Оглавление телеграм-канала» · новостной конвейер v2 (ИИ-карточки)
+==================================================================
+GitHub Actions запускает скрипт каждые 2 часа:
 
-    RSS-источники → отбор новых → анонс в Telegram-канал (Bot API)
+    RSS-источники → фото из статьи → ИИ-выжимка (Groq)
+    → красивая карточка в Telegram-канал (фото + подпись или текст)
     → запись в docs/posts.json → коммит → Pages обновляет мини-апп.
+
+Формат карточки (ИИ пишет по-русски, источник любой):
+    🌍 Заголовок
+    Лид: 2–3 предложения сути.
+    • факт 1
+    • факт 2
+    источник: BBC            ← тихая ссылка, без превью
 
 Режимы:
     --mode dry      показать, что БЫЛО бы опубликовано (без отправки и записи)
     --mode publish  полный цикл: публикация в канал + обновление posts.json
 
-Секреты (только для publish, задаются в GitHub → Settings → Secrets):
+Секреты (GitHub → Settings → Secrets and variables → Actions):
     BOT_TOKEN        токен бота от @BotFather
     CHANNEL_USERNAME юзернейм канала вида @my_channel (канал публичный!)
+    GROQ_API_KEY     ключ groq.com (бесплатный) — БЕЗ НЕГО ПУБЛИКАЦИЯ СТОИТ:
+                     конвейер не постит сырые английские анонсы в русский канал
 
-Копирайт: в канал уходит КОРОТКИЙ анонс (1–2 предложения из RSS) со
- ссылкой на источник — стандартная практика новостных дайджестов.
+Лимиты: --max новостей за запуск, --daily-cap постов в сутки (по posts.json).
+Фото: из RSS (media:content/enclosure/thumbnail) или og:image статьи;
+    нет фото → постим текстом; Telegram не принял фото → тоже текстом.
+Дедуп: seen.json (hash) + ссылки в posts.json + нормализованные заголовки.
 """
 import argparse
 import hashlib
@@ -32,14 +44,48 @@ from datetime import datetime, timedelta, timezone
 
 MSK = timezone(timedelta(hours=3))
 
+GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
+GROQ_MODEL_DEFAULT = "openai/gpt-oss-120b"
+
+# Эмодзи, которые ИИ может поставить карточке (вне списка — эмодзи источника)
+EMOJI_WHITELIST = [
+    "🌍", "🔥", "⚡", "💰", "🏛️", "⚖️", "🚀", "🔬", "💊", "🎓", "⚠️", "🌐",
+    "📱", "🛰️", "🏭", "🎭", "🏆", "🌊", "✈️", "🚗", "📊", "🤝", "🗳️", "🕊️",
+    "⛽", "📈", "📉", "🧑‍⚖️", "🏗️", "🛡️",
+]
+
 # Тема по ключевым словам (для второй метки в оглавлении)
 KEYWORD_TAGS = [
-    ("семья",   ["семья", "семь", "дет", "мама", "папа", "родител", "школ"]),
-    ("медицина",["врач", "лечен", "операц", "болниц", " терап", "реабилит", "диагноз"]),
-    ("наука",   ["учен", "наук", "исследован", "открыт", "изучен", "космос"]),
-    ("помощь",  ["помог", "поддерж", "собрал", "донор", "волонтер", "благотвор", "спас"]),
-    ("общество",["общест", "город", "жител", "акци", "проект", "инициатив"]),
+    ("конфликт",  ["войн", "удар", "обстрел", "наступлен", "боев", "перемир", "ракет", "дрон"]),
+    ("политика",  ["выбор", "президен", "парламент", "министр", "выборы", "саммит", "переговор", "выставил", "депутат"]),
+    ("экономика", ["инфляц", "ставк", "банк", "рынк", "доллар", "евро", "нефт", "газ", "санкц", "бюджет", "тариф", "экспорт", "импорт"]),
+    ("наука",     ["учен", "наук", "исследован", "открыт", "космос", "nasa", "ракет-носител", "климат"]),
+    ("технологии",["ai", "искусственн", "технолог", "приложен", "чек", "cyber", "хакер", "чип", "apple", "google", "tesla"]),
+    ("происшествия", ["землетрясен", "наводнен", "пожар", "авиакатастроф", "крушен", "эпидем", "вспышк", "авар"]),
+    ("культура",  ["фильм", "преми", "фестивал", "альбом", "сериал", "книг", "выставк", "оскар"]),
+    ("спорт",     ["чемпион", "матч", "кубок", "олимпиад", "турнир", "футбол", "хоккей"]),
+    ("общество",  ["забастовк", "протест", "мигрант", "суд", "приговор", "закон", "школ", "больниц"]),
 ]
+
+AI_SYSTEM = (
+    "Ты — новостной редактор русскоязычного Telegram-канала мировых новостей.\n"
+    "На вход приходит заголовок и описание новости из RSS (обычно на английском).\n"
+    "Верни СТРОГО один JSON-объект без markdown-обёрток:\n"
+    '{"emoji": "…", "headline": "…", "lede": "…", "bullets": ["…", "…"]}\n'
+    "Правила (строго):\n"
+    "— Всё по-русски. Имена собственные — в устоявшейся русской передаче; организации — как принято.\n"
+    "— headline: до 100 символов, ёмкий заголовок с сутью, без точки в конце, без кавычек-ёлочек по краям.\n"
+    "— lede: 2–3 предложения (до 340 символов) — суть события: кто, что, где, когда, цифры.\n"
+    "— bullets: 0–3 коротких факта (каждый до 100 символов) ТОЛЬКО если они реально есть во входе.\n"
+    "  Нет конкретики — пустой список []. Ничего не выдумывай и не добавляй контекст извне.\n"
+    "— emoji: ОДИН из списка, лучше всего отражающий тему:\n"
+    "  " + " ".join(EMOJI_WHITELIST) + "\n"
+    "— Числа, даты, суммы, имена переноси точно как во входе. Не выдумывай причину и последствия.\n"
+    "— Если вход — мнение, анонс или слишком мала для новости, всё равно сделай карточку по факту входа.\n"
+)
+
+
+# ───────────────────────────── базовые утилиты ─────────────────────────────
 
 def log(msg):
     print(msg, flush=True)
@@ -50,6 +96,14 @@ def http_json(url, payload=None, headers=None, timeout=30):
                                  headers=headers or {"Content-Type": "application/json"})
     with urllib.request.urlopen(req, timeout=timeout) as r:
         return json.loads(r.read().decode("utf-8"))
+
+def http_get_bytes(url, timeout=12, max_len=400_000):
+    req = urllib.request.Request(url, headers={
+        "User-Agent": "Mozilla/5.0 (compatible; Soderzhanie/2.0)",
+        "Accept": "text/html,application/xhtml+xml,*/*;q=0.8",
+    })
+    with urllib.request.urlopen(req, timeout=timeout) as r:
+        return r.read(max_len)
 
 def load_json(path, default):
     try:
@@ -78,12 +132,28 @@ def trim(s, limit, dots="…"):
     cut = cut[:cut.rfind(" ")] if " " in cut[-15:] else cut
     return cut.rstrip(",;:- ") + dots
 
+def plain_len(html_text):
+    """Длина текста поста БЕЗ html-тегов (Telegram считает именно её)."""
+    return len(re.sub(r"<[^>]+>", "", html_text))
+
+def esc(s):
+    return html_mod.escape(s or "", quote=True)
+
 def keyword_tags(text):
     low = " " + (text or "").lower() + " "
     for tag, keys in KEYWORD_TAGS:
         if any(k in low for k in keys):
             return "#" + tag
-    return "#общество"
+    return "#мировыеновости"
+
+def norm_title(t):
+    """Нормализация заголовка для кросс-источникового дедупа."""
+    t = (t or "").lower()
+    t = re.sub(r"[^\wа-яё ]+", " ", t, flags=re.I)
+    return re.sub(r"\s+", " ", t).strip()
+
+
+# ───────────────────────────── RSS: чтение и фото ─────────────────────────────
 
 def fetch_feed(source):
     """Загружает и разбирает один RSS/Atom-поток штатными средствами Python
@@ -92,7 +162,7 @@ def fetch_feed(source):
     import xml.etree.ElementTree as ET
     try:
         req = urllib.request.Request(source["url"], headers={
-            "User-Agent": "Mozilla/5.0 (compatible; Soderzhanie/1.0)",
+            "User-Agent": "Mozilla/5.0 (compatible; Soderzhanie/2.0)",
             "Accept": "application/rss+xml, application/atom+xml, application/xml, text/xml, */*",
         })
         with urllib.request.urlopen(req, timeout=25) as r:
@@ -131,16 +201,59 @@ def _when(el):
         return None
 
 
+def _image_url(el):
+    """URL картинки из media:*/enclosure-элемента + подсказка ширины (для выбора лучшего)."""
+    if el is None:
+        return "", 0
+    url = (el.get("url") or el.get("href") or "").strip()
+    if not url:
+        return "", 0
+    mime = (el.get("type") or el.get("medium") or "").lower()
+    if mime and not (mime.startswith("image") or mime == "photo"):
+        return "", 0
+    if not re.match(r"^https?://", url):
+        return "", 0
+    try:
+        w = int(el.get("width") or 0)
+    except ValueError:
+        w = 0
+    return url, w
+
+
+def _pick_biggest(cands):
+    """Из media:content одной записи берём самый крупный вариант:
+    сначала атрибут width, при нуле — эвристика по цифрам в URL."""
+    best, best_w = "", -1
+    for u, w in cands:
+        if w == 0:
+            m = re.search(r"[/_.-](\d{2,4})[x×][/.-]", u)  # 640x480 в пути
+            if m:
+                w = int(m.group(1))
+        if w > best_w:
+            best, best_w = u, w
+    return best
+
+
 def normalize_entry(item):
-    """RSS <item> или Atom <entry> → единый словарь записи."""
+    """RSS <item> или Atom <entry> → единый словарь записи (+ фото, если есть)."""
+    def _local(p):
+        return p.split("}")[-1].split(":")[-1]   # "media:content" → "content"
+
     def first(*paths):
         for p in paths:
             found = item.find(p)
             if found is None:
-                found = item.find("{*}" + p.split("}")[-1])   # namespace-агностично
+                found = item.find("{*}" + _local(p))   # namespace-агностично
             if found is not None:
                 return found
         return None
+
+    def all_els(*paths):
+        out = []
+        for p in paths:
+            out.extend(item.findall(p))
+            out.extend(item.findall("{*}" + _local(p)))
+        return out
 
     title_el = first("title")
     if title_el is None or _txt(title_el) == "":
@@ -164,19 +277,231 @@ def normalize_entry(item):
             if cand:
                 summary = cand
                 break
+
+    # фото: media:content (может быть несколько размеров) → enclosure → media:thumbnail
+    img = ""
+    cands = [_image_url(e) for e in all_els("media:content")]
+    cands = [c for c in cands if c[0]]
+    if cands:
+        img = _pick_biggest(cands)
+    if not img:
+        for e in all_els("enclosure"):
+            u, _w = _image_url(e)
+            if u:
+                img = u
+                break
+    if not img:
+        for e in all_els("media:thumbnail"):
+            u, _w = _image_url(e)
+            if u:
+                img = u
+                break
+
     when = _when(first("pubDate", "published", "updated", "date"))
     guid_el = first("guid", "id")
     return {
         "title": _txt(title_el),
         "link": link,
         "summary": summary,
+        "image": img,
         "id": ((guid_el.text if guid_el is not None else "") or link),
         "published_parsed": when,
     }
 
-def pick(entries, source, seen, existing_srcs, max_items):
-    """Отбирает самые свежие ещё не публиковавшиеся записи одного источника."""
+
+OG_RE = re.compile(
+    r'<meta[^>]+(?:property=["\']og:image(?::secure_url)?["\']'
+    r'|name=["\']twitter:image(?::src)?["\'])[^>]+content=["\']([^"\']+)["\']',
+    re.IGNORECASE)
+OG_RE2 = re.compile(
+    r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+(?:property=["\']og:image(?::secure_url)?["\']'
+    r'|name=["\']twitter:image(?::src)?["\'])',
+    re.IGNORECASE)
+
+
+def og_image(article_url):
+    """Резервное фото: og:image/twitter:image со страницы статьи. Best-effort."""
+    if not article_url:
+        return ""
+    try:
+        raw = http_get_bytes(article_url, timeout=10, max_len=300_000).decode("utf-8", "ignore")
+    except Exception:
+        return ""
+    m = OG_RE.search(raw) or OG_RE2.search(raw)
+    if not m:
+        return ""
+    url = html_mod.unescape(m.group(1)).strip()
+    return url if re.match(r"^https?://", url) else ""
+
+
+# ───────────────────────────── ИИ-выжимка (Groq) ─────────────────────────────
+
+def _parse_ai_json(raw):
+    """Терпимый парсер ответа модели: срезает ```-обёртки и мусор вокруг JSON."""
+    if not raw:
+        return None
+    s = raw.strip()
+    s = re.sub(r"^```(?:json)?\s*", "", s)
+    s = re.sub(r"\s*```$", "", s)
+    a, b = s.find("{"), s.rfind("}")
+    if a == -1 or b <= a:
+        return None
+    try:
+        d = json.loads(s[a:b + 1])
+    except Exception:
+        return None
+    if not isinstance(d, dict):
+        return None
+    headline = clean_html(str(d.get("headline") or ""))
+    lede = clean_html(str(d.get("lede") or ""))
+    if not headline:
+        return None
+    bullets_raw = d.get("bullets")
+    bullets = []
+    if isinstance(bullets_raw, list):
+        for b_ in bullets_raw:
+            if isinstance(b_, str) and clean_html(b_):
+                bullets.append(trim(clean_html(b_), 100))
+            if len(bullets) >= 3:
+                break
+    emoji = str(d.get("emoji") or "").strip()
+    return {
+        "headline": trim(headline, 110),
+        "lede": trim(lede, 340),
+        "bullets": bullets,
+        "emoji": emoji if emoji in EMOJI_WHITELIST else "",
+    }
+
+
+def ai_card(title, summary, source_name):
+    """ИИ-выжимка одной новости. None — ИИ недоступен/ответ некорректен."""
+    key = (os.environ.get("GROQ_API_KEY") or "").strip()
+    if not key:
+        return None
+    user_msg = (f"Источник: {source_name}\n"
+                f"Заголовок: {title}\n"
+                f"Описание: {summary or '(пусто)'}")
+    try:
+        resp = http_json(GROQ_URL, {
+            "model": (os.environ.get("GROQ_MODEL") or "").strip().strip("\"'") or GROQ_MODEL_DEFAULT,
+            "temperature": 0.2,
+            "max_tokens": 600,
+            "messages": [
+                {"role": "system", "content": AI_SYSTEM},
+                {"role": "user", "content": user_msg},
+            ],
+        }, headers={"Authorization": f"Bearer {key}"}, timeout=40)
+        return _parse_ai_json((resp["choices"][0]["message"].get("content") or ""))
+    except Exception as e:
+        log(f"    · ИИ недоступен: {e}")
+        return None
+
+
+def fallback_card(item):
+    """Карточка без ИИ (для dry-режима без ключа): сырой RSS-текст."""
+    return {
+        "headline": trim(item["title"], 110),
+        "lede": trim(item["summary"], 340),
+        "bullets": [],
+        "emoji": "",
+    }
+
+
+# ───────────────────────────── карточка поста ─────────────────────────────
+
+def compose(item, card):
+    """HTML-карточка поста. Возвращает (html, kind). Теги идут только в posts.json,
+    в тексте поста их нет — лента выглядит чисто.
+
+    С фото подпись должна влезать в 1024 символа ПО ТЕКСТУ (без тегов):
+    сначала жертвуем буллетами, потом укорачиваем лид.
+    Ссылка на источник — одна тихая строка внизу; превью выключено.
+    """
+    s = item["source"]
+    emoji = card.get("emoji") or s.get("emoji", "🌍")
+    src_name = s.get("name", "источник")
+    source_line = f"источник: <a href=\"{esc(item['src'])}\">{esc(src_name)}</a>"
+
+    headline = esc(card["headline"])
+    lede = esc(card.get("lede") or "")
+    bullets = [esc(b) for b in card.get("bullets") or []]
+
+    def build(with_bullets=True):
+        lines = [f"{emoji} <b>{headline}</b>"]
+        if lede:
+            lines += ["", lede]
+        if with_bullets and bullets:
+            lines += ["", "• " + "\n• ".join(bullets)]
+        lines += ["", source_line]
+        return "\n".join(lines)
+
+    text = build(True)
+    if item.get("image"):
+        # сжимаем до лимита подписи (1024 по тексту, запас 60 на реалии Telegram)
+        while plain_len(text) > 960:
+            if bullets:
+                bullets = bullets[:-1]
+            elif len(lede) > 120:
+                lede = esc(trim(html_mod.unescape(lede), int(len(lede) * 0.75)))
+            else:
+                break
+            text = build(True)
+        if plain_len(text) <= 960:
+            return text, "photo"
+    # текстовый пост: лимит 4096 — тут ничего резать почти никогда не нужно
+    text = build(True)
+    if plain_len(text) > 4090:
+        text = build(False)
+    return text, "text"
+
+
+# ───────────────────────────── Telegram ─────────────────────────────
+
+def tg_send(token, chat, text):
+    api = f"https://api.telegram.org/bot{token}/sendMessage"
+    return http_json(api, {
+        "chat_id": chat, "text": text, "parse_mode": "HTML",
+        "disable_web_page_preview": True,
+    })
+
+
+def tg_send_photo(token, chat, photo_url, caption):
+    api = f"https://api.telegram.org/bot{token}/sendPhoto"
+    return http_json(api, {
+        "chat_id": chat, "photo": photo_url, "caption": caption,
+        "parse_mode": "HTML",
+    })
+
+
+def publish_item(token, chat, item, text, kind):
+    """Фото → sendPhoto; не получилось → sendMessage текстом.
+    Возвращает (ok, actual_kind, message_id)."""
+    if kind == "photo" and item.get("image"):
+        try:
+            resp = tg_send_photo(token, chat, item["image"], text)
+            if resp.get("ok"):
+                return True, "photo", resp["result"]["message_id"]
+            log(f"    · фото отклонено ({resp.get('description')}) — шлю текстом")
+        except Exception as e:
+            log(f"    · фото не отправилось ({e}) — шлю текстом")
+    try:
+        resp = tg_send(token, chat, text)
+    except Exception as e:
+        log(f"    × Telegram отклонил («{e}»)")
+        return False, "text", None
+    if not resp.get("ok"):
+        log(f"    × Telegram вернул ошибку: {resp.get('description')}")
+        return False, "text", None
+    return True, "text", resp["result"]["message_id"]
+
+
+# ───────────────────────────── отбор кандидатов ─────────────────────────────
+
+def pick(entries, source, seen, existing_srcs, existing_titles, max_items):
+    """Отбирает самые свежие ещё не публиковавшиеся записи одного источника.
+    Дедуп: hash GUID, ссылка в оглавлении, нормализованный заголовок."""
     out = []
+    local_titles = set()
     for e in entries:
         link = e.get("link") or ""
         guid = e.get("id") or link
@@ -189,51 +514,41 @@ def pick(entries, source, seen, existing_srcs, max_items):
         summary = clean_html(e.get("summary", ""))
         if not title:
             continue
+        nt = norm_title(title)
+        if len(nt) < 15:
+            continue                                  # служебные/пустые заголовки
+        if nt in existing_titles or nt in local_titles:
+            continue                                  # ту же новость несёт другой источник
+        local_titles.add(nt)
         when = e.get("published_parsed") or e.get("updated_parsed")
         dt = (datetime(*when[:6], tzinfo=timezone.utc).astimezone(MSK)
               if when else datetime.now(MSK))
         out.append({"src": link, "hash": h, "title": title, "summary": summary,
-                    "dt": dt, "source": source})
+                    "image": e.get("image", ""), "dt": dt, "source": source})
         if len(out) >= max_items:
             break
     return out
 
-def compose(item, add_tags=True):
-    s = item["source"]
-    emoji = s.get("emoji", "📰")
-    tags = list(s.get("tags", ["#добрыеновости"]))
-    extra = keyword_tags(item["title"] + " " + item["summary"])
-    if extra not in tags:
-        tags.append(extra)
-    title = trim(item["title"], 110)
-    summary = trim(item["summary"], 280)
-    lines = [f"{emoji} <b>{html_mod.escape(title)}</b>"]
-    if summary and summary.lower() != title.lower():
-        lines += ["", html_mod.escape(summary)]
-    lines += ["", f"🔗 <a href=\"{html_mod.escape(item['src'])}\">{html_mod.escape(s.get('name','источник'))}</a>"]
-    if add_tags:
-        lines.append(" ".join(tags))
-    text = "\n".join(lines)
-    if len(text) > 4096:
-        text = trim(text, 4090, "…")
-    return text, tags
 
-def tg_send(token, chat, text, link_preview=False):
-    api = f"https://api.telegram.org/bot{token}/sendMessage"
-    return http_json(api, {
-        "chat_id": chat, "text": text, "parse_mode": "HTML",
-        "disable_web_page_preview": not link_preview,
-    })
+def today_count(posts):
+    """Сколько постов опубликовано сегодня (MSK) — для дневного лимита."""
+    today = datetime.now(MSK).strftime("%Y-%m-%d")
+    return sum(1 for p in posts if p.get("date") == today)
+
+
+# ───────────────────────────── main ─────────────────────────────
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--mode", choices=["dry", "publish"], default="dry")
-    ap.add_argument("--max", type=int, default=3, help="максимум новостей за запуск (на ВСЕ источники)")
-    ap.add_argument("--max-per-source", type=int, default=2)
+    ap.add_argument("--max", type=int, default=1, help="максимум новостей за запуск (на ВСЕ источники)")
+    ap.add_argument("--max-per-source", type=int, default=1)
+    ap.add_argument("--daily-cap", type=int, default=10, help="максимум постов в сутки (MSK)")
+    ap.add_argument("--no-og-image", action="store_true",
+                    help="не ходить за og:image, если RSS не дал фото")
     ap.add_argument("--sources", default="pipeline/sources.json")
     ap.add_argument("--posts", default="docs/posts.json")
     ap.add_argument("--seen", default="pipeline/seen.json")
-    ap.add_argument("--link-preview", action="store_true", help="показывать превью ссылки в посте")
     args = ap.parse_args()
 
     cfg = load_json(args.sources, {"sources": []})
@@ -245,16 +560,25 @@ def main():
     posts_doc = load_json(args.posts, {"version": 1, "updated_at": "", "channel": {}, "posts": []})
     posts = posts_doc.get("posts") or []
     existing_srcs = {p.get("src") for p in posts if p.get("src")}
+    existing_titles = {norm_title(p.get("title") or "") for p in posts[-300:]}
 
     seen_doc = load_json(args.seen, {"seen": {}})
     seen = seen_doc.get("seen") or {}
 
-    log(f"Источников: {len(sources)}; в оглавлении уже {len(posts)} постов")
+    published_today = today_count(posts)
+    if published_today >= args.daily_cap:
+        log(f"Дневной лимит исчерпан ({published_today}/{args.daily_cap}) — запуск не нужен")
+        return 0
+
+    log(f"Источников: {len(sources)}; в оглавлении {len(posts)} постов; "
+        f"сегодня уже {published_today}/{args.daily_cap}")
     candidates = []
     for src in sources:
-        candidates += pick(fetch_feed(src), src, seen, existing_srcs, args.max_per_source)
+        candidates += pick(fetch_feed(src), src, seen, existing_srcs,
+                           existing_titles, args.max_per_source)
     candidates.sort(key=lambda x: x["dt"], reverse=True)
-    candidates = candidates[: args.max]
+    room = args.daily_cap - published_today
+    candidates = candidates[: max(0, min(args.max, room))]
     log(f"К публикации отобрано: {len(candidates)}")
     if not candidates:
         log("Новых новостей нет — posts.json не меняется")
@@ -267,32 +591,52 @@ def main():
         return 1
     chat = chat.lstrip("@").replace("https://t.me/", "")
 
+    ai_ready = bool((os.environ.get("GROQ_API_KEY") or "").strip())
+    if args.mode == "publish" and not ai_ready:
+        log("!! GROQ_API_KEY не задан — публиковать сырые английские анонсы "
+            "в русский канал не буду. Добавьте ключ (groq.com, бесплатно) в Secrets.")
+
     added = 0
     for item in candidates:
-        text, tags = compose(item, add_tags=True)
         date_s, time_s = item["dt"].strftime("%Y-%m-%d"), item["dt"].strftime("%H:%M")
+
+        # фото: RSS-медиа → og:image статьи (best-effort)
+        if not item.get("image") and not args.no_og_image:
+            item["image"] = og_image(item["src"])
+
+        card = ai_card(item["title"], item["summary"], item["source"].get("name", ""))
+        if card is None:
+            if args.mode == "publish":
+                log(f"  × без ИИ-выжимки не публикую: {trim(item['title'], 60)}")
+                continue                      # hash НЕ записан → ретрай на следующем запуске
+            card = fallback_card(item)
+
+        tags = list(item["source"].get("tags", ["#мировыеновости"]))
+        extra = keyword_tags(item["title"] + " " + item["summary"] + " " + card.get("lede", ""))
+        if extra not in tags:
+            tags.append(extra)
+
+        text, kind = compose(item, card)
+
         if args.mode == "dry":
-            log(f"\n--- DRY ({date_s} {time_s}) ---\n{text}\n")
+            photo = " (с фото)" if kind == "photo" else ""
+            log(f"\n--- DRY ({date_s} {time_s}){photo} ---\n{text}\n")
             added += 1
             continue
-        try:
-            resp = tg_send(token, "@" + chat, text, link_preview=args.link_preview)
-        except Exception as e:
-            log(f"  × Telegram отклонил («{e}») — пропускаю запись")
-            continue
-        if not resp.get("ok"):
-            log(f"  × Telegram вернул ошибку: {resp.get('description')} — пропускаю")
-            continue
-        msg_id = resp["result"]["message_id"]
+
+        ok, kind, msg_id = publish_item(token, "@" + chat, item, text, kind)
+        if not ok:
+            continue                          # Telegram не принял вовсе — пропускаю
+
         posts.append({
             "id": msg_id, "date": date_s, "time": time_s,
-            "title": trim(item["title"], 110), "preview": trim(item["summary"], 180),
-            "tags": tags, "kind": "text",
+            "title": trim(card["headline"], 110), "preview": trim(card.get("lede") or item["summary"], 180),
+            "tags": tags, "kind": kind,
             "url": f"https://t.me/{chat}/{msg_id}", "src": item["src"],
         })
         seen[item["hash"]] = date_s
         added += 1
-        log(f"  ✓ опубликовано: {trim(item['title'], 60)} → t.me/{chat}/{msg_id}")
+        log(f"  ✓ {kind}: {trim(card['headline'], 60)} → t.me/{chat}/{msg_id}")
 
     if args.mode == "publish" and added:
         posts.sort(key=lambda p: (p.get("date", ""), p.get("time", "")), reverse=True)
