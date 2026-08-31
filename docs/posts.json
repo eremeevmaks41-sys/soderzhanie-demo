@@ -1,11 +1,53 @@
 {
   "version": 1,
-  "updated_at": "2026-08-31T11:49:17+03:00",
+  "updated_at": "2026-08-31T17:31:52+03:00",
   "channel": {
     "name": "Добрые вести",
-    "url": "https://t.me/dobrye_vesti_demo"
+    "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 11,
+      "date": "2026-08-31",
+      "time": "15:37",
+      "title": "На ММКЯ расскажут, как классические тексты обретают новые форматы",
+      "preview": "Проект «Большие книжные проекты: лучший опыт и практики» адресован издателям, авторам, продюсерам и маркетологам — всем, кто формирует будущее книжной индустрии",
+      "tags": [
+        "#добрыеновости",
+        "#общество"
+      ],
+      "kind": "text",
+      "url": "https://t.me/daily_news_digest/11",
+      "src": "https://godliteratury.ru/articles/2026/08/31/na-mmkia-rasskazhut-kak-klassicheskie-teksty-obretaiut-novye-formaty"
+    },
+    {
+      "id": 12,
+      "date": "2026-08-31",
+      "time": "15:25",
+      "title": "В Калмыкии перезахоронят останки свидетеля чуда Явления Христа Спасителя в Элисте в 1946 году",
+      "preview": "Останки Семена Бондаренко и его супруги перезахоронят на территории Казанского кафедрального собора Элисты.",
+      "tags": [
+        "#добрыеновости",
+        "#семья"
+      ],
+      "kind": "text",
+      "url": "https://t.me/daily_news_digest/12",
+      "src": "https://foma.ru/v-kalmykii-perezahoronyat-ostanki-svidetelya-chuda-yavleniya-hrista-spasitelya-v-eliste-v-1946-godu.html"
+    },
+    {
+      "id": 13,
+      "date": "2026-08-31",
+      "time": "15:17",
+      "title": "Урок апостола Петра: как решиться на перемены, когда нет никаких гарантий?",
+      "preview": "А вдруг не получится? А вдруг станет только хуже? Как же преодолеть этот страх и нерешительность? Ответ на этот вопрос неожиданно можно найти в истории о том, как апостол Петр…",
+      "tags": [
+        "#добрыеновости",
+        "#общество"
+      ],
+      "kind": "text",
+      "url": "https://t.me/daily_news_digest/13",
+      "src": "https://foma.ru/urok-apostola-petra-kak-reshitsya-na-peremeny-kogda-net-nikakih-garantij.html"
+    },
     {
       "id": 2,
       "date": "2026-08-31",
