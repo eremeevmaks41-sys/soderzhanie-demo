@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Оглавление</title>
+<!-- ═════════════════════════════════════════════════════════════════
+     «Содержание» · мини-апп оглавления Telegram-канала
+     Одна страница, без внешних зависимостей. Хостинг: GitHub Pages.
+     Данные: docs/posts.json (обновляется автоматически Actions).
+     Настройки: docs/config.js  (канал, цвет, лицензия).
+     ═════════════════════════════════════════════════════════════════ -->
+<style>
+:root{
+  --bg:#f6f1e7; --card:#fffdf8; --card2:#f1ead9; --text:#2b2417; --muted:#8a7f68;
+  --accent:#9a6b15; --accent-soft:#efe2c6; --chip:#efe8d8; --chip-active:#9a6b15;
+  --chip-active-text:#fffdf8; --line:#e6dcc4; --search:#fffdf8; --shadow:0 2px 10px rgba(80,60,20,.07);
+}
+html[data-theme="dark"]{
+  --bg:#1c1a16; --card:#26231d; --card2:#2e2a22; --text:#ece5d5; --muted:#9a917d;
+  --accent:#d8b25e; --accent-soft:#3a3428; --chip:#2e2a22; --chip-active:#d8b25e;
+  --chip-active-text:#1c1a16; --line:#3a352b; --search:#26231d; --shadow:0 2px 10px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:var(--bg); color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+  font-size:15px; line-height:1.45;
+  -webkit-tap-highlight-color:transparent;
+}
+.wrap{max-width:640px;margin:0 auto;padding:14px 14px 30px}
+
+/* ── шапка ── */
+header{display:flex;align-items:center;gap:12px;padding:10px 2px 14px}
+.logo{
+  width:46px;height:46px;border-radius:14px;flex:0 0 auto;
+  background:var(--accent-soft);display:flex;align-items:center;justify-content:center;
+  font-size:24px;user-select:none;
+}
+.h-name{font-size:19px;font-weight:700;letter-spacing:.1px}
+.h-sub{font-size:12.5px;color:var(--muted);margin-top:1px}
+.h-open{
+  margin-left:auto;flex:0 0 auto;text-decoration:none;font-size:13px;font-weight:600;
+  color:var(--accent);border:1.5px solid var(--accent);border-radius:11px;padding:7px 12px;
+}
+.h-open:active{background:var(--accent-soft)}
+
+/* ── поиск ── */
+.search{position:relative;margin-bottom:10px}
+.search input{
+  width:100%;padding:11px 38px 11px 38px;border-radius:13px;border:1.5px solid var(--line);
+  background:var(--search);color:var(--text);font-size:15px;outline:none;
+}
+.search input:focus{border-color:var(--accent)}
+.search .ico{position:absolute;left:12px;top:50%;transform:translateY(-50%);opacity:.55;font-size:15px}
+.search .clr{
+  position:absolute;right:6px;top:50%;transform:translateY(-50%);
+  border:0;background:transparent;color:var(--muted);font-size:17px;padding:6px 8px;cursor:pointer;display:none;
+}
+
+/* ── темы (чипсы) ── */
+.chips{
+  display:flex;gap:7px;overflow-x:auto;padding:2px 2px 12px;
+  scrollbar-width:none;-webkit-overflow-scrolling:touch;
+}
+.chips::-webkit-scrollbar{display:none}
+.chip{
+  flex:0 0 auto;border:1.5px solid var(--line);background:var(--chip);color:var(--text);
+  border-radius:999px;padding:6px 13px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;
+}
+.chip.active{background:var(--chip-active);color:var(--chip-active-text);border-color:var(--chip-active)}
+
+/* ── даты и карточки ── */
+.day{font-size:12.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin:16px 2px 8px}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:15px;
+  padding:12px 14px;margin-bottom:9px;box-shadow:var(--shadow);cursor:pointer;
+}
+.card:active{background:var(--card2)}
+.c-top{display:flex;align-items:baseline;gap:8px;margin-bottom:3px}
+.c-time{font-size:12px;color:var(--muted);flex:0 0 auto}
+.c-title{font-size:15.5px;font-weight:700;line-height:1.35}
+.c-prev{font-size:13.8px;color:var(--muted);margin-top:3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.c-tags{margin-top:7px;display:flex;flex-wrap:wrap;gap:5px}
+.c-tag{font-size:11.5px;color:var(--accent);background:var(--accent-soft);border-radius:7px;padding:2.5px 8px;font-weight:600}
+
+/* ── состояния ── */
+.more{
+  display:block;width:100%;margin:14px 0 4px;padding:12px;border-radius:13px;
+  border:1.5px dashed var(--accent);background:transparent;color:var(--accent);
+  font-size:14.5px;font-weight:700;cursor:pointer;
+}
+.state{padding:46px 20px;text-align:center;color:var(--muted)}
+.state .big{font-size:40px;margin-bottom:10px}
+.state .t{font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px}
+.banner{
+  display:none;background:#fdeaea;color:#8a2020;border:1px solid #f2c4c4;border-radius:12px;
+  padding:10px 13px;font-size:13px;margin-bottom:10px;
+}
+html[data-theme="dark"] .banner{background:#3a2424;color:#e8b0b0;border-color:#5a3434}
+
+/* ── футер (водяной знак) ── */
+footer{margin-top:26px;padding-top:14px;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:12px;line-height:1.7}
+footer b{color:var(--text);font-weight:600}
+footer .lic{font-size:11px;opacity:.75}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo" id="logo">📖</div>
+    <div>
+      <div class="h-name" id="hName">Оглавление</div>
+      <div class="h-sub" id="hSub">каталог постов канала</div>
+    </div>
+    <a class="h-open" id="hOpen" href="#">Канал</a>
+  </header>
+
+  <div class="banner" id="banner"></div>
+
+  <div class="search">
+    <span class="ico">🔍</span>
+    <input id="q" type="search" placeholder="Поиск по оглавлению…" autocomplete="off">
+    <button class="clr" id="clr" aria-label="Очистить">✕</button>
+  </div>
+
+  <div class="chips" id="chips"></div>
+  <div id="list"></div>
+  <div id="state" class="state" style="display:none"></div>
+
+  <footer>
+    <div><b>Содержание</b> · оглавление Telegram-канала</div>
+    <div class="lic" id="licLine"></div>
+  </footer>
+</div>
+
+<script src="config.js"></script>
+<script>
+/* ══════════════════════════════════════════════════════════════
+   «Содержание» · ядро мини-аппа
+   Порядок работы: config.js → лицензия → posts.json → рендер.
+   Править этот файл не нужно: всё настраивается в config.js.
+   ══════════════════════════════════════════════════════════════ */
+(function(){
+'use strict';
+
+var SALT = 'SODERZHANIE-v1-7f3a';               // служебная соль лицензии
+var PAGE_SIZE = 100;                            // карточек за одну подгрузку
+var cfg = window.SZ_CONFIG || {};
+
+/* ── Telegram WebApp: тема и открытие ссылок ── */
+var tg = (window.Telegram && window.Telegram.WebApp) ? window.Telegram.WebApp : null;
+if (tg) { try { tg.ready(); tg.expand(); } catch(e){} }
+
+function themeApply(){
+  var p = (tg && tg.themeParams) || {};
+  var dark = (tg && (p.bg_color ? isDark(p.bg_color) : (window.matchMedia('(prefers-color-scheme: dark)').matches)));
+  document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+  function isDark(hex){
+    if (!hex) return false;
+    var h = hex.replace('#','');
+    if (h.length === 3) h = h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+    var r = parseInt(h.substr(0,2),16), g = parseInt(h.substr(2,2),16), b = parseInt(h.substr(4,2),16);
+    return (0.299*r + 0.587*g + 0.114*b) < 128;
+  }
+}
+themeApply();
+if (tg && tg.onEvent) { try { tg.onEvent('themeChanged', themeApply); } catch(e){} }
+
+function openUrl(url){
+  if (!url) return;
+  if (tg && tg.openTelegramLink && url.indexOf('t.me') !== -1) { tg.openTelegramLink(url); return; }
+  if (tg && tg.openLink) { tg.openLink(url); return; }
+  window.open(url, '_blank');
+}
+
+/* ── лицензия: sha256(licensee|salt) первые 16 hex = ключ ── */
+function hex(buf){
+  var out = '';
+  new Uint8Array(buf).forEach(function(b){ out += ('0'+b.toString(16)).slice(-2); });
+  return out;
+}
+function licenseValid(licensee, key){
+  if (!licensee || !key) return Promise.resolve(false);
+  var data = new TextEncoder().encode(String(licensee).trim().toLowerCase() + '|' + SALT);
+  if (!(window.crypto && crypto.subtle)) return Promise.resolve(false); // file:// — просто показываем баннер
+  return crypto.subtle.digest('SHA-256', data).then(function(d){
+    return ('SZ-' + hex(d).slice(0,16)).toUpperCase() === String(key).trim().toUpperCase();
+  });
+}
+
+/* ── утилиты ── */
+function esc(s){
+  return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+  });
+}
+var MONTHS = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+function dayLabel(iso){
+  var d = new Date(iso + 'T00:00:00');
+  var today = new Date(); today.setHours(0,0,0,0);
+  var yst = new Date(today.getTime() - 86400000);
+  var t = new Date(d.getTime());
+  if (t.getTime() === today.getTime()) return 'Сегодня';
+  if (t.getTime() === yst.getTime()) return 'Вчера';
+  var now = new Date();
+  var label = d.getDate() + ' ' + MONTHS[d.getMonth()];
+  if (d.getFullYear() !== now.getFullYear()) label += ' ' + d.getFullYear();
+  return label;
+}
+function normTag(s){ return String(s||'').replace(/^#/,'').toLowerCase(); }
+
+/* ── состояние приложения ── */
+var POSTS = [];        // все посты (новые сверху)
+var TAGS = [];         // [{tag, n}]
+var filterTag = null;  // выбранная тема
+var filterQ = '';      // поисковая строка
+var shown = PAGE_SIZE;
+
+/* ── шапка из конфига ── */
+function applyConfig(){
+  var name = cfg.channel_name || 'Оглавление';
+  document.title = 'Оглавление · ' + name;
+  document.getElementById('hName').textContent = name;
+  document.getElementById('hOpen').textContent = cfg.channel_button || 'Канал';
+  if (cfg.channel_url) {
+    var a = document.getElementById('hOpen');
+    a.href = cfg.channel_url;
+    a.addEventListener('click', function(ev){ ev.preventDefault(); openUrl(cfg.channel_url); });
+  } else { document.getElementById('hOpen').style.display = 'none'; }
+  if (cfg.header_emoji) document.getElementById('logo').textContent = cfg.header_emoji;
+  var lic = cfg.licensee ? ('экземпляр для: ' + cfg.licensee + (cfg.license_id ? ' · лицензия ' + cfg.license_id : '')) : '';
+  document.getElementById('licLine').textContent = lic;
+}
+
+/* ── фильтрация и рендер ── */
+function filtered(){
+  var q = filterQ.trim().toLowerCase();
+  return POSTS.filter(function(p){
+    if (filterTag && !(p.tags||[]).some(function(t){ return normTag(t) === filterTag; })) return false;
+    if (!q) return true;
+    var hay = ((p.title||'') + ' ' + (p.preview||'') + ' ' + (p.tags||[]).join(' ')).toLowerCase();
+    return hay.indexOf(q) !== -1;
+  });
+}
+function renderChips(){
+  var box = document.getElementById('chips');
+  box.innerHTML = '';
+  var chipAll = document.createElement('div');
+  chipAll.className = 'chip' + (filterTag ? '' : ' active');
+  chipAll.textContent = 'Все темы';
+  chipAll.onclick = function(){ filterTag = null; shown = PAGE_SIZE; render(); };
+  box.appendChild(chipAll);
+  TAGS.slice(0, 14).forEach(function(t){
+    var c = document.createElement('div');
+    c.className = 'chip' + (filterTag === normTag(t.tag) ? ' active' : '');
+    c.textContent = t.tag + ' · ' + t.n;
+    c.onclick = function(){
+      filterTag = (filterTag === normTag(t.tag)) ? null : normTag(t.tag);
+      shown = PAGE_SIZE; render();
+    };
+    box.appendChild(c);
+  });
+}
+function renderList(items){
+  var list = document.getElementById('list');
+  var html = '', lastDay = '', groupOpen = false;
+  items.slice(0, shown).forEach(function(p){
+    if (p.date !== lastDay){
+      if (groupOpen){ html += '</div>'; }
+      html += '<div class="day">' + esc(dayLabel(p.date)) + '</div><div class="group">';
+      lastDay = p.date; groupOpen = true;
+    }
+    var tags = (p.tags||[]).map(function(t){ return '<span class="c-tag">' + esc(t) + '</span>'; }).join('');
+    html += '<div class="card" data-url="' + esc(p.url||'') + '">' +
+              '<div class="c-top">' +
+                (p.time ? '<span class="c-time">' + esc(p.time) + '</span>' : '') +
+                '<span class="c-title">' + esc(p.title || 'Пост') + '</span>' +
+              '</div>' +
+              (p.preview ? '<div class="c-prev">' + esc(p.preview) + '</div>' : '') +
+              (tags ? '<div class="c-tags">' + tags + '</div>' : '') +
+            '</div>';
+  });
+  if (groupOpen) html += '</div>';
+  list.innerHTML = html;
+  list.querySelectorAll('.card').forEach(function(el){
+    el.addEventListener('click', function(){ openUrl(el.getAttribute('data-url')); });
+  });
+  var more = document.getElementById('moreBtn');
+  if (items.length > shown){
+    if (!more){
+      more = document.createElement('button');
+      more.id = 'moreBtn'; more.className = 'more';
+      more.onclick = function(){ shown += PAGE_SIZE; render(); };
+      document.getElementById('list').after(more);
+    }
+    more.textContent = 'Показать ещё (' + (items.length - shown) + ')';
+    more.style.display = 'block';
+  } else if (more){ more.style.display = 'none'; }
+}
+function renderState(kind, extra){
+  var st = document.getElementById('state');
+  var list = document.getElementById('list');
+  var more = document.getElementById('moreBtn');
+  if (more) more.style.display = 'none';
+  if (!kind){ st.style.display = 'none'; list.style.display = ''; return; }
+  list.style.display = 'none';
+  st.style.display = 'block';
+  if (kind === 'empty')   st.innerHTML = '<div class="big">📭</div><div class="t">Пока пусто</div><div>Посты появятся здесь сразу после первой публикации или импорта.</div>';
+  if (kind === 'nomatch') st.innerHTML = '<div class="big">🔍</div><div class="t">Ничего не найдено</div><div>Попробуйте изменить запрос или выбрать другую тему.</div>';
+  if (kind === 'error')   st.innerHTML = '<div class="big">⚠️</div><div class="t">Не удалось загрузить оглавление</div><div>' + esc(extra||'') + '</div>';
+}
+function render(){
+  var items = filtered();
+  document.getElementById('hSub').textContent = 'каталог постов · ' + POSTS.length + ' шт.';
+  renderChips();
+  if (!POSTS.length) return renderState('empty');
+  if (!items.length) return renderState('nomatch');
+  renderState(null);
+  renderList(items);
+  document.getElementById('list').style.display = '';
+}
+
+/* ── поиск ── */
+var qEl = document.getElementById('q'), clrEl = document.getElementById('clr');
+qEl.addEventListener('input', function(){
+  filterQ = qEl.value; shown = PAGE_SIZE;
+  clrEl.style.display = qEl.value ? 'block' : 'none';
+  render();
+});
+clrEl.addEventListener('click', function(){
+  qEl.value = ''; filterQ = ''; clrEl.style.display = 'none'; shown = PAGE_SIZE; render(); qEl.focus();
+});
+
+/* ── загрузка данных ── */
+function boot(data){
+  var posts = Array.isArray(data) ? data : (data.posts || []);
+  POSTS = posts.map(function(p){
+    var d = String(p.date || '');
+    return {
+      date: d.slice(0,10), time: String(p.time || (d.length > 10 ? d.slice(11,16) : '')),
+      title: p.title || '', preview: p.preview || '',
+      tags: p.tags || [], url: p.url || ''
+    };
+  }).sort(function(a,b){
+    var ka = a.date + ' ' + a.time, kb = b.date + ' ' + b.time;
+    return ka < kb ? 1 : (ka > kb ? -1 : 0);
+  });
+  var counts = {};
+  POSTS.forEach(function(p){ (p.tags||[]).forEach(function(t){
+    var k = normTag(t); if (!k) return;
+    if (!counts[k]) counts[k] = {tag: t.replace(/^#/,'') ? t : t, n: 0};
+    counts[k].n++;
+  });});
+  TAGS = Object.keys(counts).map(function(k){ return counts[k]; })
+    .sort(function(a,b){ return b.n - a.n; });
+  render();
+}
+
+function load(){
+  var url = 'posts.json?v=' + Date.now();
+  fetch(url, {cache:'no-store'})
+    .then(function(r){ if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(boot)
+    .catch(function(e){ renderState('error', 'Файл posts.json недоступен или пуст. Проверьте настройку по гайду (' + e.message + ').'); });
+}
+
+/* ── старт ── */
+applyConfig();
+licenseValid(cfg.licensee, cfg.license_key).then(function(ok){
+  if (!ok){
+    var b = document.getElementById('banner');
+    b.style.display = 'block';
+    b.textContent = 'Лицензионный ключ не подтверждён. Работает демонстрационный режим — впишите корректные данные в config.js или обратитесь к продавцу.';
+  }
+});
+load();
+})();
+</script>
+</body>
+</html>
