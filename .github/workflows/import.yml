@@ -1,0 +1,55 @@
+# ═══════════════════════════════════════════════════════════════
+# «Содержание» · импорт истории канала
+# Запускается ВРУЧНУЮ после того, как вы положили файл экспорта
+# import/result.json (через веб-интерфейс GitHub: Add file → Upload).
+# Гайд: раздел «Импорт истории канала».
+# ═══════════════════════════════════════════════════════════════
+name: Импорт истории
+
+on:
+  workflow_dispatch:
+    inputs:
+      channel_username:
+        description: "Юзернейм канала без @ (например my_channel)"
+        required: true
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Проверка наличия экспорта
+        run: |
+          if [ ! -f import/result.json ]; then
+            echo "::error::Файл import/result.json не найден. Загрузите экспорт Telegram Desktop в папку import/ и повторите."
+            exit 1
+          fi
+
+      - name: Конвертация экспорта в оглавление
+        run: |
+          python pipeline/export_to_posts.py \
+            --input import/result.json \
+            --posts docs/posts.json \
+            --channel-username "${{ inputs.channel_username }}"
+
+      - name: Коммит оглавления
+        run: |
+          git config user.name  "soderzhanie-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add docs/posts.json
+          if git diff --cached --quiet; then
+            echo "Изменений нет — коммит не нужен"
+          else
+            git commit -m "импорт: оглавление собрано из экспорта [skip ci]"
+            git push
+          fi
