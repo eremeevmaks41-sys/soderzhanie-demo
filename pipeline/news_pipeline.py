@@ -5,7 +5,7 @@
 ==================================================================
 GitHub Actions запускает скрипт каждые 2 часа:
 
-    RSS-источники → фото из статьи → ИИ-выжимка (OpenRouter/Gemini/Groq)
+    RSS-источники → фото из статьи → ИИ-выжимка (OpenRouter / Gemini / Groq)
     → красивая карточка в Telegram-канал (фото + подпись или текст)
     → запись в docs/posts.json → коммит → Pages обновляет мини-апп.
 
@@ -57,7 +57,18 @@ GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/openai/chat/compl
 GEMINI_MODEL_DEFAULT = "gemini-2.5-flash"
 
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
-OPENROUTER_MODEL_DEFAULT = "nvidia/nemotron-3-ultra-550b-a55b:free"
+# Бесплатные модели (суффикс :free), пробуются по очереди, пока одна не ответит:
+# 1) GLM — лучший русский среди бесплатных + structured_outputs (надёжный JSON);
+# 2) MiniMax M3 — 1M контекста, response_format;
+# 3) Nemotron Super — компактная, structured_outputs;
+# 4) Nemotron Ultra — самый крупный резерв.
+# Переопределить можно секретом/переменной AI_MODEL (можно списком через запятую).
+OPENROUTER_MODELS = [
+    "z-ai/glm-5.2:free",
+    "minimax/minimax-m3:free",
+    "nvidia/nemotron-3-super-120b-a12b:free",
+    "nvidia/nemotron-3-ultra-550b-a55b:free",
+]
 
 # Эмодзи, которые ИИ может поставить карточке (вне списка — эмодзи источника)
 EMOJI_WHITELIST = [
@@ -350,7 +361,7 @@ def og_image(article_url):
     return url if re.match(r"^https?://", url) else ""
 
 
-# ─────────────────────── ИИ-выжимка (OpenRouter / Gemini / Groq) ───────────────────────
+# ───────────────────────── ИИ-выжимка (OpenRouter/Gemini/Groq) ─────────────────────────
 
 def _parse_ai_json(raw):
     """Терпимый парсер ответа модели: срезает ```-обёртки и мусор вокруг JSON."""
@@ -392,12 +403,15 @@ def _parse_ai_json(raw):
 def ai_card(title, summary, source_name):
     """ИИ-выжимка одной новости. None — ИИ недоступен/ответ некорректен.
     Провайдер — по префиксу ключа: "sk-or-…" → OpenRouter, "AIza…" → Gemini,
-    "gsk_…" → Groq. Переменные AI_URL / AI_MODEL переопределяют вручную."""
+    "gsk_…" → Groq. Переменные AI_URL / AI_MODEL переопределяют вручную
+    (в AI_MODEL можно перечислить несколько моделей через запятую — будут
+    пробоваться по очереди). У OpenRouter бесплатных моделей лимит частоты,
+    поэтому список моделей — цепочка запасных: 429/сбой → следующая модель."""
     key = (os.environ.get("GEMINI_API_KEY") or os.environ.get("GROQ_API_KEY") or "").strip()
     if not key:
         return None
     url = (os.environ.get("AI_URL") or "").strip()
-    model = (os.environ.get("AI_MODEL") or os.environ.get("GROQ_MODEL") or "").strip().strip("\"'")
+    model_env = (os.environ.get("AI_MODEL") or os.environ.get("GROQ_MODEL") or "").strip().strip("\"'")
     if not url:
         if key.startswith("AIza"):
             url = GEMINI_URL
@@ -405,38 +419,54 @@ def ai_card(title, summary, source_name):
             url = OPENROUTER_URL
         else:
             url = GROQ_URL
-    if not model:
-        if "generativelanguage" in url:
-            model = GEMINI_MODEL_DEFAULT
-        elif "openrouter" in url:
-            model = OPENROUTER_MODEL_DEFAULT
-        else:
-            model = GROQ_MODEL_DEFAULT
+    if model_env:
+        models = [m.strip() for m in model_env.split(",") if m.strip()]
+    elif "openrouter" in url:
+        models = OPENROUTER_MODELS
+    elif "generativelanguage" in url:
+        models = [GEMINI_MODEL_DEFAULT]
+    else:
+        models = [GROQ_MODEL_DEFAULT]
+    headers = {"Authorization": f"Bearer {key}"}
+    if "openrouter" in url:
+        headers["HTTP-Referer"] = "https://eremeevmaks41-sys.github.io/soderzhanie-demo/"
+        headers["X-Title"] = "soderzhanie-demo"
     user_msg = (f"Источник: {source_name}\n"
                 f"Заголовок: {title}\n"
                 f"Описание: {summary or '(пусто)'}")
-    try:
-        resp = http_json(url, {
+    for i, model in enumerate(models):
+        payload = {
             "model": model,
             "temperature": 0.2,
-            "max_tokens": 2000,
+            "max_tokens": 2500,
             "messages": [
                 {"role": "system", "content": AI_SYSTEM},
                 {"role": "user", "content": user_msg},
             ],
-        }, headers={"Authorization": f"Bearer {key}"}, timeout=40)
-        return _parse_ai_json((resp["choices"][0]["message"].get("content") or ""))
-    except urllib.error.HTTPError as e:
-        detail = ""
+        }
+        if "openrouter" in url:
+            # «мыслящие» модели не должны тратить лимит токенов на reasoning
+            payload["reasoning"] = {"enabled": False}
+        if i:
+            log(f"    · пробую модель {model}…")
         try:
-            detail = e.read(300).decode("utf-8", "ignore")
-        except Exception:
-            pass
-        log(f"    · ИИ недоступен: HTTP {e.code} {e.reason} :: {detail or '(тело ответа пустое)'}")
-        return None
-    except Exception as e:
-        log(f"    · ИИ недоступен: {e}")
-        return None
+            resp = http_json(url, payload, headers=headers, timeout=60)
+            card = _parse_ai_json((resp["choices"][0]["message"].get("content") or ""))
+            if card:
+                return card
+            log(f"    · ИИ {model}: в ответе нет корректного JSON")
+        except urllib.error.HTTPError as e:
+            detail = ""
+            try:
+                detail = e.read(300).decode("utf-8", "ignore")
+            except Exception:
+                pass
+            log(f"    · ИИ {model}: HTTP {e.code} {e.reason} :: {detail or '(тело ответа пустое)'}")
+            if e.code in (401, 402, 403):
+                return None          # ключ/доступ — смена модели не поможет
+        except Exception as e:
+            log(f"    · ИИ {model}: {e}")
+    return None
 
 
 def fallback_card(item):
