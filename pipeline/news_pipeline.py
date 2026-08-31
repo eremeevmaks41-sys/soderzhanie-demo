@@ -5,7 +5,7 @@
 ==================================================================
 GitHub Actions запускает скрипт каждые 2 часа:
 
-    RSS-источники → фото из статьи → ИИ-выжимка (Groq)
+    RSS-источники → фото из статьи → ИИ-выжимка (Gemini/Groq)
     → красивая карточка в Telegram-канал (фото + подпись или текст)
     → запись в docs/posts.json → коммит → Pages обновляет мини-апп.
 
@@ -23,8 +23,10 @@ GitHub Actions запускает скрипт каждые 2 часа:
 Секреты (GitHub → Settings → Secrets and variables → Actions):
     BOT_TOKEN        токен бота от @BotFather
     CHANNEL_USERNAME юзернейм канала вида @my_channel (канал публичный!)
-    GROQ_API_KEY     ключ groq.com (бесплатный) — БЕЗ НЕГО ПУБЛИКАЦИЯ СТОИТ:
-                     конвейер не постит сырые английские анонсы в русский канал
+    GROQ_API_KEY     ключ ИИ — Google Gemini (aistudio.google.com, бесплатно,
+                     начинается с "AIza") или Groq (groq.com, "gsk_"). БЕЗ НЕГО
+                     ПУБЛИКАЦИЯ СТОИТ: конвейер не постит сырые английские анонсы
+                     в русский канал. Провайдер распознаётся по префиксу ключа.
 
 Лимиты: --max новостей за запуск, --daily-cap постов в сутки (по posts.json).
 Фото: из RSS (media:content/enclosure/thumbnail) или og:image статьи;
@@ -47,6 +49,11 @@ MSK = timezone(timedelta(hours=3))
 
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 GROQ_MODEL_DEFAULT = "openai/gpt-oss-120b"
+
+# Gemini доступен из облачных раннеров (Groq блокирует дата-центровые IP),
+# поэтому основной провайдер — Google Gemini через OpenAI-совместимый endpoint.
+GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions"
+GEMINI_MODEL_DEFAULT = "gemini-2.5-flash"
 
 # Эмодзи, которые ИИ может поставить карточке (вне списка — эмодзи источника)
 EMOJI_WHITELIST = [
@@ -339,7 +346,7 @@ def og_image(article_url):
     return url if re.match(r"^https?://", url) else ""
 
 
-# ───────────────────────────── ИИ-выжимка (Groq) ─────────────────────────────
+# ───────────────────────────── ИИ-выжимка (Gemini / Groq) ─────────────────────────────
 
 def _parse_ai_json(raw):
     """Терпимый парсер ответа модели: срезает ```-обёртки и мусор вокруг JSON."""
@@ -379,18 +386,26 @@ def _parse_ai_json(raw):
 
 
 def ai_card(title, summary, source_name):
-    """ИИ-выжимка одной новости. None — ИИ недоступен/ответ некорректен."""
-    key = (os.environ.get("GROQ_API_KEY") or "").strip()
+    """ИИ-выжимка одной новости. None — ИИ недоступен/ответ некорректен.
+    Провайдер выбирается по ключу: "AIza…" → Google Gemini, "gsk_…" → Groq.
+    Переменные AI_URL / AI_MODEL переопределяют выбор вручную."""
+    key = (os.environ.get("GEMINI_API_KEY") or os.environ.get("GROQ_API_KEY") or "").strip()
     if not key:
         return None
+    url = (os.environ.get("AI_URL") or "").strip()
+    model = (os.environ.get("AI_MODEL") or os.environ.get("GROQ_MODEL") or "").strip().strip("\"'")
+    if not url:
+        url = GEMINI_URL if key.startswith("AIza") else GROQ_URL
+    if not model:
+        model = GEMINI_MODEL_DEFAULT if "generativelanguage" in url else GROQ_MODEL_DEFAULT
     user_msg = (f"Источник: {source_name}\n"
                 f"Заголовок: {title}\n"
                 f"Описание: {summary or '(пусто)'}")
     try:
-        resp = http_json(GROQ_URL, {
-            "model": (os.environ.get("GROQ_MODEL") or "").strip().strip("\"'") or GROQ_MODEL_DEFAULT,
+        resp = http_json(url, {
+            "model": model,
             "temperature": 0.2,
-            "max_tokens": 600,
+            "max_tokens": 1500,
             "messages": [
                 {"role": "system", "content": AI_SYSTEM},
                 {"role": "user", "content": user_msg},
@@ -604,10 +619,11 @@ def main():
         return 1
     chat = chat.lstrip("@").replace("https://t.me/", "")
 
-    ai_ready = bool((os.environ.get("GROQ_API_KEY") or "").strip())
+    ai_ready = bool((os.environ.get("GEMINI_API_KEY") or os.environ.get("GROQ_API_KEY") or "").strip())
     if args.mode == "publish" and not ai_ready:
-        log("!! GROQ_API_KEY не задан — публиковать сырые английские анонсы "
-            "в русский канал не буду. Добавьте ключ (groq.com, бесплатно) в Secrets.")
+        log("!! ключ ИИ не задан — публиковать сырые английские анонсы "
+            "в русский канал не буду. Добавьте ключ Google Gemini (aistudio.google.com, "
+            "бесплатно) в секрет GROQ_API_KEY.")
 
     added = 0
     for item in candidates:
