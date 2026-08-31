@@ -39,6 +39,7 @@ import os
 import re
 import sys
 import urllib.request
+import urllib.error
 import urllib.parse
 from datetime import datetime, timedelta, timezone
 
@@ -92,8 +93,12 @@ def log(msg):
 
 def http_json(url, payload=None, headers=None, timeout=30):
     data = json.dumps(payload).encode("utf-8") if payload is not None else None
+    base = {"Content-Type": "application/json",
+            "User-Agent": "Mozilla/5.0 (compatible; Soderzhanie/2.0)"}
+    if headers:
+        base.update(headers)
     req = urllib.request.Request(url, data=data, method="POST" if data else "GET",
-                                 headers=headers or {"Content-Type": "application/json"})
+                                 headers=base)
     with urllib.request.urlopen(req, timeout=timeout) as r:
         return json.loads(r.read().decode("utf-8"))
 
@@ -392,6 +397,14 @@ def ai_card(title, summary, source_name):
             ],
         }, headers={"Authorization": f"Bearer {key}"}, timeout=40)
         return _parse_ai_json((resp["choices"][0]["message"].get("content") or ""))
+    except urllib.error.HTTPError as e:
+        detail = ""
+        try:
+            detail = e.read(300).decode("utf-8", "ignore")
+        except Exception:
+            pass
+        log(f"    · ИИ недоступен: HTTP {e.code} {e.reason} :: {detail or '(тело ответа пустое)'}")
+        return None
     except Exception as e:
         log(f"    · ИИ недоступен: {e}")
         return None
