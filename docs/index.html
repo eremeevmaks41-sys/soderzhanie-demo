@@ -95,7 +95,7 @@ header{display:flex;align-items:center;gap:12px;padding:10px 2px 14px}
 /* ── даты и карточки ── */
 .day{font-size:12.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin:16px 2px 8px}
 .card{
-  display:block;color:inherit;text-decoration:none; /* карточка — <a>: ctrl/cmd+клик открывает новую вкладку, обычный тап разворачивает пост на месте */
+  display:block;color:inherit;text-decoration:none; /* карточка — настоящая <a> */
   background:var(--card);border:1px solid var(--line);border-radius:15px;
   padding:12px 14px;margin-bottom:9px;box-shadow:var(--shadow);cursor:pointer;
   transition:background .12s ease, transform .12s ease;
@@ -107,15 +107,6 @@ header{display:flex;align-items:center;gap:12px;padding:10px 2px 14px}
 .c-prev{font-size:13.8px;color:var(--muted);margin-top:3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .c-tags{margin-top:7px;display:flex;flex-wrap:wrap;gap:5px}
 .c-tag{font-size:11.5px;color:var(--accent);background:var(--accent-soft);border-radius:7px;padding:2.5px 8px;font-weight:600}
-
-/* ── встроенный предпросмотр поста (разворачивается в карточке) ── */
-.c-embed{display:none;margin-top:10px}
-.c-embed-host{border-radius:12px;overflow:hidden;background:var(--card2)}
-.c-embed-host iframe{width:100%!important;border:0;display:block}
-.c-load{padding:14px 10px;text-align:center;color:var(--muted);font-size:12.5px;animation:szpulse 1.2s ease-in-out infinite}
-@keyframes szpulse{50%{opacity:.35}}
-.c-open{display:inline-block;margin-top:8px;font-size:12.5px;font-weight:700;color:var(--accent);cursor:pointer;user-select:none;-webkit-user-select:none}
-.c-open:active{opacity:.55}
 
 /* ── переключатель вида: Оглавление / Лента ── */
 .views{display:flex;background:var(--chip);border:1.5px solid var(--line);border-radius:12px;padding:3px;margin-bottom:11px}
@@ -206,7 +197,7 @@ footer .lic{font-size:11px;opacity:.75}
   <div id="state" class="state" style="display:none"></div>
 
   <footer>
-    <div><b>Оглавление</b> · каталог постов Telegram-канала · <span id="ver">v52-i</span></div>
+    <div><b>Оглавление</b> · каталог постов Telegram-канала · <span id="ver">v52-j</span></div>
     <div class="lic" id="licLine"></div>
   </footer>
 </div>
@@ -345,9 +336,42 @@ if (tg && tg.onEvent) { try { tg.onEvent('themeChanged', function(){ themeApply(
    API мини-аппа или переход в той же вкладке. */
 var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent || '') ||
           (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1); /* iPadOS 13+ маскируется под Mac */
+/* подсказка на случай, когда Telegram открывает пост ПОД окном браузера:
+   человек сразу понимает, что пост уже открыт, и как его увидеть */
+var hintAt = 0;
+function hintOverlay(){
+  if (Date.now() - hintAt < 1500) return;
+  hintAt = Date.now();
+  var h = document.createElement('div');
+  h.style.cssText = 'position:fixed;top:calc(10px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);'
+    + 'background:rgba(25,20,10,.9);color:#fff;font-size:12.5px;font-weight:600;padding:9px 14px;border-radius:999px;'
+    + 'z-index:60;max-width:88%;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.25)';
+  h.textContent = 'Открыто в Telegram — смахните это окно вниз ⌄';
+  document.body.appendChild(h);
+  var killed = false;
+  function kill(){ if (killed) return; killed = true; if (h.parentNode) h.parentNode.removeChild(h); }
+  function onVis(){ if (document.visibilityState === 'visible') setTimeout(kill, 1500); }
+  if (document.visibilityState === 'hidden') document.addEventListener('visibilitychange', onVis);
+  setTimeout(kill, 4500);
+}
+/* глубокая ссылка tg:// через скрытый iframe: встроенный браузер Telegram
+   может перехватить её и открыть пост ПОВЕРХ окна (как надо). Если не
+   умеет — iframe просто молча не сработает, и через 600 мс уйдёт обычный
+   переход https (страховка). Основная страница при этом не ломается. */
+function tryDeep(deep){
+  try {
+    var f = document.createElement('iframe');
+    f.style.display = 'none';
+    f.src = deep;
+    document.body.appendChild(f);
+    setTimeout(function(){ if (f.parentNode) f.parentNode.removeChild(f); }, 2000);
+    return true;
+  } catch(e){ return false; }
+}
 function openUrl(url){
   if (!url) return;
-  if (tg && tg.openTelegramLink && url.indexOf('t.me') !== -1) {
+  var isTme = url.indexOf('t.me') !== -1;
+  if (tg && tg.openTelegramLink && isTme) {
     try {
       tg.openTelegramLink(url);
       /* iOS: пост/канал открывается ПОД мини-аппом (слои WKWebView) —
@@ -364,7 +388,26 @@ function openUrl(url){
   if (tg && tg.openLink) {
     try { tg.openLink(url); return; } catch(e){}
   }
-  if (iOS) { window.location.href = url; return; }  /* iPhone: та же вкладка */
+  if (iOS && isTme) {
+    /* встроенный браузер Telegram (tg-там нет): сначала пробуем глубокую
+       ссылку tg://resolve — она может открыть пост поверх окна; если через
+       600 мс ничего не произошло — обычный переход https (пост откроется
+       под окном, покажем подсказку «смахните вниз») */
+    var m = url.match(/t\.me\/([^\/?#]+)(?:\/(\d+))?/);
+    if (m && m[1] && m[1] !== 'share' && m[1] !== 'proxy') {
+      tryDeep('tg://resolve?domain=' + m[1] + (m[2] ? '&post=' + m[2] : ''));
+      setTimeout(function(){
+        if (document.visibilityState === 'hidden') return; /* уже перешли */
+        hintOverlay();
+        window.location.href = url;
+      }, 600);
+      return;
+    }
+    hintOverlay();
+    window.location.href = url;
+    return;
+  }
+  if (/Android/i.test(navigator.userAgent || '')) { window.location.href = url; return; }  /* Android: так пост открывается поверх */
   window.open(url, '_blank');
 }
 
@@ -674,59 +717,6 @@ function renderGroupCards(){
   var more = document.getElementById('moreBtn');
   if (more) more.style.display = 'none';
 }
-/* ── встроенный предпросмотр поста ──
-   Тап по карточке НЕ ведёт на t.me: пост разворачивается внутри карточки
-   через официальный виджет Telegram (iframe t.me/embed). Это работает
-   ОДИНАКОВО во встроенном браузере Telegram (где нет WebApp API и нельзя
-   программно закрыть «шторку» — из-за этого пост и открывался «за кадром»),
-   в настоящем мини-аппе, на Android и на десктопе. */
-function mountEmbed(box, p){
-  var m = (p.url || '').match(/t\.me\/([^\/?#]+)\/(\d+)/);
-  var host = box.querySelector('.c-embed-host');
-  if (!host) return;
-  if (!m){
-    host.innerHTML = '<div class="c-load">Предпросмотр недоступен — откройте пост по ссылке ниже.</div>';
-    return;
-  }
-  var s = document.createElement('script');
-  s.async = true;
-  s.src = 'https://telegram.org/js/telegram-widget.js?22';
-  s.setAttribute('data-telegram-post', m[1] + '/' + m[2]);
-  s.setAttribute('data-width', '100%');
-  try { if (document.documentElement.getAttribute('data-theme') === 'dark') s.setAttribute('data-dark', '1'); } catch(e){}
-  host.appendChild(s);
-  /* ждём появления iframe: убираем «Загружаю пост…» или честно сообщаем о сбое */
-  var tries = 0;
-  var poll = setInterval(function(){
-    tries++;
-    if (host.querySelector('iframe')){
-      clearInterval(poll);
-      var l = host.querySelector('.c-load');
-      if (l) l.parentNode.removeChild(l);
-    } else if (tries > 40){
-      clearInterval(poll);
-      var l2 = host.querySelector('.c-load');
-      if (l2) l2.textContent = 'Предпросмотр не загрузился — откройте пост по ссылке ниже.';
-    }
-  }, 200);
-}
-function togglePost(cardEl, p){
-  if (!p || !p.url) return;
-  var box = cardEl.querySelector('.c-embed');
-  if (!box) return;
-  if (cardEl.getAttribute('data-open') === '1'){
-    cardEl.removeAttribute('data-open');
-    box.style.display = 'none';
-    return;
-  }
-  cardEl.setAttribute('data-open', '1');
-  box.style.display = 'block';
-  if (box.getAttribute('data-ready') !== '1'){
-    box.setAttribute('data-ready', '1');
-    mountEmbed(box, p);
-  }
-  setTimeout(function(){ try { box.scrollIntoView({behavior:'smooth', block:'nearest'}); } catch(e){} }, 250);
-}
 function renderList(items){
   var list = document.getElementById('list');
   var html = '', lastDay = '', groupOpen = false;
@@ -744,29 +734,20 @@ function renderList(items){
               '</div>' +
               (p.preview ? '<div class="c-prev">' + esc(p.preview) + '</div>' : '') +
               (tags ? '<div class="c-tags">' + tags + '</div>' : '') +
-              (p.url ? '<div class="c-embed"><div class="c-embed-host"><div class="c-load">Загружаю пост…</div></div><span class="c-open" role="link" tabindex="0">Открыть в канале →</span></div>' : '') +
             '</a>';
   });
   if (groupOpen) html += '</div>';
   list.innerHTML = html;
-  var byUrl = {};
-  items.slice(0, shown).forEach(function(p){ if (p.url) byUrl[p.url] = p; });
   list.querySelectorAll('a.card[href]').forEach(function(el){
     el.addEventListener('click', function(ev){
-      /* ctrl/cmd+клик — пусть работает настоящая ссылка в новой вкладке;
-         обычный тап разворачивает пост внутри карточки (без перехода) */
-      if (ev.metaKey || ev.ctrlKey) return;
-      ev.preventDefault();
       haptic('light');
-      togglePost(el, byUrl[el.getAttribute('href')]);
-    });
-  });
-  list.querySelectorAll('.c-open').forEach(function(el){
-    el.addEventListener('click', function(ev){
-      ev.preventDefault(); ev.stopPropagation();
-      var card = el.closest ? el.closest('a.card') : null;
-      var p = card ? byUrl[card.getAttribute('href')] : null;
-      if (p){ haptic('light'); openUrl(p.url); }
+      // мини-апп Telegram → штатный API; iOS/Android → переход в той же вкладке
+      // (target="_blank" на iPhone молча блокируется); обычный
+      // десктоп-браузер → НЕ перехватываем: работает настоящий переход
+      if (tg || iOS) {
+        ev.preventDefault();
+        openUrl(el.getAttribute('href'));
+      }
     });
   });
   var more = document.getElementById('moreBtn');
