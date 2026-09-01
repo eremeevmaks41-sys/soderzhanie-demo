@@ -199,10 +199,21 @@ function themeApply(){
 themeApply();
 if (tg && tg.onEvent) { try { tg.onEvent('themeChanged', themeApply); } catch(e){} }
 
+/* iOS/iPadOS: переходы по target="_blank" и window.open во встроенном
+   браузере Telegram на iPhone МОЛЧА БЛОКИРУЮТСЯ (WKWebView не умеет
+   открывать новые вкладки) — единственный надёжный путь там: штатный
+   API мини-аппа или переход в той же вкладке. */
+var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent || '') ||
+          (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1); /* iPadOS 13+ маскируется под Mac */
 function openUrl(url){
   if (!url) return;
-  if (tg && tg.openTelegramLink && url.indexOf('t.me') !== -1) { tg.openTelegramLink(url); return; }
-  if (tg && tg.openLink) { tg.openLink(url); return; }
+  if (tg && tg.openTelegramLink && url.indexOf('t.me') !== -1) {
+    try { tg.openTelegramLink(url); return; } catch(e){}
+  }
+  if (tg && tg.openLink) {
+    try { tg.openLink(url); return; } catch(e){}
+  }
+  if (iOS) { window.location.href = url; return; }  /* iPhone: та же вкладка */
   window.open(url, '_blank');
 }
 
@@ -337,10 +348,10 @@ function applyConfig(){
     var a = document.getElementById('hOpen');
     a.href = cfg.channel_url;
     a.addEventListener('click', function(ev){
-      // мини-апп Telegram → штатный API; иначе НЕ перехватываем клик —
-      // сработает обычный переход по href (window.open во встроенных
-      // браузерах Telegram молча блокируется)
-      if (tg && (tg.openTelegramLink || tg.openLink)) {
+      // мини-апп Telegram → штатный API; iOS → переход в той же вкладке
+      // (target="_blank" на iPhone молча блокируется); десктоп-браузер →
+      // НЕ перехватываем: сработает обычный переход по href
+      if (tg || iOS) {
         ev.preventDefault(); openUrl(cfg.channel_url);
       }
     });
@@ -528,9 +539,10 @@ function renderList(items){
   list.innerHTML = html;
   list.querySelectorAll('a.card[href]').forEach(function(el){
     el.addEventListener('click', function(ev){
-      // мини-апп Telegram → штатный API; обычный/встроенный браузер →
-      // НЕ перехватываем: работает настоящий переход по <a href>
-      if (tg && (tg.openTelegramLink || tg.openLink)) {
+      // мини-апп Telegram → штатный API; iOS → переход в той же вкладке
+      // (target="_blank" на iPhone молча блокируется); обычный
+      // десктоп-браузер → НЕ перехватываем: работает настоящий переход
+      if (tg || iOS) {
         ev.preventDefault();
         openUrl(el.getAttribute('href'));
       }
