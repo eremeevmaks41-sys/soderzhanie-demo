@@ -1,11 +1,13 @@
 # ═══════════════════════════════════════════════════════════════
 # «Содержание» · новостной конвейер v2 (ИИ-карточки)
-# Каждые 2 часа: RSS → фото → ИИ-выжимка (Groq) → карточка в канал
-# → обновление оглавления. До 10 постов в сутки (--daily-cap).
+# Каждые 2 часа: RSS/видео → ИИ-карточка → канал → оглавление (≤10 постов
+# в сутки). Каждый публикационный запуск ещё и сверяет оглавление с
+# каналом — посты, удалённые в Telegram, вычищаются из posts.json.
 # Требует секреты (Settings → Secrets and variables → Actions):
-#   BOT_TOKEN, CHANNEL_USERNAME, GROQ_API_KEY (groq.com, бесплатно)
+#   BOT_TOKEN, CHANNEL_USERNAME, GROQ_API_KEY (openrouter.ai, бесплатно)
 # Запуск вручную: вкладка Actions → «Новостной конвейер» → Run
-#   (dry_run=true — показать карточки без публикации)
+#   dry_run=true   — показать карточки без публикации
+#   sync_only=true — только сверка оглавления (без новых постов)
 # ═══════════════════════════════════════════════════════════════
 name: Новостной конвейер
 
@@ -21,6 +23,10 @@ on:
         default: "1"
       dry_run:
         description: "Только показать новости, не публиковать (true/false)"
+        required: false
+        default: "false"
+      sync_only:
+        description: "Только сверка оглавления с каналом: вычистить удалённые посты, ничего не публикуя"
         required: false
         default: "false"
 
@@ -44,8 +50,15 @@ jobs:
 
       # Скрипты работают на чистом Python (stdlib) — pip-зависимости не нужны
 
+      - name: Только сверка оглавления (без публикаций)
+        if: ${{ inputs.sync_only == 'true' }}
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          CHANNEL_USERNAME: ${{ secrets.CHANNEL_USERNAME }}
+        run: python pipeline/news_pipeline.py --mode publish --max 0
+
       - name: Конвейер (публикация + обновление оглавления)
-        if: ${{ inputs.dry_run != 'true' }}
+        if: ${{ inputs.dry_run != 'true' && inputs.sync_only != 'true' }}
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           CHANNEL_USERNAME: ${{ secrets.CHANNEL_USERNAME }}
