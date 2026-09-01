@@ -158,12 +158,22 @@ header{display:flex;align-items:center;gap:12px;padding:10px 2px 14px}
   padding:10px 13px;font-size:13px;margin-bottom:10px;
 }
 html[data-theme="dark"] .banner{background:#3a2424;color:#e8b0b0;border-color:#5a3434}
+.banner a{color:inherit;font-weight:700;text-decoration:underline}
 
 /* ── футер (водяной знак) ── */
 footer{margin-top:26px;padding-top:14px;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:12px;line-height:1.7}
 footer b{color:var(--text);font-weight:600}
 footer .lic{font-size:11px;opacity:.75}
 </style>
+<!-- ═══ МОСТ TELEGRAM — официальный и ОБЯЗАТЕЛЬНЫЙ ═══
+     core.telegram.org/bots/webapps → «Initializing Mini Apps»:
+     «To connect your Mini App to the Telegram client, place the script
+     telegram-web-app.js in the <head> tag before any other scripts».
+     Без него window.Telegram.WebApp НЕ создаётся — на iPhone tg=НЕТ:
+     нет ни haptic, ни темы, ни openTelegramLink (корень бага
+     «перехода нет» в версиях 52-e…52-l). Тот же скрипт подключён
+     в head боевого MyRadio — и там переходы работают. ═══ -->
+<script src="https://telegram.org/js/telegram-web-app.js?63"></script>
 </head>
 <body>
 <div class="wrap">
@@ -197,7 +207,7 @@ footer .lic{font-size:11px;opacity:.75}
   <div id="state" class="state" style="display:none"></div>
 
   <footer>
-    <div><b>Оглавление</b> · каталог постов Telegram-канала · <span id="ver">v52-l</span></div>
+    <div><b>Оглавление</b> · каталог постов Telegram-канала · <span id="ver">v52-m</span></div>
     <div class="lic" id="licLine"></div>
   </footer>
 </div>
@@ -216,8 +226,22 @@ var SALT = 'SODERZHANIE-v1-7f3a';               // служебная соль �
 var PAGE_SIZE = 100;                            // карточек за одну подгрузку
 var cfg = window.SZ_CONFIG || {};
 
-/* ── Telegram WebApp: тема и открытие ссылок ── */
-var tg = (window.Telegram && window.Telegram.WebApp) ? window.Telegram.WebApp : null;
+/* ── Telegram WebApp: тема и открытие ссылок ──
+   Официальный скрипт (см. <head>) создаёт window.Telegram.WebApp даже
+   ВНЕ Telegram — но там это пустышка: в исходнике webAppVersion='6.0',
+   webAppPlatform='unknown', postEvent уходит в никуда. Настоящий клиент
+   всегда помечает мини-апп hash-параметрами tgWebApp* (tgWebAppPlatform,
+   tgWebAppData, tgWebAppVersion…). Поэтому мостом считаем только
+   настоящий контекст мини-аппа — иначе в обычном браузере ломаются
+   фолбэки (лестница ниже подменялась бы мёртвыми вызовами). */
+var rawTg = (window.Telegram && window.Telegram.WebApp) ? window.Telegram.WebApp : null;
+var tg = null;
+if (rawTg){
+  var realBridge = (rawTg.platform && rawTg.platform !== 'unknown') ||
+                   (rawTg.initData && String(rawTg.initData).length > 0) ||
+                   /[?&#]tgWebApp/.test(window.location.href);
+  tg = realBridge ? rawTg : null;
+}
 if (tg) { try { tg.ready(); tg.expand(); } catch(e){} }
 
 /* iOS Safari применяет :active только если на странице есть touchstart-обработчик */
@@ -355,6 +379,13 @@ var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent || '') ||
    в фоне происходит корректно. Отслеживается через visibilitychange:
    если за 1.5 с апп так и не свернулся — тихий случай, лечим его, как
    описано в блоке ниже (WebApp.close()). */
+/* ── КОРЕНЬ БАГА «перехода нет» (52-e…52-l): в <head> не был подключён
+   официальный telegram-web-app.js — единственный способ, которым клиент
+   Telegram создаёт window.Telegram.WebApp. Без него на iPhone tg всегда
+   НЕТ: haptic/тема/openTelegramLink не существуют, и ни одна стратегия
+   ниже не запускалась никогда. С 52-m скрипт подключён в <head> —
+   на iOS при входе через закреп/меню бота мост появляется (tg=есть).
+   Подтверждение: head боевого MyRadio содержит тот же скрипт. */
 /* ── строка самодиагностики в футере: фиксирует, в каком окружении
    открыта страница и какая ветка перехода реально сработала. По ней
    пользователь может точно сообщить, что происходит на его устройстве. */
@@ -364,8 +395,9 @@ function diagInit(){
   diagEl.className = 'lic'; diagEl.id = 'diag';
   var f = document.querySelector('footer');
   if (f) f.appendChild(diagEl);
-  diagNote('старт: tg=' + (tg ? 'есть' : 'НЕТ — открыто как обычная страница (встроенный браузер?)')
-    + (tg ? ' · платформа=' + (tg.platform || '?') + ' · ver=' + (tg.version || '?') : ''));
+  diagNote('старт: tg=' + (tg
+    ? 'есть · платформа=' + (tg.platform || '?') + ' · ver=' + (tg.version || '?')
+    : (rawTg ? 'НЕТ (пустышка WebApp вне Telegram — игнорируем)' : 'НЕТ — обычная страница, моста нет')));
 }
 function diagNote(msg){
   if (!diagEl) return;
@@ -373,6 +405,28 @@ function diagNote(msg){
   diagLog.push(z(d.getHours())+':'+z(d.getMinutes())+':'+z(d.getSeconds())+' '+msg);
   if (diagLog.length > 4) diagLog = diagLog.slice(-4);
   diagEl.textContent = 'отладка: ' + diagLog.join(' | ');
+}
+
+/* ── баннер-спасение: страница открыта БЕЗ моста Telegram (по прямой
+   ссылке — из переписки, истории браузера и т.п.). Мост изнутри страницы
+   создать невозможно (клиент инжектит среду только при открытии как
+   мини-апп — официальный контракт). Зато можно провести читателя к
+   правильному входу: закреп «Оглавление» в канале, кнопка меню бота
+   или кнопка баннера (t.me/<бот>?startapp из config.js). */
+function showBridgeBanner(){
+  if (tg || !document.querySelector) return;
+  var rescue = cfg.bot_username
+    ? 'https://t.me/' + String(cfg.bot_username).replace(/^@/, '') + '?startapp'
+    : (cfg.channel_url || '');
+  if (!rescue) return;
+  var b = document.createElement('div');
+  b.className = 'banner'; b.id = 'tgBanner'; b.style.display = 'block';
+  b.innerHTML = '<b>Telegram-мост недоступен:</b> апп открыт как обычная страница, '
+    + 'поэтому посты так не открыть. Откройте оглавление кнопкой в закрепе '
+    + 'канала или кнопкой меню бота — либо <a href="' + esc(rescue) + '">нажмите '
+    + 'сюда для правильного входа</a>.';
+  var anchor = document.querySelector('.search');
+  if (anchor && anchor.parentNode) anchor.parentNode.insertBefore(b, anchor);
 }
 
 /* Тихий случай (тот же канал): openTelegramLink навигацию в ФОНЕ выполняет
@@ -580,8 +634,8 @@ function applyConfig(){
     a.addEventListener('click', function(ev){
       haptic('light');
       // мини-апп → openPost: openTelegramLink, а при тихом сбое iOS —
-      // close() (пост уже открыт в фоне); десктоп-браузер без tg →
-      // НЕ перехватываем: сработает обычный href
+      // видимый фолбэк через браузер (стратегия MyRadio);
+      // десктоп-браузер без tg → НЕ перехватываем: сработает обычный href
       if (tg || iOS) {
         ev.preventDefault(); openPost(cfg.channel_url);
       }
@@ -779,8 +833,8 @@ function renderList(items){
       if (ev.metaKey || ev.ctrlKey) return;   // ctrl/⌘+клик — новая вкладка силами браузера
       haptic('light');
       // мини-апп → openPost: переход внутрь Telegram, а при тихом сбое iOS
-      // (мини-апп открыт из того же канала) — close(), выводящий уже
-      // открытый в фоне пост; десктоп-браузер без tg → НЕ перехватываем
+      // (мини-апп открыт из того же канала) — видимый фолбэк через браузер;
+      // десктоп-браузер без tg → НЕ перехватываем: работает настоящий href
       if (tg || iOS) {
         ev.preventDefault();
         /* мгновенный визуальный отклик, пока Telegram выполняет переход
@@ -974,6 +1028,7 @@ function load(){
 applyConfig();
 wireTgBack();
 diagInit();
+showBridgeBanner();
 
 /* кнопка «поделиться»: копирует ссылку на этот мини-апп */
 document.getElementById('hShare').addEventListener('click', function(){
