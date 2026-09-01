@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f6f1e7">
 <title>Оглавление</title>
 <!-- ═════════════════════════════════════════════════════════════════
      «Оглавление телеграм-канала» · мини-апп
@@ -29,7 +30,7 @@ body{
   font-size:15px; line-height:1.45;
   -webkit-tap-highlight-color:transparent;
 }
-.wrap{max-width:640px;margin:0 auto;padding:14px 14px 30px}
+.wrap{max-width:640px;margin:0 auto;padding:14px 14px calc(30px + env(safe-area-inset-bottom))}
 
 /* ── шапка ── */
 header{display:flex;align-items:center;gap:12px;padding:10px 2px 14px}
@@ -40,8 +41,17 @@ header{display:flex;align-items:center;gap:12px;padding:10px 2px 14px}
 }
 .h-name{font-size:19px;font-weight:700;letter-spacing:.1px}
 .h-sub{font-size:12.5px;color:var(--muted);margin-top:1px}
+.h-share{
+  margin-left:auto;flex:0 0 auto;width:36px;height:36px;padding:0;
+  display:flex;align-items:center;justify-content:center;
+  border:1.5px solid var(--line);background:transparent;color:var(--accent);
+  border-radius:11px;font-size:16px;line-height:1;cursor:pointer;
+  user-select:none;-webkit-user-select:none;
+  transition:background .12s ease, transform .12s ease;
+}
+.h-share:active{background:var(--accent-soft);transform:scale(.94)}
 .h-open{
-  margin-left:auto;flex:0 0 auto;text-decoration:none;font-size:13px;font-weight:600;
+  flex:0 0 auto;text-decoration:none;font-size:13px;font-weight:600;
   color:var(--accent);border:1.5px solid var(--accent);border-radius:11px;padding:7px 12px;
   user-select:none;-webkit-user-select:none;
   transition:background .12s ease, transform .12s ease;
@@ -55,6 +65,10 @@ header{display:flex;align-items:center;gap:12px;padding:10px 2px 14px}
   background:var(--search);color:var(--text);font-size:15px;outline:none;
 }
 .search input:focus{border-color:var(--accent)}
+/* iOS рисует у type=search свой крестик — скрываем, у нас есть свой */
+.search input{-webkit-appearance:none;appearance:none}
+.search input::-webkit-search-cancel-button,
+.search input::-webkit-search-decoration{-webkit-appearance:none;display:none}
 .search .ico{position:absolute;left:12px;top:50%;transform:translateY(-50%);opacity:.55;font-size:15px}
 .search .clr{
   position:absolute;right:6px;top:50%;transform:translateY(-50%);
@@ -159,6 +173,9 @@ footer .lic{font-size:11px;opacity:.75}
       <div class="h-name" id="hName">Оглавление</div>
       <div class="h-sub" id="hSub">каталог постов канала</div>
     </div>
+    <button class="h-share" id="hShare" type="button" aria-label="Скопировать ссылку на оглавление" title="Скопировать ссылку">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+    </button>
     <a class="h-open" id="hOpen" href="#">Канал</a>
   </header>
 
@@ -218,6 +235,75 @@ function hapticSelect(){
     try { tg.HapticFeedback.selectionChanged(); } catch(e){}
   }
 }
+function hapticNotify(type){
+  if (tg && tg.HapticFeedback && tg.HapticFeedback.notificationOccurred) {
+    try { tg.HapticFeedback.notificationOccurred(type); } catch(e){}
+  }
+}
+
+/* ── нативная кнопка «Назад» Telegram: зеркалит внутреннюю «← …» ── */
+var tgBackWired = false;
+function wireTgBack(){
+  if (!tg || !tg.BackButton || tgBackWired) return;
+  tgBackWired = true;
+  try {
+    tg.onEvent('backButtonClicked', function(){
+      var b = document.getElementById('backBtn');
+      if (b && b.style.display !== 'none') b.click();
+    });
+  } catch(e){}
+}
+function updateTgBack(){
+  if (!tg || !tg.BackButton || !tgBackWired) return;
+  var b = document.getElementById('backBtn');
+  var need = !!(b && b.style.display === 'block');
+  try { if (need) tg.BackButton.show(); else tg.BackButton.hide(); } catch(e){}
+}
+
+/* ── тост + копирование ссылки (кнопка «поделиться») ── */
+var toastTimer = null;
+function toast(msg){
+  var t = document.getElementById('toast');
+  if (!t){
+    t = document.createElement('div');
+    t.id = 'toast';
+    t.style.cssText = 'position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));'
+      + 'transform:translateX(-50%) translateY(8px);background:rgba(25,20,10,.88);color:#fff;'
+      + 'font-size:13px;font-weight:600;padding:9px 16px;border-radius:999px;'
+      + 'opacity:0;transition:opacity .18s ease, transform .18s ease;'
+      + 'pointer-events:none;z-index:50;max-width:86%;text-align:center';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.opacity = '1';
+  t.style.transform = 'translateX(-50%) translateY(0)';
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){
+    t.style.opacity = '0';
+    t.style.transform = 'translateX(-50%) translateY(8px)';
+  }, 1900);
+}
+function legacyCopy(text){
+  try {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.cssText = 'position:fixed;top:-999px;left:-999px;opacity:0';
+    document.body.appendChild(ta);
+    ta.select(); ta.setSelectionRange(0, text.length);
+    var ok = document.execCommand('copy');
+    document.body.removeChild(ta);
+    return ok;
+  } catch(e){ return false; }
+}
+function copyText(text, done){
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(
+      function(){ done(true); },
+      function(){ done(legacyCopy(text)); }
+    );
+  } else { done(legacyCopy(text)); }
+}
 
 function themeApply(){
   var p = (tg && tg.themeParams) || {};
@@ -231,8 +317,18 @@ function themeApply(){
     return (0.299*r + 0.587*g + 0.114*b) < 128;
   }
 }
+/* шапка Telegram и фон под контентом красятся под тему приложения,
+   meta theme-color — то же для обычного браузера */
+function headerColorApply(){
+  var bg = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim();
+  var m = document.querySelector('meta[name="theme-color"]');
+  if (m && bg) m.setAttribute('content', bg);
+  if (tg && tg.setHeaderColor) { try { tg.setHeaderColor(bg); } catch(e){ try { tg.setHeaderColor('bg_color'); } catch(e2){} } }
+  if (tg && tg.setBackgroundColor) { try { tg.setBackgroundColor(bg); } catch(e){} }
+}
 themeApply();
-if (tg && tg.onEvent) { try { tg.onEvent('themeChanged', themeApply); } catch(e){} }
+headerColorApply();
+if (tg && tg.onEvent) { try { tg.onEvent('themeChanged', function(){ themeApply(); headerColorApply(); }); } catch(e){} }
 
 /* iOS/iPadOS: переходы по target="_blank" и window.open во встроенном
    браузере Telegram на iPhone МОЛЧА БЛОКИРУЮТСЯ (WKWebView не умеет
@@ -243,7 +339,14 @@ var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent || '') ||
 function openUrl(url){
   if (!url) return;
   if (tg && tg.openTelegramLink && url.indexOf('t.me') !== -1) {
-    try { tg.openTelegramLink(url); return; } catch(e){}
+    try {
+      tg.openTelegramLink(url);
+      /* iOS: пост/канал открывается ПОД мини-аппом (слои WKWebView) —
+         закрываем апп, чтобы ссылка оказалась на экране. Android и
+         десктоп сами показывают контент поверх и возвращаются назад. */
+      if (iOS && tg.close) setTimeout(function(){ try { tg.close(); } catch(e){} }, 250);
+      return;
+    } catch(e){}
   }
   if (tg && tg.openLink) {
     try { tg.openLink(url); return; } catch(e){}
@@ -459,10 +562,12 @@ function showBack(label, onClick){
   b.textContent = label;
   b.onclick = function(){ haptic('light'); onClick(); };
   b.style.display = 'block';
+  updateTgBack();
 }
 function hideBack(){
   var b = document.getElementById('backBtn');
   if (b) b.style.display = 'none';
+  updateTgBack();
 }
 function renderTocGrid(){
   hideBack();
@@ -611,7 +716,13 @@ function renderState(kind, extra){
   st.style.display = 'block';
   if (kind === 'empty')   st.innerHTML = '<div class="big">📭</div><div class="t">Пока пусто</div><div>Посты появятся здесь сразу после первой публикации или импорта.</div>';
   if (kind === 'nomatch') st.innerHTML = '<div class="big">🔍</div><div class="t">Ничего не найдено</div><div>Попробуйте изменить запрос или выбрать другую тему.</div>';
-  if (kind === 'error')   st.innerHTML = '<div class="big">⚠️</div><div class="t">Не удалось загрузить оглавление</div><div>' + esc(extra||'') + '</div>';
+  if (kind === 'error'){
+    document.getElementById('chips').style.display = 'none';
+    st.innerHTML = '<div class="big">⚠️</div><div class="t">Не удалось загрузить оглавление</div><div>' + esc(extra||'') + '</div>'
+      + '<button type="button" class="more" id="retryBtn" style="max-width:220px;margin:18px auto 0">Повторить</button>';
+    var rb = document.getElementById('retryBtn');
+    if (rb) rb.onclick = function(){ haptic('light'); load(); loadTopics(); };
+  }
 }
 function render(){
   var items = filtered();
@@ -661,7 +772,7 @@ clrEl.addEventListener('click', function(){
 /* ── переключатель вида: Оглавление / Лента ── */
 document.getElementById('vToc').addEventListener('click', function(){
   hapticSelect();
-  view = 'toc'; filterTopic = null; filterMode = null; tocGroup = null; shown = PAGE_SIZE; render();
+  view = 'toc'; filterTopic = null; filterTag = null; filterMode = null; tocGroup = null; shown = PAGE_SIZE; render();
 });
 document.getElementById('vFeed').addEventListener('click', function(){
   hapticSelect();
@@ -685,7 +796,7 @@ function loadTopics(){
   fetch('topics.json?v=' + Date.now(), {cache:'no-store'})
     .then(function(r){ if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
     .then(function(data){ RAW_TOPICS = data; tryApplyTopics(); })
-    .catch(function(){ render(); });   // topics.json нет — остаётся вид «Лента»
+    .catch(function(){ if (POSTS_READY) render(); });   // topics.json нет/недоступен — остаётся текущий вид
 }
 function boot(data){
   var posts = Array.isArray(data) ? data : (data.posts || []);
@@ -700,11 +811,11 @@ function boot(data){
     var ka = a.date + ' ' + a.time, kb = b.date + ' ' + b.time;
     return ka < kb ? 1 : (ka > kb ? -1 : 0);
   });
-  if (cfg.default_view !== 'feed') view = 'toc';   // по умолчанию — оглавление
+  if (!POSTS_READY && cfg.default_view !== 'feed') view = 'toc';   // вид по умолчанию — только при первой загрузке
   var counts = {};
   POSTS.forEach(function(p){ (p.tags||[]).forEach(function(t){
     var k = normTag(t); if (!k) return;
-    if (!counts[k]) counts[k] = {tag: t.replace(/^#/,'') ? t : t, n: 0};
+    if (!counts[k]) counts[k] = {tag: t, n: 0};
     counts[k].n++;
   });});
   TAGS = Object.keys(counts).map(function(k){ return counts[k]; })
@@ -714,16 +825,69 @@ function boot(data){
   tryApplyTopics();
 }
 
+/* ── загрузка данных: мгновенный старт из кэша + тихое обновление ──
+   posts.json сохраняется в localStorage после каждой успешной загрузки:
+   при медленной сети оглавление открывается мгновенно (сохранённая
+   копия), затем тихо обновляется; без сети показывается копия. */
+var CACHE_KEY = 'sz_posts_v1';
+function cacheRead(){
+  try {
+    var o = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
+    return (o && typeof o.raw === 'string') ? o : null;
+  } catch(e){ return null; }
+}
+function stampFresh(t){
+  if (!t) return;
+  var el = document.getElementById('fresh');
+  if (!el){
+    el = document.createElement('div');
+    el.className = 'lic'; el.id = 'fresh';
+    var f = document.querySelector('footer');
+    if (f) f.insertBefore(el, document.getElementById('licLine'));
+  }
+  var d = new Date(t), z = function(x){ return ('0' + x).slice(-2); };
+  el.textContent = 'данные обновлены: ' + z(d.getDate()) + '.' + z(d.getMonth() + 1) + ' ' + z(d.getHours()) + ':' + z(d.getMinutes());
+}
+function bootFromCache(){
+  var cached = cacheRead();
+  if (!cached) return null;
+  try {
+    var cd = JSON.parse(cached.raw);
+    var cn = Array.isArray(cd) ? cd.length : ((cd && cd.posts) ? cd.posts.length : 0);
+    if (cn) { boot(cd); stampFresh(cached.t); }   // пустой кэш не показываем — пусть решает сеть
+    return cached;
+  } catch(e){ return null; }
+}
 function load(){
-  var url = 'posts.json?v=' + Date.now();
-  fetch(url, {cache:'no-store'})
-    .then(function(r){ if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-    .then(boot)
-    .catch(function(e){ renderState('error', 'Файл posts.json недоступен или пуст. Проверьте настройку по гайду (' + e.message + ').'); });
+  var cached = bootFromCache();
+  fetch('posts.json?v=' + Date.now(), {cache:'no-store'})
+    .then(function(r){ if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
+    .then(function(txt){
+      try { localStorage.setItem(CACHE_KEY, JSON.stringify({t: Date.now(), raw: txt})); } catch(e){}
+      if (cached && txt === cached.raw){ stampFresh(Date.now()); return; }   // данные не изменились
+      boot(JSON.parse(txt));
+      stampFresh(Date.now());
+    })
+    .catch(function(e){
+      if (!POSTS_READY) renderState('error', 'Файл posts.json недоступен или пуст. Проверьте настройку по гайду (' + e.message + ').');
+    });
 }
 
 /* ── старт ── */
 applyConfig();
+wireTgBack();
+
+/* кнопка «поделиться»: копирует ссылку на этот мини-апп */
+document.getElementById('hShare').addEventListener('click', function(){
+  haptic('light');
+  var http = location.protocol === 'http:' || location.protocol === 'https:';
+  var url = http ? (location.origin + location.pathname) : (cfg.channel_url || location.href);
+  copyText(url, function(ok){
+    if (ok){ hapticNotify('success'); toast('Ссылка на оглавление скопирована'); }
+    else { hapticNotify('error'); toast('Не удалось скопировать ссылку'); }
+  });
+});
+
 licenseValid(cfg.licensee, cfg.license_key).then(function(ok){
   if (!ok){
     var b = document.getElementById('banner');
