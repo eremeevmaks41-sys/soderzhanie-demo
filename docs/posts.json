@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-08-31T22:26:39+03:00",
+  "updated_at": "2026-09-01T03:28:33+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 16,
+      "date": "2026-09-01",
+      "time": "03:15",
+      "title": "Пять лет после захвата власти Саида: в Тунисе вновь звучат старые обиды",
+      "preview": "Спустя пять лет после того, как президент Каис Саид сосредоточил власть в своих руках, в Тунисе сохраняются экономические трудности, а пространство для инакомыслия сузилось.…",
+      "tags": [
+        "#мировыеновости",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/16",
+      "src": "https://www.aljazeera.com/news/2026/9/1/five-years-after-saieds-power-grab-tunisias-old-grievances-resurface?traffic_source=rss"
+    },
     {
       "id": 15,
       "date": "2026-08-31",
