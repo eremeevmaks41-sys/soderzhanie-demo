@@ -74,6 +74,7 @@ header{display:flex;align-items:center;gap:12px;padding:10px 2px 14px}
 /* ── даты и карточки ── */
 .day{font-size:12.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin:16px 2px 8px}
 .card{
+  display:block;color:inherit;text-decoration:none; /* карточка — настоящая <a>: клик работает и во встроенном браузере Telegram */
   background:var(--card);border:1px solid var(--line);border-radius:15px;
   padding:12px 14px;margin-bottom:9px;box-shadow:var(--shadow);cursor:pointer;
 }
@@ -335,7 +336,14 @@ function applyConfig(){
   if (cfg.channel_url) {
     var a = document.getElementById('hOpen');
     a.href = cfg.channel_url;
-    a.addEventListener('click', function(ev){ ev.preventDefault(); openUrl(cfg.channel_url); });
+    a.addEventListener('click', function(ev){
+      // мини-апп Telegram → штатный API; иначе НЕ перехватываем клик —
+      // сработает обычный переход по href (window.open во встроенных
+      // браузерах Telegram молча блокируется)
+      if (tg && (tg.openTelegramLink || tg.openLink)) {
+        ev.preventDefault(); openUrl(cfg.channel_url);
+      }
+    });
   } else { document.getElementById('hOpen').style.display = 'none'; }
   if (cfg.header_emoji) document.getElementById('logo').textContent = cfg.header_emoji;
   var lic = cfg.licensee ? ('экземпляр для: ' + cfg.licensee + (cfg.license_id ? ' · лицензия ' + cfg.license_id : '')) : '';
@@ -507,19 +515,26 @@ function renderList(items){
       lastDay = p.date; groupOpen = true;
     }
     var tags = (p.tags||[]).map(function(t){ return '<span class="c-tag">' + esc(t) + '</span>'; }).join('');
-    html += '<div class="card" data-url="' + esc(p.url||'') + '">' +
+    html += '<a class="card"' + (p.url ? ' href="' + esc(p.url) + '" target="_blank" rel="noopener"' : '') + '>' +
               '<div class="c-top">' +
                 (p.time ? '<span class="c-time">' + esc(p.time) + '</span>' : '') +
                 '<span class="c-title">' + esc(p.title || 'Пост') + '</span>' +
               '</div>' +
               (p.preview ? '<div class="c-prev">' + esc(p.preview) + '</div>' : '') +
               (tags ? '<div class="c-tags">' + tags + '</div>' : '') +
-            '</div>';
+            '</a>';
   });
   if (groupOpen) html += '</div>';
   list.innerHTML = html;
-  list.querySelectorAll('.card').forEach(function(el){
-    el.addEventListener('click', function(){ openUrl(el.getAttribute('data-url')); });
+  list.querySelectorAll('a.card[href]').forEach(function(el){
+    el.addEventListener('click', function(ev){
+      // мини-апп Telegram → штатный API; обычный/встроенный браузер →
+      // НЕ перехватываем: работает настоящий переход по <a href>
+      if (tg && (tg.openTelegramLink || tg.openLink)) {
+        ev.preventDefault();
+        openUrl(el.getAttribute('href'));
+      }
+    });
   });
   var more = document.getElementById('moreBtn');
   if (items.length > shown){
