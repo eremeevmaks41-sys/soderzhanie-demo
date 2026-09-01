@@ -5,9 +5,16 @@
 ==================================================================
 GitHub Actions запускает скрипт каждые 2 часа:
 
-    RSS-источники → фото из статьи → ИИ-выжимка (OpenRouter / Gemini / Groq)
+    RSS-источники (мировые ленты + российские агентства) → фото из статьи
+    → ИИ-выжимка (OpenRouter / Gemini / Groq)
     → красивая карточка в Telegram-канал (фото + подпись или текст)
     → запись в docs/posts.json → коммит → Pages обновляет мини-апп.
+
+Отбор: источники обходятся по кругу (сдвиг зависит от времени суток),
+    иначе круглосуточные российские агентства (публикуют в разы чаще
+    мировых лент) вытеснили бы BBC/Al Jazeera/Guardian из ленты.
+    Мировые ленты приходят на английском — ИИ переводит; российские
+    публикуют по-русски — ИИ просто сжимает суть.
 
 Формат карточки (ИИ пишет по-русски, источник любой):
     🌍 Заголовок
@@ -26,8 +33,8 @@ GitHub Actions запускает скрипт каждые 2 часа:
     GROQ_API_KEY     ключ ИИ (имя историческое): OpenRouter (openrouter.ai,
                      "sk-or-…", есть бесплатные модели) / Google Gemini
                      ("AIza…") / Groq ("gsk_…"). БЕЗ НЕГО ПУБЛИКАЦИЯ СТОИТ:
-                     конвейер не постит сырые английские анонсы в русский
-                     канал. Провайдер распознаётся по префиксу ключа.
+                     конвейер не постит сырые анонсы без ИИ-выжимки.
+                     Провайдер распознаётся по префиксу ключа.
 
 Лимиты: --max новостей за запуск, --daily-cap постов в сутки (по posts.json).
 Фото: из RSS (media:content/enclosure/thumbnail) или og:image статьи;
@@ -77,7 +84,14 @@ EMOJI_WHITELIST = [
     "⛽", "📈", "📉", "🧑‍⚖️", "🏗️", "🛡️",
 ]
 
-# Тема по ключевым словам (для второй метки в оглавлении)
+# Слова, в которые «встроены» ключевые корни ниже — вырезаются перед
+# сопоставлением: «газета» не должна быть «газом», «невролог» — евро,
+# «Европа» — валютой евро, «чипсы» — чипом, «судьба» — судом.
+FALSE_STEMS = ["европ", "газет", "неврол", "чипс", "судьб"]
+
+# Тема по ключевым словам (для второй метки в оглавлении).
+# Латинские ключи сопоставляются ЦЕЛИКОМ по границе слова (иначе «ai»
+# ловит «airline»), кириллические — по корню («нефт» ловит «нефти/нефть»).
 KEYWORD_TAGS = [
     ("конфликт",  ["войн", "удар", "обстрел", "наступлен", "боев", "перемир", "ракет", "дрон"]),
     ("политика",  ["выбор", "президен", "парламент", "министр", "выборы", "саммит", "переговор", "выставил", "депутат"]),
@@ -91,12 +105,16 @@ KEYWORD_TAGS = [
 ]
 
 AI_SYSTEM = (
-    "Ты — новостной редактор русскоязычного Telegram-канала мировых новостей.\n"
-    "На вход приходит заголовок и описание новости из RSS (обычно на английском).\n"
+    "Ты — новостной редактор русскоязычного Telegram-канала новостей "
+    "(мировые и российские события).\n"
+    "На вход приходит заголовок и описание новости из RSS: мировые ленты — "
+    "на английском, российские агентства — на русском.\n"
     "Верни СТРОГО один JSON-объект без markdown-обёрток:\n"
     '{"emoji": "…", "headline": "…", "lede": "…", "bullets": ["…", "…"]}\n'
     "Правила (строго):\n"
     "— Всё по-русски. Имена собственные — в устоявшейся русской передаче; организации — как принято.\n"
+    "— Если вход уже на русском — не переводи и не пересказывай дословно: "
+    "сожми суть своими словами, сохранив все цифры, имена и факты.\n"
     "— headline: до 100 символов, ёмкий заголовок с сутью, без точки в конце, без кавычек-ёлочек по краям.\n"
     "— lede: 2–3 предложения (до 340 символов) — суть события: кто, что, где, когда, цифры.\n"
     "— bullets: 0–3 коротких факта (каждый до 100 символов) ТОЛЬКО если они реально есть во входе.\n"
@@ -166,12 +184,16 @@ def plain_len(html_text):
 def esc(s):
     return html_mod.escape(s or "", quote=True)
 
-def keyword_tags(text):
+def keyword_tags(text, default="#мировыеновости"):
     low = " " + (text or "").lower() + " "
+    for stem in FALSE_STEMS:
+        low = low.replace(stem, "§")
     for tag, keys in KEYWORD_TAGS:
-        if any(k in low for k in keys):
-            return "#" + tag
-    return "#мировыеновости"
+        for k in keys:
+            pat = (r"\b" + re.escape(k) + r"\b") if k.isascii() else (r"\b" + re.escape(k))
+            if re.search(pat, low):
+                return "#" + tag
+    return default
 
 def norm_title(t):
     """Нормализация заголовка для кросс-источникового дедупа."""
@@ -602,6 +624,30 @@ def pick(entries, source, seen, existing_srcs, existing_titles, max_items):
     return out
 
 
+def interleave_by_source(candidates, offset=0):
+    """Честная ротация источников: внутри источника — по свежести,
+    между источниками — round-robin со сдвигом offset (сдвиг меняется
+    от запуска к запуску, т.к. считается от часа суток). Без ротации
+    источник с самым частым потоком занял бы весь дневной лимит."""
+    groups = {}
+    for c in candidates:
+        groups.setdefault(c["source"].get("name", "?"), []).append(c)
+    for g in groups.values():
+        g.sort(key=lambda x: x["dt"], reverse=True)
+    names = sorted(groups)
+    if not names:
+        return []
+    offset %= len(names)
+    names = names[offset:] + names[:offset]
+    out = []
+    for idx in range(max(len(g) for g in groups.values())):
+        for n in names:
+            g = groups[n]
+            if idx < len(g):
+                out.append(g[idx])
+    return out
+
+
 def today_count(posts):
     """Сколько постов опубликовано сегодня (MSK) — для дневного лимита."""
     today = datetime.now(MSK).strftime("%Y-%m-%d")
@@ -648,7 +694,11 @@ def main():
     for src in sources:
         candidates += pick(fetch_feed(src), src, seen, existing_srcs,
                            existing_titles, args.max_per_source)
-    candidates.sort(key=lambda x: x["dt"], reverse=True)
+    # Ротация источников: сдвиг = номер 2-часового слота суток, поэтому
+    # каждый запуск первым опрашивает другой источник (см. interleave_by_source).
+    rotation = (datetime.now(MSK).hour // 2) % max(1, len(sources))
+    candidates = interleave_by_source(candidates, rotation)
+    log(f"Ротация источников: первым в очереди №{rotation + 1} из {len(sources)}")
     room = args.daily_cap - published_today
     candidates = candidates[: max(0, min(args.max, room))]
     log(f"К публикации отобрано: {len(candidates)}")
@@ -665,8 +715,8 @@ def main():
 
     ai_ready = bool((os.environ.get("GEMINI_API_KEY") or os.environ.get("GROQ_API_KEY") or "").strip())
     if args.mode == "publish" and not ai_ready:
-        log("!! ключ ИИ не задан — публиковать сырые английские анонсы "
-            "в русский канал не буду. Добавьте ключ OpenRouter (openrouter.ai/keys, "
+        log("!! ключ ИИ не задан — публиковать сырые анонсы без выжимки "
+            "не буду. Добавьте ключ OpenRouter (openrouter.ai/keys, "
             "бесплатно) в секрет GROQ_API_KEY.")
 
     added = 0
@@ -685,7 +735,10 @@ def main():
             card = fallback_card(item)
 
         tags = list(item["source"].get("tags", ["#мировыеновости"]))
-        extra = keyword_tags(item["title"] + " " + item["summary"] + " " + card.get("lede", ""))
+        # тема по ключевым словам; если тема не распознана — вторая метка
+        # не дублирует главную метку источника
+        extra = keyword_tags(item["title"] + " " + item["summary"] + " " + card.get("lede", ""),
+                             default=tags[0] if tags else "#мировыеновости")
         if extra not in tags:
             tags.append(extra)
 
