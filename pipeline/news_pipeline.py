@@ -39,7 +39,19 @@ GitHub Actions запускает скрипт каждые 2 часа:
 Лимиты: --max новостей за запуск, --daily-cap постов в сутки (по posts.json).
 Фото: из RSS (media:content/enclosure/thumbnail) или og:image статьи;
     нет фото → постим текстом; Telegram не принял фото → тоже текстом.
+Видео: если в записи RSS есть видео-вложение (media/enclosure) или на странице
+    статьи og:video с прямым mp4 — публикуем ВИДЕОПОСТ (kind=video):
+    Telegram берёт файл сам по URL (≤20 МБ) или качаем и льём файлом (≤45 МБ);
+    не вышло → фото, затем текст. Агентства дают короткие нарезки 1–2 мин
+    в невысоком разрешении (~4–8 МБ) — для канала достаточно.
 Дедуп: seen.json (hash) + ссылки в posts.json + нормализованные заголовки.
+
+Сверка оглавления (publish-запуски): последние ~120 постов опрашиваются в
+    канале editMessageText/Caption ТОМ ЖЕ текстом («message is not modified»
+    = жив, и на экране ничего не меняется; старые посты без сохранённого
+    текста — t.me-эмбедом). Пост, удалённый в Telegram, вычищается из
+    posts.json — оглавление больше не ссылается на «Пост не найден».
+    Ручная сверка без публикаций: Run workflow → sync_only=true.
 """
 import argparse
 import hashlib
@@ -86,23 +98,30 @@ EMOJI_WHITELIST = [
 
 # Слова, в которые «встроены» ключевые корни ниже — вырезаются перед
 # сопоставлением: «газета» не должна быть «газом», «невролог» — евро,
-# «Европа» — валютой евро, «чипсы» — чипом, «судьба» — судом.
-FALSE_STEMS = ["европ", "газет", "неврол", "чипс", "судьб"]
+# «Европа» — валютой евро, «чипсы» — чипом, «судьба» — судом, «рейсинг» — рейсом.
+FALSE_STEMS = ["европ", "газет", "неврол", "чипс", "судьб", "рейсинг"]
 
 # Тема по ключевым словам (для второй метки в оглавлении).
 # Латинские ключи сопоставляются ЦЕЛИКОМ по границе слова (иначе «ai»
 # ловит «airline»), кириллические — по корню («нефт» ловит «нефти/нефть»).
 KEYWORD_TAGS = [
-    ("конфликт",  ["войн", "удар", "обстрел", "наступлен", "боев", "перемир", "ракет", "дрон"]),
+    ("конфликт",  ["войн", "удар", "обстрел", "наступлен", "боев", "перемир", "ракет", "дрон", "атак"]),
     ("политика",  ["выбор", "президен", "парламент", "министр", "выборы", "саммит", "переговор", "выставил", "депутат"]),
-    ("экономика", ["инфляц", "ставк", "банк", "рынк", "доллар", "евро", "нефт", "газ", "санкц", "бюджет", "тариф", "экспорт", "импорт"]),
+    ("экономика", ["инфляц", "ставк", "банк", "рынк", "доллар", "евро", "нефт", "газ", "санкц", "бюджет", "тариф", "экспорт", "импорт", "дивиденд"]),
     ("наука",     ["учен", "наук", "исследован", "открыт", "космос", "nasa", "ракет-носител", "климат"]),
     ("технологии",["ai", "искусственн", "технолог", "приложен", "чек", "cyber", "хакер", "чип", "apple", "google", "tesla"]),
-    ("происшествия", ["землетрясен", "наводнен", "пожар", "авиакатастроф", "крушен", "эпидем", "вспышк", "авар"]),
+    ("здоровье",  ["медиц", "врач", "болезн", "вирус", "вакцин", "пациент", "здоровь", "эпидеми"]),
+    ("происшествия", ["землетрясен", "наводнен", "пожар", "авиакатастроф", "крушен", "вспышк", "авар"]),
     ("культура",  ["фильм", "преми", "фестивал", "альбом", "сериал", "книг", "выставк", "оскар"]),
     ("спорт",     ["чемпион", "матч", "кубок", "олимпиад", "турнир", "футбол", "хоккей"]),
     ("общество",  ["забастовк", "протест", "мигрант", "суд", "приговор", "закон", "школ", "больниц"]),
+    ("энергетика",["энергет", "электроэнерг", "аэс", "атэс", "гэс", "тэс", "нефтепровод", "газопровод", "энергоблок"]),
+    ("транспорт", ["аэропорт", "метро", "железнодорож", "ж/д", "рейс", "паром", "трамвай", "трасс", "пробк", "перелет", "перелёт"]),
 ]
+
+# Управляемый словарь тем: из него ИИ выбирает метки (tags), из него же
+# работает keyword-фолбэк — чипсы в оглавлении никогда не разъезжаются.
+TAG_WHITELIST = [t for t, _ in KEYWORD_TAGS]
 
 AI_SYSTEM = (
     "Ты — новостной редактор русскоязычного Telegram-канала новостей "
@@ -110,11 +129,16 @@ AI_SYSTEM = (
     "На вход приходит заголовок и описание новости из RSS: мировые ленты — "
     "на английском, российские агентства — на русском.\n"
     "Верни СТРОГО один JSON-объект без markdown-обёрток:\n"
-    '{"emoji": "…", "headline": "…", "lede": "…", "bullets": ["…", "…"]}\n'
+    '{"emoji": "…", "headline": "…", "lede": "…", "bullets": ["…", "…"], "tags": ["…", "…"]}\n'
     "Правила (строго):\n"
     "— Всё по-русски. Имена собственные — в устоявшейся русской передаче; организации — как принято.\n"
     "— Если вход уже на русском — не переводи и не пересказывай дословно: "
     "сожми суть своими словами, сохранив все цифры, имена и факты.\n"
+    "— tags: 1–3 метки СТРОГО из списка, первая — главная тема:\n"
+    "  " + ", ".join(TAG_WHITELIST) + "\n"
+    "  Опиши фактическую тему новости (например, нефть/курсы → экономика, выборы/саммиты → политика, "
+    "болезни/медицина → здоровье, ЧП/катастрофы → происшествия). Нет уверенной темы — []. "
+    "Другие метки (в т.ч. «россия», «мир») запрещены — страна/регион и так видны по источнику.\n"
     "— headline: до 100 символов, ёмкий заголовок с сутью, без точки в конце, без кавычек-ёлочек по краям.\n"
     "— lede: 2–3 предложения (до 340 символов) — суть события: кто, что, где, когда, цифры.\n"
     "— bullets: 0–3 коротких факта (каждый до 100 символов) ТОЛЬКО если они реально есть во входе.\n"
@@ -283,6 +307,22 @@ def _pick_biggest(cands):
     return best
 
 
+def _video_url(el):
+    """URL видео из media:*/enclosure-элемента (тип video/* или .mp4/.m4v/.mov
+    в адресе) или ''. Редиректы (например file.aspx у РИА) разрешаются позже,
+    перед отправкой (resolve_video)."""
+    if el is None:
+        return ""
+    url = (el.get("url") or el.get("href") or "").strip()
+    if not re.match(r"^https?://", url):
+        return ""
+    mime = (el.get("type") or el.get("medium") or "").lower()
+    if not (mime.startswith("video") or mime == "movie"
+            or re.search(r"\.(mp4|m4v|mov)([?#]|$)", url, re.I)):
+        return ""
+    return url
+
+
 def normalize_entry(item):
     """RSS <item> или Atom <entry> → единый словарь записи (+ фото, если есть)."""
     def _local(p):
@@ -346,6 +386,13 @@ def normalize_entry(item):
                 img = u
                 break
 
+    # видео: первое попавшееся video-вложение (enclosure/media:content)
+    video = ""
+    for e in all_els("enclosure") + all_els("media:content"):
+        video = _video_url(e)
+        if video:
+            break
+
     when = _when(first("pubDate", "published", "updated", "date"))
     guid_el = first("guid", "id")
     return {
@@ -353,6 +400,7 @@ def normalize_entry(item):
         "link": link,
         "summary": summary,
         "image": img,
+        "video": video,
         "id": ((guid_el.text if guid_el is not None else "") or link),
         "published_parsed": when,
     }
@@ -368,19 +416,37 @@ OG_RE2 = re.compile(
     re.IGNORECASE)
 
 
-def og_image(article_url):
-    """Резервное фото: og:image/twitter:image со страницы статьи. Best-effort."""
+OG_VID_RE = re.compile(
+    r'<meta[^>]+(?:property=["\']og:video(?::secure_url|:url)?["\]'
+    r'|name=["\']twitter:player:stream["\'])[^>]+content=["\']([^"\']+)["\']',
+    re.IGNORECASE)
+OG_VID_RE2 = re.compile(
+    r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+(?:property=["\']og:video(?::secure_url|:url)?["\]'
+    r'|name=["\']twitter:player:stream["\'])',
+    re.IGNORECASE)
+
+
+def og_media(article_url):
+    """Резервные медиа со страницы статьи: (og:image, og:video). Best-effort.
+    Видео берём только прямые файлы (.mp4/.m4v/.mov) — og:video часто
+    указывает на iframe-плеер, который Telegram съесть не может."""
     if not article_url:
-        return ""
+        return "", ""
     try:
         raw = http_get_bytes(article_url, timeout=10, max_len=300_000).decode("utf-8", "ignore")
     except Exception:
-        return ""
+        return "", ""
     m = OG_RE.search(raw) or OG_RE2.search(raw)
-    if not m:
-        return ""
-    url = html_mod.unescape(m.group(1)).strip()
-    return url if re.match(r"^https?://", url) else ""
+    img = html_mod.unescape(m.group(1)).strip() if m else ""
+    if img and not re.match(r"^https?://", img):
+        img = ""
+    vid = ""
+    mv = OG_VID_RE.search(raw) or OG_VID_RE2.search(raw)
+    if mv:
+        vid = html_mod.unescape(mv.group(1)).strip()
+        if not re.search(r"\.(mp4|m4v|mov)([?#]|$)", vid, re.I):
+            vid = ""
+    return img, vid
 
 
 # ───────────────────────── ИИ-выжимка (OpenRouter/Gemini/Groq) ─────────────────────────
@@ -414,11 +480,22 @@ def _parse_ai_json(raw):
             if len(bullets) >= 3:
                 break
     emoji = str(d.get("emoji") or "").strip()
+    tags_raw = d.get("tags")
+    ai_tags = []
+    if isinstance(tags_raw, list):
+        for t_ in tags_raw:
+            if isinstance(t_, str):
+                t_ = clean_html(t_).strip().lower().lstrip("#")
+                if t_ in TAG_WHITELIST and ("#" + t_) not in ai_tags:
+                    ai_tags.append("#" + t_)
+            if len(ai_tags) >= 3:
+                break
     return {
         "headline": trim(headline, 110),
         "lede": trim(lede, 340),
         "bullets": bullets,
         "emoji": emoji if emoji in EMOJI_WHITELIST else "",
+        "tags": ai_tags,
     }
 
 
@@ -530,7 +607,8 @@ def compose(item, card):
         return "\n".join(lines)
 
     text = build(True)
-    if item.get("image"):
+    if item.get("image") or item.get("video"):
+        kind_media = "video" if item.get("video") else "photo"
         # сжимаем до лимита подписи (1024 по тексту, запас 60 на реалии Telegram)
         while plain_len(text) > 960:
             if bullets:
@@ -541,7 +619,7 @@ def compose(item, card):
                 break
             text = build(True)
         if plain_len(text) <= 960:
-            return text, "photo"
+            return text, kind_media
     # текстовый пост: лимит 4096 — тут ничего резать почти никогда не нужно
     text = build(True)
     if plain_len(text) > 4090:
@@ -567,10 +645,83 @@ def tg_send_photo(token, chat, photo_url, caption):
     })
 
 
+def tg_send_video(token, chat, video_url, caption):
+    api = f"https://api.telegram.org/bot{token}/sendVideo"
+    return http_json(api, {
+        "chat_id": chat, "video": video_url, "caption": caption,
+        "parse_mode": "HTML", "supports_streaming": True,
+    })
+
+
+def tg_send_video_upload(token, chat, video_url, caption, timeout=240):
+    """Фолбэк: Telegram не смог забрать видео по URL — качаем сами и льём
+    файлом (multipart; лимит бота 50 МБ, забираем не больше 45 МБ)."""
+    import uuid
+    raw = http_get_bytes(video_url, timeout=180, max_len=48_000_000)
+    bnd = "----Soderzhanie" + uuid.uuid4().hex
+    parts = []
+    for name, val in (("chat_id", chat), ("caption", caption),
+                      ("parse_mode", "HTML"), ("supports_streaming", "true")):
+        parts.append((f"--{bnd}\r\nContent-Disposition: form-data; name=\"{name}\"\r\n\r\n{val}\r\n").encode("utf-8"))
+    parts.append((f"--{bnd}\r\nContent-Disposition: form-data; name=\"video\"; filename=\"news.mp4\"\r\n"
+                  f"Content-Type: video/mp4\r\n\r\n").encode("utf-8"))
+    parts.append(raw)
+    parts.append(f"\r\n--{bnd}--\r\n".encode("utf-8"))
+    req = urllib.request.Request(
+        f"https://api.telegram.org/bot{token}/sendVideo", data=b"".join(parts),
+        method="POST",
+        headers={"Content-Type": f"multipart/form-data; boundary={bnd}"})
+    with urllib.request.urlopen(req, timeout=timeout) as r:
+        return json.loads(r.read().decode("utf-8"))
+
+
+def resolve_video(url):
+    """HEAD-проверка видео: (итоговый URL, content-type, content-length).
+    Многие ленты дают редиректы (РИА: file.aspx → *.mp4) — идём за ними."""
+    try:
+        req = urllib.request.Request(url, method="HEAD", headers={
+            "User-Agent": "Mozilla/5.0 (compatible; Soderzhanie/2.0)"})
+        with urllib.request.urlopen(req, timeout=15) as r:
+            ctype = (r.headers.get("Content-Type") or "").lower()
+            try:
+                clen = int(r.headers.get("Content-Length") or 0)
+            except ValueError:
+                clen = 0
+            return r.geturl(), ctype, clen
+    except Exception:
+        return url, "", 0
+
+
 def publish_item(token, chat, item, text, kind):
-    """Фото → sendPhoto; не получилось → sendMessage текстом.
+    """Видео → sendVideo (по URL или файлом); фото → sendPhoto;
+    не получилось — фолбэк ниже (видео → фото → текст).
     Возвращает (ok, actual_kind, message_id)."""
-    if kind == "photo" and item.get("image"):
+    if kind == "video" and item.get("video"):
+        url, ctype, clen = resolve_video(item["video"])
+        ok_video = ctype.startswith("video") or not ctype   # HEAD мог не пройти — пробуем как есть
+        if ok_video and clen > 45_000_000:
+            log("    · видео больше 45 МБ — шлю как фото/текст")
+            ok_video = False
+        if ok_video:
+            # по URL Telegram сам забирает файлы ≤20 МБ; больше — только файлом
+            if clen == 0 or clen <= 20_000_000:
+                try:
+                    resp = tg_send_video(token, chat, url, text)
+                    if resp.get("ok"):
+                        return True, "video", resp["result"]["message_id"]
+                    log(f"    · видео по URL отклонено ({resp.get('description')}) — пробую файлом")
+                except Exception as e:
+                    log(f"    · видео по URL не отправилось ({e}) — пробую файлом")
+            else:
+                log(f"    · видео ~{clen // 1_000_000} МБ — загружаю файлом")
+            try:
+                resp = tg_send_video_upload(token, chat, url, text)
+                if resp.get("ok"):
+                    return True, "video", resp["result"]["message_id"]
+                log(f"    · видео файлом отклонено ({resp.get('description')}) — шлю как фото/текст")
+            except Exception as e:
+                log(f"    · видео файлом не отправилось ({e}) — шлю как фото/текст")
+    if kind in ("video", "photo") and item.get("image"):
         try:
             resp = tg_send_photo(token, chat, item["image"], text)
             if resp.get("ok"):
@@ -587,6 +738,99 @@ def publish_item(token, chat, item, text, kind):
         log(f"    × Telegram вернул ошибку: {resp.get('description')}")
         return False, "text", None
     return True, "text", resp["result"]["message_id"]
+
+
+# ───────────────────── сверка оглавления с каналом ─────────────────────
+
+SYNC_PROBE_LIMIT = 120          # сколько свежих постов проверяем за запуск
+
+
+def classify_probe_error(desc):
+    """Ответ Telegram на edit-пробу тем же текстом → состояние поста:
+    alive (пост жив, на экране ничего не изменилось), dead (удалён),
+    chat (канал недоступен — сверку надо прервать), unknown (не ясен)."""
+    low = (desc or "").lower()
+    if "chat not found" in low or "chat_id is invalid" in low:
+        return "chat"
+    if "message is not modified" in low:
+        return "alive"
+    if "message to edit not found" in low or ("not found" in low and "message" in low):
+        return "dead"
+    if "no text in the message" in low or "no caption" in low:
+        return "alive"            # есть, но другой тип — переспросим эмбедом
+    return "unknown"
+
+
+def probe_alive_api(token, chat, msg_id, meta):
+    """editMessageText/editMessageCaption ТОМ ЖЕ тексту: пост жив →
+    Telegram отвечает «message is not modified» (контент не меняется);
+    удалён → «message to edit not found»."""
+    kind = meta.get("kind") or "text"
+    if kind == "text":
+        api, field = "editMessageText", "text"
+    else:
+        api, field = "editMessageCaption", "caption"
+    payload = {"chat_id": "@" + chat, "message_id": msg_id, field: meta["text"],
+               "parse_mode": "HTML"}
+    if kind == "text":
+        payload["disable_web_page_preview"] = True
+    try:
+        resp = http_json(f"https://api.telegram.org/bot{token}/{api}", payload, timeout=20)
+        return "alive" if resp.get("ok") else "unknown"
+    except urllib.error.HTTPError as e:
+        desc = ""
+        try:
+            desc = e.read(300).decode("utf-8", "ignore")
+        except Exception:
+            pass
+        return classify_probe_error(desc)
+    except Exception:
+        return "unknown"
+
+
+def probe_alive_embed(chat, msg_id):
+    """Фолбэк для постов без сохранённого текста: t.me-эмбед удалённого поста
+    содержит tgme_widget_message_error («Post not found»), живого — нет."""
+    try:
+        raw = http_get_bytes(f"https://t.me/{chat}/{msg_id}?embed=1&mode=tme",
+                             timeout=10, max_len=150_000).decode("utf-8", "ignore")
+    except Exception:
+        return "unknown"
+    low = raw.lower()
+    if "tgme_widget_message_error" in low:
+        return "dead"
+    if "tgme_widget_message_date" in low or "tgme_widget_message_text" in low:
+        return "alive"
+    return "unknown"
+
+
+def sync_deleted(token, chat, posts, texts):
+    """Сверяет оглавление с каналом: последние SYNC_PROBE_LIMIT постов
+    опрашиваются edit-методом (есть сохранённый текст) или t.me-эмбедом.
+    Удалённые в Telegram вычищаются из posts.json (и из texts).
+    Возвращает число вычищенных (0 — ничего, -1 — канал недоступен)."""
+    with_id = [p for p in posts if p.get("id")]
+    dead = []
+    for p in with_id[-SYNC_PROBE_LIMIT:]:
+        meta = texts.get(str(p["id"]))
+        if meta and meta.get("text"):
+            state = probe_alive_api(token, chat, p["id"], meta)
+        else:
+            state = probe_alive_embed(chat, p["id"])
+        if state == "chat":
+            log("!! канал недоступен для бота — сверка прервана, ничего не удаляю")
+            return -1
+        if state == "dead":
+            dead.append(p["id"])
+            log(f"  × пост удалён в канале → вычищаю из оглавления: id={p['id']} «{trim(p.get('title',''), 50)}»")
+        elif state == "unknown":
+            log(f"  · сверка: состояние id={p['id']} не выяснено — не трогаю")
+    if dead:
+        dead_set = set(dead)
+        posts[:] = [p for p in posts if p.get("id") not in dead_set]
+        for mid in dead:
+            texts.pop(str(mid), None)
+    return len(dead)
 
 
 # ───────────────────────────── отбор кандидатов ─────────────────────────────
@@ -624,6 +868,20 @@ def pick(entries, source, seen, existing_srcs, existing_titles, max_items):
     return out
 
 
+def merge_tags(base, card, text):
+    """Итоговые метки поста: метка источника (первая) + темы от ИИ (из
+    TAG_WHITELIST), всего ≤3. ИИ не дал тем → keyword-фолбэк; фолбэк
+    не дублирует метку источника."""
+    base = list(base or ["#мировыеновости"])
+    picked = [t for t in (card.get("tags") or []) if t not in base]
+    tags = (base + picked)[:3]
+    if len(tags) == len(base):
+        extra = keyword_tags(text, default=base[0])
+        if extra not in tags:
+            tags.append(extra)
+    return tags
+
+
 def interleave_by_source(candidates, offset=0):
     """Честная ротация источников: внутри источника — по свежести,
     между источниками — round-robin со сдвигом offset (сдвиг меняется
@@ -654,6 +912,23 @@ def today_count(posts):
     return sum(1 for p in posts if p.get("date") == today)
 
 
+def save_state(posts_doc, seen_doc, posts, chat, args):
+    """Единая запись результатов запуска: оглавление + seen.json
+    (в нём же хранятся тексты постов для будущих edit-проб сверки)."""
+    posts.sort(key=lambda p: (p.get("date", ""), p.get("time", "")), reverse=True)
+    posts_doc["posts"] = posts[:1500]
+    posts_doc["updated_at"] = datetime.now(MSK).isoformat(timespec="seconds")
+    if isinstance(posts_doc.get("channel"), dict) and chat:
+        posts_doc["channel"]["url"] = f"https://t.me/{chat}"
+    save_json(args.posts, posts_doc)
+    seen_doc["seen"] = dict(sorted((seen_doc.get("seen") or {}).items(),
+                                   key=lambda kv: kv[1], reverse=True)[:5000])
+    texts = seen_doc.get("texts") or {}
+    if len(texts) > 400:
+        seen_doc["texts"] = dict(list(texts.items())[-300:])
+    save_json(args.seen, seen_doc)
+
+
 # ───────────────────────────── main ─────────────────────────────
 
 def main():
@@ -682,11 +957,26 @@ def main():
 
     seen_doc = load_json(args.seen, {"seen": {}})
     seen = seen_doc.get("seen") or {}
+    texts = seen_doc.setdefault("texts", {})   # тексты постов для edit-пробы сверки
+
+    token = os.environ.get("BOT_TOKEN", "")
+    chat = (os.environ.get("CHANNEL_USERNAME", "") or "").strip()
+    if args.mode == "publish" and (not token or not chat):
+        log("!! publish требует BOT_TOKEN и CHANNEL_USERNAME (GitHub Secrets)")
+        return 1
+    chat = chat.lstrip("@").replace("https://t.me/", "")
+
+    # Сверка оглавления с каналом: посты, удалённые в Telegram, вычищаются
+    # из posts.json (работает и при --max 0 — «только сверка»).
+    removed = 0
+    if args.mode == "publish":
+        removed = max(0, sync_deleted(token, chat, posts, texts))
 
     published_today = today_count(posts)
     if published_today >= args.daily_cap:
-        log(f"Дневной лимит исчерпан ({published_today}/{args.daily_cap}) — запуск не нужен")
-        return 0
+        log(f"Дневной лимит исчерпан ({published_today}/{args.daily_cap}) — "
+            "новые посты не публикую"
+            + (f"; вычищено удалённых: {removed}" if removed else ""))
 
     log(f"Источников: {len(sources)}; в оглавлении {len(posts)} постов; "
         f"сегодня уже {published_today}/{args.daily_cap}")
@@ -703,15 +993,12 @@ def main():
     candidates = candidates[: max(0, min(args.max, room))]
     log(f"К публикации отобрано: {len(candidates)}")
     if not candidates:
-        log("Новых новостей нет — posts.json не меняется")
+        log("Новых новостей нет"
+            + (f"; вычищено удалённых постов: {removed}" if removed else ""))
+        if args.mode == "publish" and removed:
+            save_state(posts_doc, seen_doc, posts, chat, args)
+            log(f"Оглавление обновлено: {len(posts_doc['posts'])} постов")
         return 0
-
-    token = os.environ.get("BOT_TOKEN", "")
-    chat = (os.environ.get("CHANNEL_USERNAME", "") or "").strip()
-    if args.mode == "publish" and (not token or not chat):
-        log("!! publish требует BOT_TOKEN и CHANNEL_USERNAME (GitHub Secrets)")
-        return 1
-    chat = chat.lstrip("@").replace("https://t.me/", "")
 
     ai_ready = bool((os.environ.get("GEMINI_API_KEY") or os.environ.get("GROQ_API_KEY") or "").strip())
     if args.mode == "publish" and not ai_ready:
@@ -723,9 +1010,9 @@ def main():
     for item in candidates:
         date_s, time_s = item["dt"].strftime("%Y-%m-%d"), item["dt"].strftime("%H:%M")
 
-        # фото: RSS-медиа → og:image статьи (best-effort)
-        if not item.get("image") and not args.no_og_image:
-            item["image"] = og_image(item["src"])
+        # медиа: RSS-вложения → og:image/og:video статьи (best-effort)
+        if not item.get("image") and not item.get("video") and not args.no_og_image:
+            item["image"], item["video"] = og_media(item["src"])
 
         card = ai_card(item["title"], item["summary"], item["source"].get("name", ""))
         if card is None:
@@ -734,19 +1021,15 @@ def main():
                 continue                      # hash НЕ записан → ретрай на следующем запуске
             card = fallback_card(item)
 
-        tags = list(item["source"].get("tags", ["#мировыеновости"]))
-        # тема по ключевым словам; если тема не распознана — вторая метка
-        # не дублирует главную метку источника
-        extra = keyword_tags(item["title"] + " " + item["summary"] + " " + card.get("lede", ""),
-                             default=tags[0] if tags else "#мировыеновости")
-        if extra not in tags:
-            tags.append(extra)
+        tags = merge_tags(item["source"].get("tags"), card,
+                          item["title"] + " " + item["summary"] + " " + card.get("lede", ""))
 
         text, kind = compose(item, card)
 
         if args.mode == "dry":
-            photo = " (с фото)" if kind == "photo" else ""
-            log(f"\n--- DRY ({date_s} {time_s}){photo} ---\n{text}\n")
+            media = " (с фото)" if kind == "photo" else (" (видео)" if kind == "video" else "")
+            log(f"\n--- DRY ({date_s} {time_s}){media} ---\n{text}\n")
+            log(f"    метки: {' '.join(tags)}")
             added += 1
             continue
 
@@ -761,19 +1044,15 @@ def main():
             "url": f"https://t.me/{chat}/{msg_id}", "src": item["src"],
         })
         seen[item["hash"]] = date_s
+        texts[str(msg_id)] = {"kind": kind, "text": text}   # для edit-пробы будущих сверок
         added += 1
         log(f"  ✓ {kind}: {trim(card['headline'], 60)} → t.me/{chat}/{msg_id}")
 
-    if args.mode == "publish" and added:
-        posts.sort(key=lambda p: (p.get("date", ""), p.get("time", "")), reverse=True)
-        posts_doc["posts"] = posts[:1500]
-        posts_doc["updated_at"] = datetime.now(MSK).isoformat(timespec="seconds")
-        if isinstance(posts_doc.get("channel"), dict) and chat:
-            posts_doc["channel"]["url"] = f"https://t.me/{chat}"
-        save_json(args.posts, posts_doc)
-        seen_doc["seen"] = dict(sorted(seen.items(), key=lambda kv: kv[1], reverse=True)[:5000])
-        save_json(args.seen, seen_doc)
-        log(f"\nГотово: {added} новых постов; в оглавлении {len(posts_doc['posts'])}")
+    if args.mode == "publish" and (added or removed):
+        save_state(posts_doc, seen_doc, posts, chat, args)
+        log(f"\nГотово: {added} новых, {removed} вычищено; в оглавлении {len(posts_doc['posts'])}")
+    elif args.mode == "publish":
+        log("\nОглавление без изменений")
     elif args.mode == "dry":
         log(f"\nDRY-режим: было бы опубликовано {added}; файлы не менялись")
     return 0
