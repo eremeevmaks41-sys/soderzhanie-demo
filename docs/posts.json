@@ -1,11 +1,38 @@
 {
   "version": 1,
-  "updated_at": "2026-09-01T15:23:51+03:00",
+  "updated_at": "2026-09-01T16:55:30+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 26,
+      "date": "2026-09-01",
+      "time": "16:53",
+      "title": "В КЧР 8 сентября пройдёт пятый диктант на языках народов республики",
+      "preview": "Юбилейный пятый диктант на языках народов Карачаево-Черкесии пройдёт 8 сентября. Мероприятие посвятят культуре и обычаям народов КЧР.",
+      "tags": [
+        "#россия"
+      ],
+      "kind": "text",
+      "url": "https://t.me/daily_news_digest/26",
+      "src": "https://tass.ru/obschestvo/28066309"
+    },
+    {
+      "id": 27,
+      "date": "2026-09-01",
+      "time": "16:32",
+      "title": "Саммит ШОС в Бишкеке осудил атаки и санкции против Ирана",
+      "preview": "На саммите ШОС в Бишкеке участники осудили атаки и санкции в отношении Ирана. ШОС, основанная в 1996 году, охватывает 43% мирового населения и 23% мировой экономики.",
+      "tags": [
+        "#мировыеновости",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/27",
+      "src": "https://www.aljazeera.com/news/2026/9/1/sco-slams-attacks-sanctions-on-iran-key-takeaways-from-bishkek-summit?traffic_source=rss"
+    },
     {
       "id": 25,
       "date": "2026-09-01",
@@ -59,6 +86,19 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/19",
       "src": "https://www.aljazeera.com/news/2026/9/1/israeli-forces-raze-west-bank-homes-as-eu-weighs-ban-on-settlement-goods?traffic_source=rss"
+    },
+    {
+      "id": 28,
+      "date": "2026-09-01",
+      "time": "08:00",
+      "title": "Шесть миллионов депортированных возвращаются в Афганистан под властью талибов",
+      "preview": "За годы правления талибов около 6 миллионов человек были депортированы в Афганистан из Пакистана и Ирана. Многие из них никогда не были в стране, которую вынуждены называть…",
+      "tags": [
+        "#мировыеновости"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/28",
+      "src": "https://www.bbc.co.uk/news/articles/c2e074nn8eko?at_medium=RSS&at_campaign=rss"
     },
     {
       "id": 18,
