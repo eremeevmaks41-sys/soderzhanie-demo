@@ -1,11 +1,24 @@
 {
   "version": 1,
-  "updated_at": "2026-09-01T03:28:33+03:00",
+  "updated_at": "2026-09-01T05:17:03+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 17,
+      "date": "2026-09-01",
+      "time": "04:19",
+      "title": "Полиция Нью-Йорка застрелила женщину с ножами на Таймс-сквер",
+      "preview": "В Нью-Йорке полиция застрелила женщину на Таймс-сквер после того, как она, по их словам, была вооружена ножами. Инцидент произошёл в одном из самых оживлённых мест Манхэттена.…",
+      "tags": [
+        "#мировыеновости"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/17",
+      "src": "https://www.aljazeera.com/video/newsfeed/2026/9/1/09-01-26-times-square-stabbing-minisv?traffic_source=rss"
+    },
     {
       "id": 16,
       "date": "2026-09-01",
