@@ -131,6 +131,7 @@ header{display:flex;align-items:center;gap:12px;padding:10px 2px 14px}
 .t-ico{font-size:25px;line-height:1}
 .t-title{font-size:14.5px;font-weight:700;margin-top:7px;line-height:1.3}
 .t-n{font-size:12px;color:var(--muted);margin-top:3px}
+.slabel{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin:15px 2px 9px}
 .back{
   display:block;width:100%;margin:2px 0 10px;padding:10px;border-radius:12px;
   border:1.5px solid var(--line);background:var(--chip);color:var(--text);
@@ -207,7 +208,7 @@ footer .lic{font-size:11px;opacity:.75}
   <div id="state" class="state" style="display:none"></div>
 
   <footer>
-    <div><b>Оглавление</b> · каталог постов Telegram-канала · <span id="ver">v52-m</span></div>
+    <div><b>Оглавление</b> · каталог постов Telegram-канала · <span id="ver">v53</span></div>
     <div class="lic" id="licLine"></div>
   </footer>
 </div>
@@ -661,7 +662,7 @@ function filtered(){
     if (inToc && filterTopic){
       var t = topicOf(p) || '__misc';
       if (t !== filterTopic) return false;
-    } else if (inToc && !TOC_ON && filterMode && tocGroup){
+    } else if (inToc && filterMode && tocGroup){   // v53: универсальные разделы работают и рядом с темами
       if (groupKey(p) !== tocGroup) return false;
     } else if (filterTag && !(p.tags||[]).some(function(t){ return normTag(t) === filterTag; })) return false;
     if (!q) return true;
@@ -740,12 +741,28 @@ function renderTocGrid(){
             '</div>';
   }
   html += '</div>';
+  /* v53: универсальные разделы (месяцы/алфавит/типы) видны ВСЕГДА —
+     и рядом с темами тоже. До v53 они показывались только когда темы
+     не покрывали ни одного поста: любая тема с «#общество» в постах
+     прятала карточки целиком — из-за этого они «пропадали». */
+  html += '<div class="slabel">Универсальные разделы</div><div class="tgrid">';
+  MODES.forEach(function(m){
+    var gn = groupCards(m.id).length;
+    html += '<div class="tcard" data-mode="' + m.id + '">' +
+              '<div class="t-ico">' + m.icon + '</div>' +
+              '<div class="t-title">' + m.title + '</div>' +
+              '<div class="t-n">' + gn + ' ' + pluralWord(gn, ['раздел','раздела','разделов']) + '</div>' +
+            '</div>';
+  });
+  html += '</div>';
   list.innerHTML = html;
   list.style.display = '';
   list.querySelectorAll('.tcard').forEach(function(el){
     el.addEventListener('click', function(){
       haptic('medium');
-      filterTopic = el.getAttribute('data-topic');
+      var md = el.getAttribute('data-mode');
+      if (md){ filterMode = md; tocGroup = null; }        // универсальный раздел
+      else { filterTopic = el.getAttribute('data-topic'); } // тема из topics.json
       shown = PAGE_SIZE; render();
       window.scrollTo(0, 0);
     });
@@ -781,7 +798,8 @@ function renderModeGrid(){
   if (more) more.style.display = 'none';
 }
 function renderGroupCards(){
-  showBack('← Разделы', function(){ filterMode = null; tocGroup = null; shown = PAGE_SIZE; render(); });
+  showBack(TOC_ON ? '← Оглавление' : '← Разделы',
+           function(){ filterMode = null; tocGroup = null; shown = PAGE_SIZE; render(); });
   renderState(null);
   var list = document.getElementById('list');
   var cards = groupCards(filterMode);
@@ -885,7 +903,7 @@ function render(){
       return POSTS.some(function(p){ return topicOf(p) === t.id; });
     }).length + (POSTS.some(function(p){ return !topicOf(p); }) ? 1 : 0);
     sub = POSTS.length + ' ' + plural(POSTS.length) + ' · ' + nt + ' ' + pluralWord(nt, ['тема','темы','тем']);
-  } else if (inToc && !TOC_ON && filterMode && !tocGroup){
+  } else if (inToc && filterMode && !tocGroup){
     var gn = groupCards().length;
     sub = gn + ' ' + pluralWord(gn, ['раздел','раздела','разделов']);
   }
@@ -893,12 +911,12 @@ function render(){
   renderViews();
   document.getElementById('chips').style.display = inToc ? 'none' : '';
   if (!POSTS.length){ renderChips(); return renderState('empty'); }
-  if (inToc && TOC_ON && !filterTopic){ renderTocGrid(); return; }
+  if (inToc && TOC_ON && !filterTopic && !filterMode){ renderTocGrid(); return; }
   if (inToc && !TOC_ON && !filterMode){ renderModeGrid(); return; }
-  if (inToc && !TOC_ON && filterMode && !tocGroup){ renderGroupCards(); return; }
-  if (inToc && TOC_ON){
+  if (inToc && filterMode && !tocGroup){ renderGroupCards(); return; }   // v53: и при активных темах
+  if (inToc && TOC_ON && !filterMode){
     showBack('← Все темы', function(){ filterTopic = null; shown = PAGE_SIZE; render(); });
-  } else if (inToc){
+  } else if (inToc && filterMode && tocGroup){
     showBack('← Разделы', function(){ tocGroup = null; shown = PAGE_SIZE; render(); });
   } else { hideBack(); }
   renderChips();
