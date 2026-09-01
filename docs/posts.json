@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-09-01T11:20:13+03:00",
+  "updated_at": "2026-09-01T13:19:01+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 24,
+      "date": "2026-09-01",
+      "time": "12:48",
+      "title": "Израильские удары по Газе унесли жизни как минимум четырёх человек, включая детей",
+      "preview": "По меньшей мере четыре человека погибли, несколько получили ранения в результате израильских авиаударов по сектору Газа. В районе Аль-Катиба к западу от города Газа в результате…",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/24",
+      "src": "https://www.aljazeera.com/news/2026/9/1/israeli-attacks-on-gaza-kill-at-least-four-including-children?traffic_source=rss"
+    },
     {
       "id": 23,
       "date": "2026-09-01",
