@@ -1,11 +1,26 @@
 {
   "version": 1,
-  "updated_at": "2026-09-01T17:27:03+03:00",
+  "updated_at": "2026-09-02T01:16:49+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 31,
+      "date": "2026-09-02",
+      "time": "00:54",
+      "title": "Глава Минэнерго США едет в Венесуэлу для объявления нефтяной сделки",
+      "preview": "Министр энергетики США отправится в Венесуэлу, чтобы представить договорённости по нефти. Национальная ассамблея Венесуэлы одобрила сделку на 65 млрд баррелей, несмотря на то что…",
+      "tags": [
+        "#мировыеновости",
+        "#энергетика",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/31",
+      "src": "https://www.aljazeera.com/news/2026/9/1/us-energy-secretary-will-travel-to-venezuela-to-unveil-oil-arrangement?traffic_source=rss"
+    },
     {
       "id": 26,
       "date": "2026-09-01",
