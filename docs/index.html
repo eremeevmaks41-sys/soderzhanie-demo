@@ -21,7 +21,7 @@ html[data-theme="dark"]{
   --accent:#d8b25e; --accent-soft:#3a3428; --chip:#2e2a22; --chip-active:#d8b25e;
   --chip-active-text:#1c1a16; --line:#3a352b; --search:#26231d; --shadow:0 2px 10px rgba(0,0,0,.35);
 }
-*{box-sizing:border-box;margin:0;padding:0}
+*{box-sizing:border-box;margin:0;padding:0;touch-action:manipulation}
 html,body{height:100%}
 body{
   background:var(--bg); color:var(--text);
@@ -43,8 +43,10 @@ header{display:flex;align-items:center;gap:12px;padding:10px 2px 14px}
 .h-open{
   margin-left:auto;flex:0 0 auto;text-decoration:none;font-size:13px;font-weight:600;
   color:var(--accent);border:1.5px solid var(--accent);border-radius:11px;padding:7px 12px;
+  user-select:none;-webkit-user-select:none;
+  transition:background .12s ease, transform .12s ease;
 }
-.h-open:active{background:var(--accent-soft)}
+.h-open:active{background:var(--accent-soft);transform:scale(.96)}
 
 /* ── поиск ── */
 .search{position:relative;margin-bottom:10px}
@@ -57,7 +59,9 @@ header{display:flex;align-items:center;gap:12px;padding:10px 2px 14px}
 .search .clr{
   position:absolute;right:6px;top:50%;transform:translateY(-50%);
   border:0;background:transparent;color:var(--muted);font-size:17px;padding:6px 8px;cursor:pointer;display:none;
+  transition:color .12s ease, transform .12s ease;
 }
+.search .clr:active{color:var(--accent);transform:translateY(-50%) scale(.88)}
 
 /* ── темы (чипсы) ── */
 .chips{
@@ -68,7 +72,10 @@ header{display:flex;align-items:center;gap:12px;padding:10px 2px 14px}
 .chip{
   flex:0 0 auto;border:1.5px solid var(--line);background:var(--chip);color:var(--text);
   border-radius:999px;padding:6px 13px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;
+  user-select:none;-webkit-user-select:none;
+  transition:transform .12s ease, border-color .12s ease, color .12s ease, background .12s ease;
 }
+.chip:active{transform:scale(.93)}
 .chip.active{background:var(--chip-active);color:var(--chip-active-text);border-color:var(--chip-active)}
 
 /* ── даты и карточки ── */
@@ -77,8 +84,9 @@ header{display:flex;align-items:center;gap:12px;padding:10px 2px 14px}
   display:block;color:inherit;text-decoration:none; /* карточка — настоящая <a>: клик работает и во встроенном браузере Telegram */
   background:var(--card);border:1px solid var(--line);border-radius:15px;
   padding:12px 14px;margin-bottom:9px;box-shadow:var(--shadow);cursor:pointer;
+  transition:background .12s ease, transform .12s ease;
 }
-.card:active{background:var(--card2)}
+.card:active{background:var(--card2);transform:scale(.985)}
 .c-top{display:flex;align-items:baseline;gap:8px;margin-bottom:3px}
 .c-time{font-size:12px;color:var(--muted);flex:0 0 auto}
 .c-title{font-size:15.5px;font-weight:700;line-height:1.35}
@@ -91,7 +99,10 @@ header{display:flex;align-items:center;gap:12px;padding:10px 2px 14px}
 .views button{
   flex:1;border:0;background:transparent;color:var(--muted);
   font-size:13.5px;font-weight:700;padding:8px 0;border-radius:9px;cursor:pointer;
+  user-select:none;-webkit-user-select:none;
+  transition:color .12s ease, background .12s ease;
 }
+.views button:active{color:var(--text)}
 .views button.active{background:var(--chip-active);color:var(--chip-active-text)}
 
 /* ── сетка тем (настоящее оглавление) ── */
@@ -99,8 +110,10 @@ header{display:flex;align-items:center;gap:12px;padding:10px 2px 14px}
 .tcard{
   background:var(--card);border:1px solid var(--line);border-radius:15px;
   padding:14px;cursor:pointer;box-shadow:var(--shadow);
+  user-select:none;-webkit-user-select:none;
+  transition:background .12s ease, transform .12s ease;
 }
-.tcard:active{background:var(--card2)}
+.tcard:active{background:var(--card2);transform:scale(.96)}
 .t-ico{font-size:25px;line-height:1}
 .t-title{font-size:14.5px;font-weight:700;margin-top:7px;line-height:1.3}
 .t-n{font-size:12px;color:var(--muted);margin-top:3px}
@@ -108,7 +121,10 @@ header{display:flex;align-items:center;gap:12px;padding:10px 2px 14px}
   display:block;width:100%;margin:2px 0 10px;padding:10px;border-radius:12px;
   border:1.5px solid var(--line);background:var(--chip);color:var(--text);
   font-size:13.5px;font-weight:700;cursor:pointer;text-align:center;
+  user-select:none;-webkit-user-select:none;
+  transition:background .12s ease, transform .12s ease;
 }
+.back:active{background:var(--accent-soft);transform:scale(.98)}
 
 
 /* ── состояния ── */
@@ -116,7 +132,10 @@ header{display:flex;align-items:center;gap:12px;padding:10px 2px 14px}
   display:block;width:100%;margin:14px 0 4px;padding:12px;border-radius:13px;
   border:1.5px dashed var(--accent);background:transparent;color:var(--accent);
   font-size:14.5px;font-weight:700;cursor:pointer;
+  user-select:none;-webkit-user-select:none;
+  transition:background .12s ease, transform .12s ease;
 }
+.more:active{background:var(--accent-soft);transform:scale(.98)}
 .state{padding:46px 20px;text-align:center;color:var(--muted)}
 .state .big{font-size:40px;margin-bottom:10px}
 .state .t{font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px}
@@ -183,6 +202,22 @@ var cfg = window.SZ_CONFIG || {};
 /* ── Telegram WebApp: тема и открытие ссылок ── */
 var tg = (window.Telegram && window.Telegram.WebApp) ? window.Telegram.WebApp : null;
 if (tg) { try { tg.ready(); tg.expand(); } catch(e){} }
+
+/* iOS Safari применяет :active только если на странице есть touchstart-обработчик */
+document.addEventListener('touchstart', function(){}, {passive:true});
+
+/* ── тактильный отклик: HapticFeedback есть в мобильном Telegram;
+   в обычном браузере и на десктопе вызовы тихо игнорируются ── */
+function haptic(style){
+  if (tg && tg.HapticFeedback && tg.HapticFeedback.impactOccurred) {
+    try { tg.HapticFeedback.impactOccurred(style); } catch(e){}
+  }
+}
+function hapticSelect(){
+  if (tg && tg.HapticFeedback && tg.HapticFeedback.selectionChanged) {
+    try { tg.HapticFeedback.selectionChanged(); } catch(e){}
+  }
+}
 
 function themeApply(){
   var p = (tg && tg.themeParams) || {};
@@ -348,6 +383,7 @@ function applyConfig(){
     var a = document.getElementById('hOpen');
     a.href = cfg.channel_url;
     a.addEventListener('click', function(ev){
+      haptic('light');
       // мини-апп Telegram → штатный API; iOS → переход в той же вкладке
       // (target="_blank" на iPhone молча блокируется); десктоп-браузер →
       // НЕ перехватываем: сработает обычный переход по href
@@ -390,13 +426,14 @@ function renderChips(){
   var chipAll = document.createElement('div');
   chipAll.className = 'chip' + (filterTag ? '' : ' active');
   chipAll.textContent = 'Все темы';
-  chipAll.onclick = function(){ filterTag = null; shown = PAGE_SIZE; render(); };
+  chipAll.onclick = function(){ hapticSelect(); filterTag = null; shown = PAGE_SIZE; render(); };
   box.appendChild(chipAll);
   TAGS.slice(0, 14).forEach(function(t){
     var c = document.createElement('div');
     c.className = 'chip' + (filterTag === normTag(t.tag) ? ' active' : '');
     c.textContent = t.tag + ' · ' + t.n;
     c.onclick = function(){
+      hapticSelect();
       filterTag = (filterTag === normTag(t.tag)) ? null : normTag(t.tag);
       shown = PAGE_SIZE; render();
     };
@@ -420,7 +457,7 @@ function showBack(label, onClick){
     list.parentNode.insertBefore(b, list);
   }
   b.textContent = label;
-  b.onclick = onClick;
+  b.onclick = function(){ haptic('light'); onClick(); };
   b.style.display = 'block';
 }
 function hideBack(){
@@ -456,6 +493,7 @@ function renderTocGrid(){
   list.style.display = '';
   list.querySelectorAll('.tcard').forEach(function(el){
     el.addEventListener('click', function(){
+      haptic('medium');
       filterTopic = el.getAttribute('data-topic');
       shown = PAGE_SIZE; render();
       window.scrollTo(0, 0);
@@ -482,6 +520,7 @@ function renderModeGrid(){
   list.style.display = '';
   list.querySelectorAll('.tcard').forEach(function(el){
     el.addEventListener('click', function(){
+      haptic('medium');
       filterMode = el.getAttribute('data-mode');
       tocGroup = null; shown = PAGE_SIZE; render();
       window.scrollTo(0, 0);
@@ -508,6 +547,7 @@ function renderGroupCards(){
   list.style.display = '';
   list.querySelectorAll('.tcard').forEach(function(el){
     el.addEventListener('click', function(){
+      haptic('medium');
       tocGroup = el.getAttribute('data-group');
       shown = PAGE_SIZE; render();
       window.scrollTo(0, 0);
@@ -539,6 +579,7 @@ function renderList(items){
   list.innerHTML = html;
   list.querySelectorAll('a.card[href]').forEach(function(el){
     el.addEventListener('click', function(ev){
+      haptic('light');
       // мини-апп Telegram → штатный API; iOS → переход в той же вкладке
       // (target="_blank" на iPhone молча блокируется); обычный
       // десктоп-браузер → НЕ перехватываем: работает настоящий переход
@@ -553,7 +594,7 @@ function renderList(items){
     if (!more){
       more = document.createElement('button');
       more.id = 'moreBtn'; more.className = 'more';
-      more.onclick = function(){ shown += PAGE_SIZE; render(); };
+      more.onclick = function(){ haptic('light'); shown += PAGE_SIZE; render(); };
       document.getElementById('list').after(more);
     }
     more.textContent = 'Показать ещё (' + (items.length - shown) + ')';
@@ -613,14 +654,17 @@ qEl.addEventListener('input', function(){
   render();
 });
 clrEl.addEventListener('click', function(){
+  haptic('light');
   qEl.value = ''; filterQ = ''; clrEl.style.display = 'none'; shown = PAGE_SIZE; render(); qEl.focus();
 });
 
 /* ── переключатель вида: Оглавление / Лента ── */
 document.getElementById('vToc').addEventListener('click', function(){
+  hapticSelect();
   view = 'toc'; filterTopic = null; filterMode = null; tocGroup = null; shown = PAGE_SIZE; render();
 });
 document.getElementById('vFeed').addEventListener('click', function(){
+  hapticSelect();
   view = 'feed'; filterTopic = null; filterTag = null; filterMode = null; tocGroup = null; shown = PAGE_SIZE; render();
 });
 
