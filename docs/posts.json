@@ -1,11 +1,24 @@
 {
   "version": 1,
-  "updated_at": "2026-09-01T13:19:01+03:00",
+  "updated_at": "2026-09-01T15:23:51+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 25,
+      "date": "2026-09-01",
+      "time": "14:53",
+      "title": "Старый город Дамаска на сутки стал пешеходным",
+      "preview": "Исторический центр Дамаска на 24 часа закрыли для автомобилей. Жители получили редкую возможность прогуляться по улицам Старого города без транспорта и шума.",
+      "tags": [
+        "#мировыеновости"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/25",
+      "src": "https://www.aljazeera.com/video/newsfeed/2026/9/1/damascus-goes-car-free-for-24-hours?traffic_source=rss"
+    },
     {
       "id": 24,
       "date": "2026-09-01",
