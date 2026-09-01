@@ -100,7 +100,7 @@ header{display:flex;align-items:center;gap:12px;padding:10px 2px 14px}
   padding:12px 14px;margin-bottom:9px;box-shadow:var(--shadow);cursor:pointer;
   transition:background .12s ease, transform .12s ease;
 }
-.card:active{background:var(--card2);transform:scale(.985)}
+.card:active,.card.pressed{background:var(--card2);transform:scale(.985)}
 .c-top{display:flex;align-items:baseline;gap:8px;margin-bottom:3px}
 .c-time{font-size:12px;color:var(--muted);flex:0 0 auto}
 .c-title{font-size:15.5px;font-weight:700;line-height:1.35}
@@ -197,7 +197,7 @@ footer .lic{font-size:11px;opacity:.75}
   <div id="state" class="state" style="display:none"></div>
 
   <footer>
-    <div><b>Оглавление</b> · каталог постов Telegram-канала · <span id="ver">v52-j</span></div>
+    <div><b>Оглавление</b> · каталог постов Telegram-канала · <span id="ver">v52-k</span></div>
     <div class="lic" id="licLine"></div>
   </footer>
 </div>
@@ -336,79 +336,72 @@ if (tg && tg.onEvent) { try { tg.onEvent('themeChanged', function(){ themeApply(
    API мини-аппа или переход в той же вкладке. */
 var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent || '') ||
           (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1); /* iPadOS 13+ маскируется под Mac */
-/* подсказка на случай, когда Telegram открывает пост ПОД окном браузера:
-   человек сразу понимает, что пост уже открыт, и как его увидеть */
-var hintAt = 0;
-function hintOverlay(){
-  if (Date.now() - hintAt < 1500) return;
-  hintAt = Date.now();
-  var h = document.createElement('div');
-  h.style.cssText = 'position:fixed;top:calc(10px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);'
-    + 'background:rgba(25,20,10,.9);color:#fff;font-size:12.5px;font-weight:600;padding:9px 14px;border-radius:999px;'
-    + 'z-index:60;max-width:88%;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.25)';
-  h.textContent = 'Открыто в Telegram — смахните это окно вниз ⌄';
-  document.body.appendChild(h);
-  var killed = false;
-  function kill(){ if (killed) return; killed = true; if (h.parentNode) h.parentNode.removeChild(h); }
-  function onVis(){ if (document.visibilityState === 'visible') setTimeout(kill, 1500); }
-  if (document.visibilityState === 'hidden') document.addEventListener('visibilitychange', onVis);
-  setTimeout(kill, 4500);
-}
-/* глубокая ссылка tg:// через скрытый iframe: встроенный браузер Telegram
-   может перехватить её и открыть пост ПОВЕРХ окна (как надо). Если не
-   умеет — iframe просто молча не сработает, и через 600 мс уйдёт обычный
-   переход https (страховка). Основная страница при этом не ломается. */
-function tryDeep(deep){
-  try {
-    var f = document.createElement('iframe');
-    f.style.display = 'none';
-    f.src = deep;
-    document.body.appendChild(f);
-    setTimeout(function(){ if (f.parentNode) f.parentNode.removeChild(f); }, 2000);
-    return true;
-  } catch(e){ return false; }
-}
-function openUrl(url){
-  if (!url) return;
-  var isTme = url.indexOf('t.me') !== -1;
-  if (tg && tg.openTelegramLink && isTme) {
-    try {
-      tg.openTelegramLink(url);
-      /* iOS: пост/канал открывается ПОД мини-аппом (слои WKWebView) —
-         закрываем апп, чтобы ссылка оказалась на экране. Android и
-         десктоп сами показывают контент поверх и возвращаются назад. */
-      if (iOS && tg.close) {
-        /* двойная страховка: шлём close дважды */
-        setTimeout(function(){ try { tg.close(); } catch(e){} }, 120);
-        setTimeout(function(){ try { tg.close(); } catch(e){} }, 450);
-      }
-      return;
-    } catch(e){}
-  }
-  if (tg && tg.openLink) {
-    try { tg.openLink(url); return; } catch(e){}
-  }
-  if (iOS && isTme) {
-    /* встроенный браузер Telegram (tg-там нет): сначала пробуем глубокую
-       ссылку tg://resolve — она может открыть пост поверх окна; если через
-       600 мс ничего не произошло — обычный переход https (пост откроется
-       под окном, покажем подсказку «смахните вниз») */
-    var m = url.match(/t\.me\/([^\/?#]+)(?:\/(\d+))?/);
-    if (m && m[1] && m[1] !== 'share' && m[1] !== 'proxy') {
-      tryDeep('tg://resolve?domain=' + m[1] + (m[2] ? '&post=' + m[2] : ''));
-      setTimeout(function(){
-        if (document.visibilityState === 'hidden') return; /* уже перешли */
-        hintOverlay();
-        window.location.href = url;
-      }, 600);
-      return;
+/* ── ОТКРЫТИЕ ПОСТА — стратегия боевого приложения-оглавления MyRadio
+   (канал «От чтения к Преображению»), проверена вживую на iOS 9.6 и
+   Android 9.6 07.07.2026 (заметки из кода того проекта):
+
+     Desktop Telegram → tg.openTelegramLink (открывает внутри Telegram)
+     Telegram Web     → window.open (новая вкладка браузера)
+     Мобильные        → tg.openTelegramLink: переход происходит сразу
+                        в канал, мини-апп НЕ закрывается — Telegram сам
+                        показывает канал поверх аппа, возврат свайпом
+                        или системной кнопкой «Назад». Именно так это
+                        предусматривает сам Телеграм для айфонов.
+
+   Известная особенность iOS (наш случай «пост за аппом»): если мини-апп
+   запущен ИЗ ТОГО ЖЕ канала, на пост которого ведёт ссылка (у нас —
+   закреп с кнопкой оглавления), openTelegramLink НЕ делает видимого
+   перехода — нет ни вибрации, ни сворачивания. При этом сама навигация
+   в фоне происходит корректно. Проверяется через visibilitychange:
+   если за 1.5 с апп так и не свернулся — вызываем tg.openLink(), дающий
+   ВИДИМЫЙ переход ЧЕРЕЗ БРАУЗЕР (гарантированно рабочий путь).
+   Решение самовосстанавливающееся: если Telegram когда-нибудь починит
+   эту особенность, visibilitychange будет срабатывать быстро и фолбэк
+   просто никогда не вызовется. */
+var TG_LINK_FALLBACK_MS = 1500;
+function openViaTelegramLinkWithFallback(url){
+  var settled = false;
+  function onVisChange(){
+    if (document.hidden){
+      settled = true;
+      document.removeEventListener('visibilitychange', onVisChange);
     }
-    hintOverlay();
-    window.location.href = url;
+  }
+  document.addEventListener('visibilitychange', onVisChange);
+  try { tg.openTelegramLink(url); } catch(e){}
+  setTimeout(function(){
+    document.removeEventListener('visibilitychange', onVisChange);
+    if (!settled){
+      try { tg.openLink(url, {try_instant_view:false}); } catch(e){}
+    }
+  }, TG_LINK_FALLBACK_MS);
+}
+function openPost(url){
+  if (!url) return;
+  if (!tg){
+    /* вне мини-аппа: во встроенном браузере Telegram target="_blank" и
+       window.open молча блокируются (WKWebView не умеет новых вкладок) —
+       спасает переход в той же вкладке; обычный десктоп-браузер откроет
+       новую вкладку штатно */
+    if (iOS) { window.location.href = url; return; }
+    window.open(url, '_blank');
     return;
   }
-  if (/Android/i.test(navigator.userAgent || '')) { window.location.href = url; return; }  /* Android: так пост открывается поверх */
-  window.open(url, '_blank');
+  var plat = tg.platform || '';
+  /* Telegram Web (web/weba) — в новой вкладке браузера (как в MyRadio) */
+  if (plat === 'web' || plat === 'weba') { window.open(url, '_blank'); return; }
+  /* родные приложения (десктоп, macOS, iOS, Android) — переход сразу
+     внутрь Telegram через openTelegramLink, без внешнего браузера */
+  var NATIVE_APP_PLATFORMS = {tdesktop:1, macos:1, ios:1, android:1, android_x:1};
+  var canUseTelegramLink = !!tg.openTelegramLink
+    && (!tg.isVersionAtLeast || tg.isVersionAtLeast('7.0'));
+  if (NATIVE_APP_PLATFORMS[plat] && canUseTelegramLink) {
+    openViaTelegramLinkWithFallback(url);
+    return;
+  }
+  /* необычная/неопознанная платформа или клиент старше Bot API 7.0 —
+     страховка прежним openLink(): гарантированно видимый рабочий путь */
+  try { tg.openLink(url, {try_instant_view:false}); } catch(e){}
 }
 
 /* ── лицензия: sha256(licensee|salt) первые 16 hex = ключ ── */
@@ -543,11 +536,11 @@ function applyConfig(){
     a.href = cfg.channel_url;
     a.addEventListener('click', function(ev){
       haptic('light');
-      // мини-апп Telegram → штатный API; iOS → переход в той же вкладке
-      // (target="_blank" на iPhone молча блокируется); десктоп-браузер →
-      // НЕ перехватываем: сработает обычный переход по href
+      // мини-апп → openPost: openTelegramLink, а при тихом сбое iOS —
+      // видимый фолбэк через браузер (стратегия MyRadio);
+      // десктоп-браузер без tg → НЕ перехватываем: сработает обычный href
       if (tg || iOS) {
-        ev.preventDefault(); openUrl(cfg.channel_url);
+        ev.preventDefault(); openPost(cfg.channel_url);
       }
     });
   } else { document.getElementById('hOpen').style.display = 'none'; }
@@ -740,13 +733,18 @@ function renderList(items){
   list.innerHTML = html;
   list.querySelectorAll('a.card[href]').forEach(function(el){
     el.addEventListener('click', function(ev){
+      if (ev.metaKey || ev.ctrlKey) return;   // ctrl/⌘+клик — новая вкладка силами браузера
       haptic('light');
-      // мини-апп Telegram → штатный API; iOS/Android → переход в той же вкладке
-      // (target="_blank" на iPhone молча блокируется); обычный
-      // десктоп-браузер → НЕ перехватываем: работает настоящий переход
+      // мини-апп → openPost: переход внутрь Telegram, а при тихом сбое iOS
+      // (мини-апп открыт из того же канала) — видимый фолбэк через браузер;
+      // десктоп-браузер без tg → НЕ перехватываем: работает настоящий href
       if (tg || iOS) {
         ev.preventDefault();
-        openUrl(el.getAttribute('href'));
+        /* мгновенный визуальный отклик, пока Telegram выполняет переход
+           (до 1.5 с) — тап не кажется «провисшим» (опыт MyRadio) */
+        el.classList.add('pressed');
+        setTimeout(function(){ el.classList.remove('pressed'); }, 300);
+        openPost(el.getAttribute('href'));
       }
     });
   });
