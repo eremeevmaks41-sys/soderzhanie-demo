@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-01T16:55:30+03:00",
+  "updated_at": "2026-09-01T17:27:03+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -167,113 +167,6 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/14",
       "src": "https://www.bbc.co.uk/news/articles/c5ylvgq9q71o?at_medium=RSS&at_campaign=rss"
-    },
-    {
-      "id": 11,
-      "date": "2026-08-31",
-      "time": "15:37",
-      "title": "На ММКЯ расскажут, как классические тексты обретают новые форматы",
-      "preview": "Проект «Большие книжные проекты: лучший опыт и практики» адресован издателям, авторам, продюсерам и маркетологам — всем, кто формирует будущее книжной индустрии",
-      "tags": [
-        "#добрыеновости",
-        "#общество"
-      ],
-      "kind": "text",
-      "url": "https://t.me/daily_news_digest/11",
-      "src": "https://godliteratury.ru/articles/2026/08/31/na-mmkia-rasskazhut-kak-klassicheskie-teksty-obretaiut-novye-formaty"
-    },
-    {
-      "id": 12,
-      "date": "2026-08-31",
-      "time": "15:25",
-      "title": "В Калмыкии перезахоронят останки свидетеля чуда Явления Христа Спасителя в Элисте в 1946 году",
-      "preview": "Останки Семена Бондаренко и его супруги перезахоронят на территории Казанского кафедрального собора Элисты.",
-      "tags": [
-        "#добрыеновости",
-        "#семья"
-      ],
-      "kind": "text",
-      "url": "https://t.me/daily_news_digest/12",
-      "src": "https://foma.ru/v-kalmykii-perezahoronyat-ostanki-svidetelya-chuda-yavleniya-hrista-spasitelya-v-eliste-v-1946-godu.html"
-    },
-    {
-      "id": 13,
-      "date": "2026-08-31",
-      "time": "15:17",
-      "title": "Урок апостола Петра: как решиться на перемены, когда нет никаких гарантий?",
-      "preview": "А вдруг не получится? А вдруг станет только хуже? Как же преодолеть этот страх и нерешительность? Ответ на этот вопрос неожиданно можно найти в истории о том, как апостол Петр…",
-      "tags": [
-        "#добрыеновости",
-        "#общество"
-      ],
-      "kind": "text",
-      "url": "https://t.me/daily_news_digest/13",
-      "src": "https://foma.ru/urok-apostola-petra-kak-reshitsya-na-peremeny-kogda-net-nikakih-garantij.html"
-    },
-    {
-      "id": 2,
-      "date": "2026-08-31",
-      "time": "11:09",
-      "title": "В сентябре начнется строительство надземной части храма Царственных страстотерпцев в Ясеневе",
-      "preview": "Семиглавый трехапсидный собор с колокольней спроектирован в традициях московского зодчества XVI века.",
-      "tags": [
-        "#добрыеновости",
-        "#общество"
-      ],
-      "url": "https://t.me/daily_news_digest/2",
-      "src": "https://foma.ru/v-sentyabre-nachnetsya-stroitelstvo-nadzemnoj-chasti-hrama-czarstvennyh-strastoterpczev-v-yaseneve.html"
-    },
-    {
-      "id": 3,
-      "date": "2026-08-31",
-      "time": "10:38",
-      "title": "До 27 сентября в трех храмах Москвы и Подмосковья будет пребывать Тихвинская икона Божией Матери",
-      "preview": "Святыня принесена из Тихвинского Богородичного Успенского мужского монастыря города Тихвин Ленинградской области.",
-      "tags": [
-        "#добрыеновости",
-        "#семья"
-      ],
-      "url": "https://t.me/daily_news_digest/3",
-      "src": "https://foma.ru/do-27-sentyabrya-v-treh-hramah-moskvy-i-podmoskovya-budet-prebyvat-tihvinskaya-ikona-bozhiej-materi.html"
-    },
-    {
-      "id": 4,
-      "date": "2026-08-31",
-      "time": "10:00",
-      "title": "Наставники. «Человек без отечества и семейства есть пропащее существо… От этого избави вас Боже, Тургенев!»",
-      "preview": "“Римские каникулы”, которые Тургенев провёл со Станкевичем, открыли для него целый мир искусства и глубоких чувств",
-      "tags": [
-        "#добрыеновости",
-        "#общество"
-      ],
-      "url": "https://t.me/daily_news_digest/4",
-      "src": "https://godliteratury.ru/articles/2026/08/31/nastavniki-chelovek-bez-otechestva-i-semejstva-est-propashchee-sushchestvo-ot-etogo-izbavi-vas-bozhe-turgenev"
-    },
-    {
-      "id": 5,
-      "date": "2026-08-31",
-      "time": "10:00",
-      "title": "Цао Вэньсюань: «Детская литература по сути не слишком отличается от взрослой»",
-      "preview": "В состав китайской делегации на ММКЯ входит Цао Вэньсюань, единственный китайский лауреат Премии имени Андерсена; он ответил на несколько наших вопросов",
-      "tags": [
-        "#добрыеновости",
-        "#семья"
-      ],
-      "url": "https://t.me/daily_news_digest/5",
-      "src": "https://godliteratury.ru/articles/2026/08/31/cao-vensiuan-detskaia-literatura-po-suti-ne-slishkom-otlichaetsia-ot-vzrosloj"
-    },
-    {
-      "id": 6,
-      "date": "2026-08-31",
-      "time": "09:09",
-      "title": "Что изменится в ЕГЭ-2027? Главное из проекта",
-      "preview": "Финальная версия появится в ноябре",
-      "tags": [
-        "#добрыеновости",
-        "#общество"
-      ],
-      "url": "https://t.me/daily_news_digest/6",
-      "src": "https://www.pravmir.ru/chto-izmenitsya-v-ege-2027-glavnoe-iz-proekta/"
     }
   ]
 }
