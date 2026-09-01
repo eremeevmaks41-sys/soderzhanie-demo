@@ -197,7 +197,7 @@ footer .lic{font-size:11px;opacity:.75}
   <div id="state" class="state" style="display:none"></div>
 
   <footer>
-    <div><b>Оглавление</b> · каталог постов Telegram-канала · <span id="ver">v52-k</span></div>
+    <div><b>Оглавление</b> · каталог постов Telegram-канала · <span id="ver">v52-l</span></div>
     <div class="lic" id="licLine"></div>
   </footer>
 </div>
@@ -352,26 +352,69 @@ var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent || '') ||
    запущен ИЗ ТОГО ЖЕ канала, на пост которого ведёт ссылка (у нас —
    закреп с кнопкой оглавления), openTelegramLink НЕ делает видимого
    перехода — нет ни вибрации, ни сворачивания. При этом сама навигация
-   в фоне происходит корректно. Проверяется через visibilitychange:
-   если за 1.5 с апп так и не свернулся — вызываем tg.openLink(), дающий
-   ВИДИМЫЙ переход ЧЕРЕЗ БРАУЗЕР (гарантированно рабочий путь).
-   Решение самовосстанавливающееся: если Telegram когда-нибудь починит
-   эту особенность, visibilitychange будет срабатывать быстро и фолбэк
-   просто никогда не вызовется. */
+   в фоне происходит корректно. Отслеживается через visibilitychange:
+   если за 1.5 с апп так и не свернулся — тихий случай, лечим его, как
+   описано в блоке ниже (WebApp.close()). */
+/* ── строка самодиагностики в футере: фиксирует, в каком окружении
+   открыта страница и какая ветка перехода реально сработала. По ней
+   пользователь может точно сообщить, что происходит на его устройстве. */
+var diagEl = null, diagLog = [];
+function diagInit(){
+  diagEl = document.createElement('div');
+  diagEl.className = 'lic'; diagEl.id = 'diag';
+  var f = document.querySelector('footer');
+  if (f) f.appendChild(diagEl);
+  diagNote('старт: tg=' + (tg ? 'есть' : 'НЕТ — открыто как обычная страница (встроенный браузер?)')
+    + (tg ? ' · платформа=' + (tg.platform || '?') + ' · ver=' + (tg.version || '?') : ''));
+}
+function diagNote(msg){
+  if (!diagEl) return;
+  var d = new Date(), z = function(x){ return ('0'+x).slice(-2); };
+  diagLog.push(z(d.getHours())+':'+z(d.getMinutes())+':'+z(d.getSeconds())+' '+msg);
+  if (diagLog.length > 4) diagLog = diagLog.slice(-4);
+  diagEl.textContent = 'отладка: ' + diagLog.join(' | ');
+}
+
+/* Тихий случай (тот же канал): openTelegramLink навигацию в ФОНЕ выполняет
+   корректно — подтверждено инспектором Safari (MyRadio, 08.07.2026) —,
+   но видимого перехода нет, апп остаётся поверх уже открытого поста.
+
+   ЧЕМ ЛЕЧИМ (по официальной документации core.telegram.org/bots/webapps):
+   1. openLink можно вызывать «only in response to user interaction» —
+      наш прежний фолбэк из setTimeout через 1.5 с этот контракт нарушал,
+      поэтому Telegram его молча отбрасывал (а на iOS openLink ещё и
+      всегда открывает внешний Safari — Telegram-iOS issue #1670).
+   2. Документированный WebApp.close() контракт не нарушает: закрытие
+      аппа выводит на экран уже открытый в фоне пост (ровно то, что
+      зафиксировано инспектором в MyRadio). */
 var TG_LINK_FALLBACK_MS = 1500;
-function openViaTelegramLinkWithFallback(url){
+function openInTelegram(url){
   var settled = false;
   function onVisChange(){
     if (document.hidden){
       settled = true;
       document.removeEventListener('visibilitychange', onVisChange);
+      diagNote('апп свернулся — пост открыт, возврат свайпом');
     }
   }
   document.addEventListener('visibilitychange', onVisChange);
-  try { tg.openTelegramLink(url); } catch(e){}
+  try { tg.openTelegramLink(url); diagNote('openTelegramLink отправлен'); }
+  catch(e){ diagNote('openTelegramLink ошибка: ' + (e && e.message ? e.message : '?')); }
   setTimeout(function(){
     document.removeEventListener('visibilitychange', onVisChange);
-    if (!settled){
+    if (settled) return;
+    if (tg.platform === 'ios' && tg.close){
+      diagNote('за 1.5с не свернулся → close() (пост уже открыт в фоне)');
+      try { tg.close(); } catch(e){}
+      /* последняя страховка, если close не поддержан клиентом */
+      setTimeout(function(){
+        if (!settled && tg.openLink){
+          diagNote('close не сработал → openLink');
+          try { tg.openLink(url, {try_instant_view:false}); } catch(e){}
+        }
+      }, 800);
+    } else if (tg.openLink){
+      diagNote('за 1.5с не свернулся → openLink');
       try { tg.openLink(url, {try_instant_view:false}); } catch(e){}
     }
   }, TG_LINK_FALLBACK_MS);
@@ -383,7 +426,7 @@ function openPost(url){
        window.open молча блокируются (WKWebView не умеет новых вкладок) —
        спасает переход в той же вкладке; обычный десктоп-браузер откроет
        новую вкладку штатно */
-    if (iOS) { window.location.href = url; return; }
+    if (iOS) { diagNote('tg нет → переход location.href (пост может открыться под окном)'); window.location.href = url; return; }
     window.open(url, '_blank');
     return;
   }
@@ -396,7 +439,7 @@ function openPost(url){
   var canUseTelegramLink = !!tg.openTelegramLink
     && (!tg.isVersionAtLeast || tg.isVersionAtLeast('7.0'));
   if (NATIVE_APP_PLATFORMS[plat] && canUseTelegramLink) {
-    openViaTelegramLinkWithFallback(url);
+    openInTelegram(url);
     return;
   }
   /* необычная/неопознанная платформа или клиент старше Bot API 7.0 —
@@ -537,8 +580,8 @@ function applyConfig(){
     a.addEventListener('click', function(ev){
       haptic('light');
       // мини-апп → openPost: openTelegramLink, а при тихом сбое iOS —
-      // видимый фолбэк через браузер (стратегия MyRadio);
-      // десктоп-браузер без tg → НЕ перехватываем: сработает обычный href
+      // close() (пост уже открыт в фоне); десктоп-браузер без tg →
+      // НЕ перехватываем: сработает обычный href
       if (tg || iOS) {
         ev.preventDefault(); openPost(cfg.channel_url);
       }
@@ -736,8 +779,8 @@ function renderList(items){
       if (ev.metaKey || ev.ctrlKey) return;   // ctrl/⌘+клик — новая вкладка силами браузера
       haptic('light');
       // мини-апп → openPost: переход внутрь Telegram, а при тихом сбое iOS
-      // (мини-апп открыт из того же канала) — видимый фолбэк через браузер;
-      // десктоп-браузер без tg → НЕ перехватываем: работает настоящий href
+      // (мини-апп открыт из того же канала) — close(), выводящий уже
+      // открытый в фоне пост; десктоп-браузер без tg → НЕ перехватываем
       if (tg || iOS) {
         ev.preventDefault();
         /* мгновенный визуальный отклик, пока Telegram выполняет переход
@@ -930,6 +973,7 @@ function load(){
 /* ── старт ── */
 applyConfig();
 wireTgBack();
+diagInit();
 
 /* кнопка «поделиться»: копирует ссылку на этот мини-апп */
 document.getElementById('hShare').addEventListener('click', function(){
