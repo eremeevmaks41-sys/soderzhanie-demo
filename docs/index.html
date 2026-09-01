@@ -119,7 +119,7 @@ header{display:flex;align-items:center;gap:12px;padding:10px 2px 14px}
 .views button:active{color:var(--text)}
 .views button.active{background:var(--chip-active);color:var(--chip-active-text)}
 
-/* ── сетка тем (настоящее оглавление) ── */
+/* ── сетка карточек (корень оглавления и разделы) ── */
 .tgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:4px}
 .tcard{
   background:var(--card);border:1px solid var(--line);border-radius:15px;
@@ -132,6 +132,7 @@ header{display:flex;align-items:center;gap:12px;padding:10px 2px 14px}
 .t-title{font-size:14.5px;font-weight:700;margin-top:7px;line-height:1.3}
 .t-n{font-size:12px;color:var(--muted);margin-top:3px}
 .slabel{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin:15px 2px 9px}
+.tagwrap{display:flex;flex-wrap:wrap;gap:7px;margin:2px 2px 8px}
 .back{
   display:block;width:100%;margin:2px 0 10px;padding:10px;border-radius:12px;
   border:1.5px solid var(--line);background:var(--chip);color:var(--text);
@@ -182,7 +183,7 @@ footer .lic{font-size:11px;opacity:.75}
     <div class="logo" id="logo">📖</div>
     <div>
       <div class="h-name" id="hName">Оглавление</div>
-      <div class="h-sub" id="hSub">каталог постов канала</div>
+      <div class="h-sub" id="hSub">каталог постов канаала</div>
     </div>
     <button class="h-share" id="hShare" type="button" aria-label="Скопировать ссылку на оглавление" title="Скопировать ссылку">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
@@ -208,7 +209,7 @@ footer .lic{font-size:11px;opacity:.75}
   <div id="state" class="state" style="display:none"></div>
 
   <footer>
-    <div><b>Оглавление</b> · каталог постов Telegram-канала · <span id="ver">v53</span></div>
+    <div><b>Оглавление</b> · каталог постов Telegram-канала · <span id="ver">v54</span></div>
     <div class="lic" id="licLine"></div>
   </footer>
 </div>
@@ -543,10 +544,9 @@ function normTag(s){ return String(s||'').replace(/^#/,'').toLowerCase(); }
 var POSTS = [];        // все посты (новые сверху)
 var TAGS = [];         // [{tag, n}]
 var TOPICS = null;     // [{id,title,icon,tags[]}] из topics.json (может не быть)
-var TOC_ON = false;    // темы из topics.json реально покрывают посты
 var view = 'feed';     // 'toc' | 'feed'
 var filterTopic = null;// id выбранной темы (режим тем)
-var filterMode = null; // универсальная группировка: 'months' | 'alpha' | 'kind'
+var filterMode = null; // универсальная группировка: 'months' | 'alpha' | 'kind' | 'topics'
 var tocGroup = null;   // выбранная группа внутри filterMode
 var filterTag = null;  // выбранный тег-фильтр (в виде «Лента»)
 var filterQ = '';      // поисковая строка
@@ -564,7 +564,7 @@ function topicOf(p){
   return null;
 }
 
-/* ── универсальная группировка без тегов: месяцы / алфавит / тип постов ── */
+/* ── универсальная группировка: месяцы / алфавит / тип постов ── */
 var MODES = [
   {id:'months', icon:'📅', title:'По месяцам'},
   {id:'alpha',  icon:'🔤', title:'По алфавиту'},
@@ -623,6 +623,26 @@ function groupIcon(k){
   return k; // алфавит: буква сама — иконка
 }
 
+/* ── «По темам» (v54): счётчик для карточки в корне.
+   Если темы из topics.json покрывают посты — считаем карточки тем
+   (+ «Разное»), иначе — число тегов постов. */
+function topicCardCount(){
+  if (TOPICS){
+    var n = 0, covered = 0;
+    TOPICS.forEach(function(t){
+      var c = 0;
+      POSTS.forEach(function(p){ if (topicOf(p) === t.id) c++; });
+      if (c) n++;
+      covered += c;
+    });
+    if (covered > 0){
+      var misc = POSTS.length - covered, total = n + (misc > 0 ? 1 : 0);
+      return { n: total, word: pluralWord(total, ['тема','темы','тем']) };
+    }
+  }
+  return { n: TAGS.length, word: pluralWord(TAGS.length, ['тег','тега','тегов']) };
+}
+
 /* ── шапка из конфига ── */
 function applyConfig(){
   var name = cfg.channel_name || 'Оглавление';
@@ -662,7 +682,7 @@ function filtered(){
     if (inToc && filterTopic){
       var t = topicOf(p) || '__misc';
       if (t !== filterTopic) return false;
-    } else if (inToc && filterMode && tocGroup){   // v53: универсальные разделы работают и рядом с темами
+    } else if (inToc && filterMode && tocGroup){
       if (groupKey(p) !== tocGroup) return false;
     } else if (filterTag && !(p.tags||[]).some(function(t){ return normTag(t) === filterTag; })) return false;
     if (!q) return true;
@@ -690,7 +710,7 @@ function renderChips(){
     box.appendChild(c);
   });
 }
-/* ── вид «Оглавление»: темы либо универсальные разделы + возврат ── */
+/* ── переключатель вида: Оглавление / Лента ── */
 function renderViews(){
   var box = document.getElementById('views');
   if (!POSTS.length){ box.style.display = 'none'; return; }
@@ -716,53 +736,63 @@ function hideBack(){
   if (b) b.style.display = 'none';
   updateTgBack();
 }
-function renderTocGrid(){
-  hideBack();
+/* ── экран «По темам» (v54): карточки тем из topics.json
+   (только если они реально покрывают посты) + ВСЕ теги постов
+   с счётчиками. Тап по теме или тегу → отфильтрованный список. ── */
+function renderTopicsScreen(){
+  showBack('← Оглавление', function(){ filterMode = null; filterTopic = null; filterTag = null; tocGroup = null; shown = PAGE_SIZE; render(); });
   renderState(null);
   var list = document.getElementById('list');
-  var misc = 0;
-  POSTS.forEach(function(p){ if (!topicOf(p)) misc++; });
-  var html = '<div class="tgrid">';
-  TOPICS.forEach(function(t){
-    var n = 0;
-    POSTS.forEach(function(p){ if (topicOf(p) === t.id) n++; });
-    if (!n) return;
-    html += '<div class="tcard" data-topic="' + esc(t.id) + '">' +
-              '<div class="t-ico">' + esc(t.icon || '🏷') + '</div>' +
-              '<div class="t-title">' + esc(t.title || t.id) + '</div>' +
-              '<div class="t-n">' + n + ' ' + plural(n) + '</div>' +
-            '</div>';
-  });
-  if (misc){
-    html += '<div class="tcard" data-topic="__misc">' +
-              '<div class="t-ico">🗂</div>' +
-              '<div class="t-title">Разное</div>' +
-              '<div class="t-n">' + misc + ' ' + plural(misc) + '</div>' +
-            '</div>';
+  var html = '';
+  if (TOPICS){
+    var covered = 0, misc = 0;
+    POSTS.forEach(function(p){ if (topicOf(p)) covered++; else misc++; });
+    if (covered > 0){
+      html += '<div class="tgrid">';
+      TOPICS.forEach(function(t){
+        var n = 0;
+        POSTS.forEach(function(p){ if (topicOf(p) === t.id) n++; });
+        if (!n) return;
+        html += '<div class="tcard" data-topic="' + esc(t.id) + '">' +
+                  '<div class="t-ico">' + esc(t.icon || '🏷') + '</div>' +
+                  '<div class="t-title">' + esc(t.title || t.id) + '</div>' +
+                  '<div class="t-n">' + n + ' ' + plural(n) + '</div>' +
+                '</div>';
+      });
+      if (misc){
+        html += '<div class="tcard" data-topic="__misc">' +
+                  '<div class="t-ico">🗂</div>' +
+                  '<div class="t-title">Разное</div>' +
+                  '<div class="t-n">' + misc + ' ' + plural(misc) + '</div>' +
+                '</div>';
+      }
+      html += '</div>';
+    }
   }
-  html += '</div>';
-  /* v53: универсальные разделы (месяцы/алфавит/типы) видны ВСЕГДА —
-     и рядом с темами тоже. До v53 они показывались только когда темы
-     не покрывали ни одного поста: любая тема с «#общество» в постах
-     прятала карточки целиком — из-за этого они «пропадали». */
-  html += '<div class="slabel">Универсальные разделы</div><div class="tgrid">';
-  MODES.forEach(function(m){
-    var gn = groupCards(m.id).length;
-    html += '<div class="tcard" data-mode="' + m.id + '">' +
-              '<div class="t-ico">' + m.icon + '</div>' +
-              '<div class="t-title">' + m.title + '</div>' +
-              '<div class="t-n">' + gn + ' ' + pluralWord(gn, ['раздел','раздела','разделов']) + '</div>' +
-            '</div>';
-  });
-  html += '</div>';
+  if (TAGS.length){
+    html += '<div class="slabel">Теги постов</div><div class="tagwrap">';
+    TAGS.forEach(function(t){
+      var nt = normTag(t.tag);
+      html += '<div class="chip' + (filterTag === nt ? ' active' : '') + '" data-tag="' + esc(nt) + '">' + esc(t.tag) + ' · ' + t.n + '</div>';
+    });
+    html += '</div>';
+  }
+  if (!html) return renderState('empty');
   list.innerHTML = html;
   list.style.display = '';
   list.querySelectorAll('.tcard').forEach(function(el){
     el.addEventListener('click', function(){
       haptic('medium');
-      var md = el.getAttribute('data-mode');
-      if (md){ filterMode = md; tocGroup = null; }        // универсальный раздел
-      else { filterTopic = el.getAttribute('data-topic'); } // тема из topics.json
+      filterTopic = el.getAttribute('data-topic');
+      shown = PAGE_SIZE; render();
+      window.scrollTo(0, 0);
+    });
+  });
+  list.querySelectorAll('.chip[data-tag]').forEach(function(el){
+    el.addEventListener('click', function(){
+      hapticSelect();
+      var nt = el.getAttribute('data-tag');
+      filterTag = (filterTag === nt) ? null : nt;
       shown = PAGE_SIZE; render();
       window.scrollTo(0, 0);
     });
@@ -774,6 +804,9 @@ function renderModeGrid(){
   hideBack();
   renderState(null);
   var list = document.getElementById('list');
+  /* v54: корень оглавления — ВСЕГДА четыре карточки на равных:
+     три универсальные (месяцы/алфавит/типы) + «По темам» (темы и теги).
+     Режима «темы вместо разделов» больше нет — карточки не исчезают. */
   var html = '<div class="tgrid">';
   MODES.forEach(function(m){
     var gn = groupCards(m.id).length;
@@ -783,13 +816,19 @@ function renderModeGrid(){
               '<div class="t-n">' + gn + ' ' + pluralWord(gn, ['раздел','раздела','разделов']) + '</div>' +
             '</div>';
   });
+  var tn = topicCardCount();
+  html += '<div class="tcard" data-mode="topics">' +
+            '<div class="t-ico">🏷</div>' +
+            '<div class="t-title">По темам</div>' +
+            '<div class="t-n">' + tn.n + ' ' + tn.word + '</div>' +
+          '</div>';
   html += '</div>';
   list.innerHTML = html;
   list.style.display = '';
   list.querySelectorAll('.tcard').forEach(function(el){
     el.addEventListener('click', function(){
       haptic('medium');
-      filterMode = el.getAttribute('data-mode');
+      filterMode = el.getAttribute('data-mode');   // 'months' | 'alpha' | 'kind' | 'topics'
       tocGroup = null; shown = PAGE_SIZE; render();
       window.scrollTo(0, 0);
     });
@@ -798,7 +837,7 @@ function renderModeGrid(){
   if (more) more.style.display = 'none';
 }
 function renderGroupCards(){
-  showBack(TOC_ON ? '← Оглавление' : '← Разделы',
+  showBack('← Оглавление',
            function(){ filterMode = null; tocGroup = null; shown = PAGE_SIZE; render(); });
   renderState(null);
   var list = document.getElementById('list');
@@ -898,26 +937,26 @@ function render(){
   var q = filterQ.trim();
   var inToc = view === 'toc' && !q;
   var sub = POSTS.length ? ('каталог постов · ' + POSTS.length + ' шт.') : 'каталог постов канала';
-  if (inToc && TOC_ON && !filterTopic){
-    var nt = TOPICS.filter(function(t){
-      return POSTS.some(function(p){ return topicOf(p) === t.id; });
-    }).length + (POSTS.some(function(p){ return !topicOf(p); }) ? 1 : 0);
-    sub = POSTS.length + ' ' + plural(POSTS.length) + ' · ' + nt + ' ' + pluralWord(nt, ['тема','темы','тем']);
-  } else if (inToc && filterMode && !tocGroup){
+  if (inToc && filterMode && filterMode !== 'topics' && !tocGroup){
     var gn = groupCards().length;
     sub = gn + ' ' + pluralWord(gn, ['раздел','раздела','разделов']);
+  } else if (inToc && filterMode === 'topics' && !filterTopic && !filterTag){
+    var tc = topicCardCount();
+    sub = tc.n + ' ' + tc.word;
   }
   document.getElementById('hSub').textContent = sub;
   renderViews();
   document.getElementById('chips').style.display = inToc ? 'none' : '';
   if (!POSTS.length){ renderChips(); return renderState('empty'); }
-  if (inToc && TOC_ON && !filterTopic && !filterMode){ renderTocGrid(); return; }
-  if (inToc && !TOC_ON && !filterMode){ renderModeGrid(); return; }
-  if (inToc && filterMode && !tocGroup){ renderGroupCards(); return; }   // v53: и при активных темах
-  if (inToc && TOC_ON && !filterMode){
-    showBack('← Все темы', function(){ filterTopic = null; shown = PAGE_SIZE; render(); });
+  if (inToc && !filterMode && !filterTopic && !tocGroup && !filterTag){ renderModeGrid(); return; }  // v54 корень: 4 карточки
+  if (inToc && filterMode === 'topics' && !filterTopic && !filterTag){ renderTopicsScreen(); return; }
+  if (inToc && filterMode && filterMode !== 'topics' && !tocGroup){ renderGroupCards(); return; }
+  if (inToc && filterTopic){
+    showBack('← Темам', function(){ filterTopic = null; shown = PAGE_SIZE; render(); });
   } else if (inToc && filterMode && tocGroup){
     showBack('← Разделы', function(){ tocGroup = null; shown = PAGE_SIZE; render(); });
+  } else if (inToc && filterTag){
+    showBack('← Темам', function(){ filterTag = null; shown = PAGE_SIZE; render(); });
   } else { hideBack(); }
   renderChips();
   if (!items.length) return renderState('nomatch');
@@ -955,11 +994,8 @@ function tryApplyTopics(){
   if (!RAW_TOPICS || !POSTS_READY) return;
   var ts = (RAW_TOPICS && RAW_TOPICS.topics) || [];
   TOPICS = ts.filter(function(t){ return t && t.id && (t.tags||[]).length; });
-  TOC_ON = false;
-  if (!TOPICS.length){ TOPICS = null; render(); return; }
-  var covered = POSTS.filter(function(p){ return topicOf(p); }).length;
-  TOC_ON = covered > 0;
-  render();   // темы не покрывают посты — корень оглавления покажет универсальные разделы
+  if (!TOPICS.length) TOPICS = null;
+  render();   // v54: темы живут внутри карточки «По темам» — корень всегда одинаков
 }
 function loadTopics(){
   fetch('topics.json?v=' + Date.now(), {cache:'no-store'})
