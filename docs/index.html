@@ -736,9 +736,23 @@ function hideBack(){
   if (b) b.style.display = 'none';
   updateTgBack();
 }
-/* ── экран «По темам» (v54): карточки тем из topics.json
-   (только если они реально покрывают посты) + ВСЕ теги постов
-   с счётчиками. Тап по теме или тегу → отфильтрованный список. ── */
+/* ── иконки для карточек тегов (v54): частые теги → эмодзи, иначе ярлык ── */
+var TAG_ICONS = {
+  russia:'🇷🇺', россия:'🇷🇺', worldnews:'🌍', мировыеновости:'🌍',
+  conflict:'⚔️', конфликт:'⚔️', society:'🏙️', общество:'🏙️',
+  economy:'📈', экономика:'📈', politics:'🏛️', политика:'🏛️',
+  health:'🏥', здоровье:'🏥', science:'🔬', наука:'🔬',
+  energy:'⚡', энергетика:'⚡', sport:'⚽', спорт:'⚽',
+  technology:'💻', технологии:'💻', culture:'🎭', культура:'🎭',
+  family:'👨‍👩‍👧', семья:'👨‍👩‍👧', incident:'🚨', происшествия:'🚨'
+};
+function tagIcon(tag){
+  return TAG_ICONS[normTag(tag)] || '🏷️';
+}
+/* ── экран «По темам» (v54): везде карточки. Подборки из topics.json
+   (только если они реально покрывают посты) + каждый тег поста — своя
+   карточка (иконка и счётчик). Тап по карточке → оглавление
+   соответствующих постов. ── */
 function renderTopicsScreen(){
   showBack('← Оглавление', function(){ filterMode = null; filterTopic = null; filterTag = null; tocGroup = null; shown = PAGE_SIZE; render(); });
   renderState(null);
@@ -770,17 +784,21 @@ function renderTopicsScreen(){
     }
   }
   if (TAGS.length){
-    html += '<div class="slabel">Теги постов</div><div class="tagwrap">';
+    html += '<div class="slabel">Все темы</div><div class="tgrid">';
     TAGS.forEach(function(t){
       var nt = normTag(t.tag);
-      html += '<div class="chip' + (filterTag === nt ? ' active' : '') + '" data-tag="' + esc(nt) + '">' + esc(t.tag) + ' · ' + t.n + '</div>';
+      html += '<div class="tcard" data-ttag="' + esc(nt) + '">' +
+                '<div class="t-ico">' + esc(tagIcon(t.tag)) + '</div>' +
+                '<div class="t-title">' + esc(t.tag) + '</div>' +
+                '<div class="t-n">' + t.n + ' ' + plural(t.n) + '</div>' +
+              '</div>';
     });
     html += '</div>';
   }
   if (!html) return renderState('empty');
   list.innerHTML = html;
   list.style.display = '';
-  list.querySelectorAll('.tcard').forEach(function(el){
+  list.querySelectorAll('.tcard[data-topic]').forEach(function(el){
     el.addEventListener('click', function(){
       haptic('medium');
       filterTopic = el.getAttribute('data-topic');
@@ -788,11 +806,10 @@ function renderTopicsScreen(){
       window.scrollTo(0, 0);
     });
   });
-  list.querySelectorAll('.chip[data-tag]').forEach(function(el){
+  list.querySelectorAll('.tcard[data-ttag]').forEach(function(el){
     el.addEventListener('click', function(){
-      hapticSelect();
-      var nt = el.getAttribute('data-tag');
-      filterTag = (filterTag === nt) ? null : nt;
+      haptic('medium');
+      filterTag = el.getAttribute('data-ttag');
       shown = PAGE_SIZE; render();
       window.scrollTo(0, 0);
     });
