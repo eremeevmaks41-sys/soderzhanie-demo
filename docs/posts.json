@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-02T01:16:49+03:00",
+  "updated_at": "2026-09-02T03:27:30+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -20,6 +20,21 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/31",
       "src": "https://www.aljazeera.com/news/2026/9/1/us-energy-secretary-will-travel-to-venezuela-to-unveil-oil-arrangement?traffic_source=rss"
+    },
+    {
+      "id": 32,
+      "date": "2026-09-02",
+      "time": "00:05",
+      "title": "Германия обвинила Россию в атаке дрона на аэропорт Лейпцига",
+      "preview": "Власти Германии заявили, что Россия стоит за атакой дрона с взрывчаткой на аэропорт Лейпцига. Беспилотник с взрывным устройством был обнаружен 4 августа рядом с украинскими…",
+      "tags": [
+        "#мировыеновости",
+        "#происшествия",
+        "#конфликт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/32",
+      "src": "https://www.bbc.co.uk/news/articles/c5ylm3m67n2o?at_medium=RSS&at_campaign=rss"
     },
     {
       "id": 26,
