@@ -111,7 +111,8 @@ KEYWORD_TAGS = [
     ("наука",     ["учен", "наук", "исследован", "открыт", "космос", "nasa", "ракет-носител", "климат"]),
     ("технологии",["ai", "искусственн", "технолог", "приложен", "чек", "cyber", "хакер", "чип", "apple", "google", "tesla"]),
     ("здоровье",  ["медиц", "врач", "болезн", "вирус", "вакцин", "пациент", "здоровь", "эпидеми"]),
-    ("происшествия", ["землетрясен", "наводнен", "пожар", "авиакатастроф", "крушен", "вспышк", "авар"]),
+    ("происшествия", ["землетрясен", "наводнен", "пожар", "авиакатастроф", "крушен", "вспышк", "авар",
+                     "взрыв", "взорвал", "жертв", "обрушен", "затоплен"]),
     ("культура",  ["фильм", "преми", "фестивал", "альбом", "сериал", "книг", "выставк", "оскар"]),
     ("спорт",     ["чемпион", "матч", "кубок", "олимпиад", "турнир", "футбол", "хоккей"]),
     ("общество",  ["забастовк", "протест", "мигрант", "суд", "приговор", "закон", "школ", "больниц"]),
@@ -134,10 +135,26 @@ AI_SYSTEM = (
     "— Всё по-русски. Имена собственные — в устоявшейся русской передаче; организации — как принято.\n"
     "— Если вход уже на русском — не переводи и не пересказывай дословно: "
     "сожми суть своими словами, сохранив все цифры, имена и факты.\n"
-    "— tags: 1–3 метки СТРОГО из списка, первая — главная тема:\n"
+    "— tags: 1–3 метки СТРОГО из списка, первая — главная тема. Рубрика тем:\n"
     "  " + ", ".join(TAG_WHITELIST) + "\n"
-    "  Опиши фактическую тему новости (например, нефть/курсы → экономика, выборы/саммиты → политика, "
-    "болезни/медицина → здоровье, ЧП/катастрофы → происшествия). Нет уверенной темы — []. "
+    "  Границы тем: конфликт — боевые действия, удары, обстрелы, дроны; "
+    "происшествия — взрывы, пожары, наводнения, крушения, аварии, атаки с разрушениями и жертвами "
+    "(в том числе на ГЭС, заводах, трубопроводах и ЛЭП); "
+    "энергетика — отрасль как бизнес и проекты (нефтепроводы, газопроводы, стройка энергоблоков, рынки энергии); "
+    "технологии — ТОЛЬКО гаджеты, интернет, ИИ, кибербезопасность; "
+    "экономика — деньги, рынки, нефть/газ как товар, компании, бюджеты; "
+    "политика — выборы, саммиты, законы, назначения; "
+    "наука — исследования, космос, открытия; здоровье — болезни и медицина; "
+    "спорт — соревнования; культура — кино, музыка, книги; общество — суды, быт, образование; "
+    "транспорт — аэропорты, метро, ж/д как инфраструктура.\n"
+    "  Жёсткое правило: ЧП (взрыв, пожар, наводнение, крушение, обрушение, атака с разрушением) — "
+    "ВСЕГДА первая метка «происшествия», даже если объект — ГЭС, завод или электросеть. "
+    "«Технологии» для ЧП и аварий ЗАПРЕЩЕНЫ.\n"
+    "  Примеры: «спасатели взрывают склон у ГЭС после наводнения, есть жертвы» → происшествия, мировыеновости; "
+    "«стройка газопровода вышла на финальную стадию» → энергетика, экономика; "
+    "«лыжников допустили до международных стартов» → спорт; "
+    "«суд защитил единственное жильё пенсионера» → общество.\n"
+    "  Нет уверенной темы — []. "
     "Другие метки (в т.ч. «россия», «мир») запрещены — страна/регион и так видны по источнику.\n"
     "— headline: до 100 символов, ёмкий заголовок с сутью, без точки в конце, без кавычек-ёлочек по краям.\n"
     "— lede: 2–3 предложения (до 340 символов) — суть события: кто, что, где, когда, цифры.\n"
@@ -645,6 +662,29 @@ def tg_send_photo(token, chat, photo_url, caption):
     })
 
 
+def tg_send_photo_upload(token, chat, photo_url, caption, timeout=60):
+    """Фолбэк: Telegram не смог скачать фото по URL (блок, формат, размер) —
+    качаем сами и льём файлом (multipart; лимит фото 10 МБ, берём до 9)."""
+    import uuid
+    raw = http_get_bytes(photo_url, timeout=30, max_len=9_000_000)
+    if len(raw) < 1024:
+        raise ValueError("картинка слишком мала — это не изображение")
+    bnd = "----Soderzhanie" + uuid.uuid4().hex
+    parts = []
+    for name, val in (("chat_id", chat), ("caption", caption), ("parse_mode", "HTML")):
+        parts.append((f"--{bnd}\r\nContent-Disposition: form-data; name=\"{name}\"\r\n\r\n{val}\r\n").encode("utf-8"))
+    parts.append((f"--{bnd}\r\nContent-Disposition: form-data; name=\"photo\"; filename=\"news.jpg\"\r\n"
+                  f"Content-Type: image/jpeg\r\n\r\n").encode("utf-8"))
+    parts.append(raw)
+    parts.append(f"\r\n--{bnd}--\r\n".encode("utf-8"))
+    req = urllib.request.Request(
+        f"https://api.telegram.org/bot{token}/sendPhoto", data=b"".join(parts),
+        method="POST",
+        headers={"Content-Type": f"multipart/form-data; boundary={bnd}"})
+    with urllib.request.urlopen(req, timeout=timeout) as r:
+        return json.loads(r.read().decode("utf-8"))
+
+
 def tg_send_video(token, chat, video_url, caption):
     api = f"https://api.telegram.org/bot{token}/sendVideo"
     return http_json(api, {
@@ -698,7 +738,8 @@ def publish_item(token, chat, item, text, kind):
     Возвращает (ok, actual_kind, message_id)."""
     if kind == "video" and item.get("video"):
         url, ctype, clen = resolve_video(item["video"])
-        ok_video = ctype.startswith("video") or not ctype   # HEAD мог не пройти — пробуем как есть
+        ok_video = (ctype.startswith("video") or not ctype) \
+            and "flv" not in (ctype + " " + url).lower()   # HEAD мог не пройти — пробуем как есть; FLV Telegram не играет
         if ok_video and clen > 45_000_000:
             log("    · видео больше 45 МБ — шлю как фото/текст")
             ok_video = False
@@ -726,9 +767,16 @@ def publish_item(token, chat, item, text, kind):
             resp = tg_send_photo(token, chat, item["image"], text)
             if resp.get("ok"):
                 return True, "photo", resp["result"]["message_id"]
-            log(f"    · фото отклонено ({resp.get('description')}) — шлю текстом")
+            log(f"    · фото отклонено ({resp.get('description')}) — пробую файлом")
         except Exception as e:
-            log(f"    · фото не отправилось ({e}) — шлю текстом")
+            log(f"    · фото не отправилось ({e}) — пробую файлом")
+        try:
+            resp = tg_send_photo_upload(token, chat, item["image"], text)
+            if resp.get("ok"):
+                return True, "photo", resp["result"]["message_id"]
+            log(f"    · фото файлом отклонено ({resp.get('description')}) — шлю текстом")
+        except Exception as e:
+            log(f"    · фото файлом не отправилось ({e}) — шлю текстом")
     try:
         resp = tg_send(token, chat, text)
     except Exception as e:
@@ -874,6 +922,12 @@ def merge_tags(base, card, text):
     не дублирует метку источника."""
     base = list(base or ["#мировыеновости"])
     picked = [t for t in (card.get("tags") or []) if t not in base]
+    # страховка рубрики: во входе ЧП (взрыв, наводнение, крушение…), а ИИ
+    # «происшествия» не поставил — ставим принудительно первой меткой темы.
+    low = (text or "").lower()
+    if "происшествия" not in [str(t).lstrip("#").lower() for t in picked] \
+            and any(k in low for k in KEYWORD_TAGS["происшествия"]):
+        picked = ["#происшествия"] + picked
     tags = (base + picked)[:3]
     if len(tags) == len(base):
         extra = keyword_tags(text, default=base[0])
