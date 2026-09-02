@@ -1,11 +1,26 @@
 {
   "version": 1,
-  "updated_at": "2026-09-02T21:22:57+03:00",
+  "updated_at": "2026-09-03T01:18:18+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 45,
+      "date": "2026-09-03",
+      "time": "00:37",
+      "title": "Сенатор-республиканец призвал Трампа уволить главу Пентагона Хегсета",
+      "preview": "Сенатор Том Тиллис обвинил главу Пентагона Пита Хегсета в «некомпетентном управлении» на фоне военного напряжения из-за конфликта с Ираном. Призыв к отставке прозвучал от…",
+      "tags": [
+        "#мировыеновости",
+        "#политика",
+        "#конфликт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/45",
+      "src": "https://www.aljazeera.com/news/2026/9/2/republican-senator-calls-on-trump-to-fire-secretary-of-defence-hegseth?traffic_source=rss"
+    },
     {
       "id": 43,
       "date": "2026-09-02",
