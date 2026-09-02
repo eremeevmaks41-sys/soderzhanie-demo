@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-02T19:20:03+03:00",
+  "updated_at": "2026-09-02T21:22:57+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -20,6 +20,21 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/43",
       "src": "https://www.aljazeera.com/news/2026/9/2/dismissal-of-ex-us-soldier-bergdahls-conviction-was-invalid-court-rules?traffic_source=rss"
+    },
+    {
+      "id": 44,
+      "date": "2026-09-02",
+      "time": "18:33",
+      "title": "Иран обвинил США в гибели четырёх человек на свадьбе",
+      "preview": "Иранские СМИ сообщают, что в результате удара США погибли четыре человека, включая двух детей — осколки попали в жилой дом. Иран назвал это военным преступлением и в ответ…",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/44",
+      "src": "https://www.bbc.co.uk/news/articles/cj06q4ynpmjo?at_medium=RSS&at_campaign=rss"
     },
     {
       "id": 42,
