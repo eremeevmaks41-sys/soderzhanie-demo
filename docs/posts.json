@@ -1,11 +1,26 @@
 {
   "version": 1,
-  "updated_at": "2026-09-02T17:18:51+03:00",
+  "updated_at": "2026-09-02T19:20:03+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 43,
+      "date": "2026-09-02",
+      "time": "18:53",
+      "title": "Суд США отменил отмену приговора сержанту Бергдалу, обменянному в Афганистане",
+      "preview": "Апелляционная инстанция признала недействительным решение об отмене обвинительного приговора бывшему рядовому армии США Бо Бергдалу. Отмечается, что пересмотр приговоров военного…",
+      "tags": [
+        "#мировыеновости",
+        "#политика",
+        "#общество"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/43",
+      "src": "https://www.aljazeera.com/news/2026/9/2/dismissal-of-ex-us-soldier-bergdahls-conviction-was-invalid-court-rules?traffic_source=rss"
+    },
     {
       "id": 42,
       "date": "2026-09-02",
