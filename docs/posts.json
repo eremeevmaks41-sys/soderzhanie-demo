@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-02T05:32:20+03:00",
+  "updated_at": "2026-09-02T07:20:22+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -212,6 +212,21 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/14",
       "src": "https://www.bbc.co.uk/news/articles/c5ylvgq9q71o?at_medium=RSS&at_campaign=rss"
+    },
+    {
+      "id": 34,
+      "date": "2026-08-31",
+      "time": "16:44",
+      "title": "Южноафриканская авиакомпания защитила опасный пролёт самолётов над стадионом в Кейптауне",
+      "preview": "Перед вторым тестовым матчем по регби между сборными ЮАР и Новой Зеландии в Кейптауне два пассажирских Embraer авиакомпании Airlink пролетели на малой высоте над Cape Town…",
+      "tags": [
+        "#мировыеновости",
+        "#происшествия",
+        "#спорт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/34",
+      "src": "https://www.theguardian.com/sport/2026/aug/31/south-african-airline-defends-dramatic-low-level-flyby-before-rugby-union-springboks-new-zealand"
     }
   ]
 }
