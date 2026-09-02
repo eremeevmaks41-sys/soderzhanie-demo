@@ -925,8 +925,9 @@ def merge_tags(base, card, text):
     # страховка рубрики: во входе ЧП (взрыв, наводнение, крушение…), а ИИ
     # «происшествия» не поставил — ставим принудительно первой меткой темы.
     low = (text or "").lower()
+    inc_kw = dict(KEYWORD_TAGS).get("происшествия") or []
     if "происшествия" not in [str(t).lstrip("#").lower() for t in picked] \
-            and any(k in low for k in KEYWORD_TAGS["происшествия"]):
+            and any(k in low for k in inc_kw):
         picked = ["#происшествия"] + picked
     tags = (base + picked)[:3]
     if len(tags) == len(base):
