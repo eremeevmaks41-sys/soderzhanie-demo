@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-03T01:18:18+03:00",
+  "updated_at": "2026-09-03T03:29:43+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -20,6 +20,21 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/45",
       "src": "https://www.aljazeera.com/news/2026/9/2/republican-senator-calls-on-trump-to-fire-secretary-of-defence-hegseth?traffic_source=rss"
+    },
+    {
+      "id": 46,
+      "date": "2026-09-02",
+      "time": "20:33",
+      "title": "Саудовский танкер атакован в Ормузском проливе: погибли двое филиппинцев",
+      "preview": "Саудовская Аравия заявила, что иранская атака на танкер Sidr в Ормузском проливе в понедельник привела к гибели двух филиппинских моряков. Судно получило повреждения от попадания…",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт",
+        "#происшествия"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/46",
+      "src": "https://www.bbc.co.uk/news/articles/cx2zxgg4mx9o?at_medium=RSS&at_campaign=rss"
     },
     {
       "id": 43,
