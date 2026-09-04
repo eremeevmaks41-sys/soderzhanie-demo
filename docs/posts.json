@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-09-03T17:20:28+03:00",
+  "updated_at": "2026-09-04T05:18:41+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 54,
+      "date": "2026-09-04",
+      "time": "05:11",
+      "title": "Беспилотники атаковали Сочи",
+      "preview": "Беспилотники атаковали Сочи. Подробности и последствия уточняются.",
+      "tags": [
+        "#россия",
+        "#происшествия"
+      ],
+      "kind": "text",
+      "url": "https://t.me/daily_news_digest/54",
+      "src": "https://lenta.ru/news/2026/09/04/bespilotniki-atakovali-sochi/"
+    },
     {
       "id": 53,
       "date": "2026-09-03",
