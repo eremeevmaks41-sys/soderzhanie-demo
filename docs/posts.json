@@ -1,11 +1,26 @@
 {
   "version": 1,
-  "updated_at": "2026-09-04T05:18:41+03:00",
+  "updated_at": "2026-09-06T01:17:47+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 55,
+      "date": "2026-09-06",
+      "time": "00:23",
+      "title": "Уиткофф и Кушнер встретились с Путиным в Кремле",
+      "preview": "Спецпосланники США Стив Уиткофф и Джаред Кушнер провели в субботу в Кремле переговоры с президентом России Владимиром Путиным. Главной темой встречи стало урегулирование…",
+      "tags": [
+        "#мировыеновости",
+        "#политика",
+        "#конфликт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/55",
+      "src": "https://www.aljazeera.com/video/newsfeed/2026/9/5/us-envoys-witkoff-kushner-meet-putin-for-talks-on-ukraine-war?traffic_source=rss"
+    },
     {
       "id": 54,
       "date": "2026-09-04",
