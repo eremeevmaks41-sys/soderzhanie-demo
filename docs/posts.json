@@ -1,11 +1,26 @@
 {
   "version": 1,
-  "updated_at": "2026-09-07T21:22:22+03:00",
+  "updated_at": "2026-09-08T01:18:39+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 58,
+      "date": "2026-09-08",
+      "time": "00:17",
+      "title": "Нефть подорожала до максимума за 6 недель из-за ударов США и Ирана в Ормузском проливе",
+      "preview": "Цены на нефть взлетели до шестинедельного максимума после обмена ударами между США и Ираном в Ормузском проливе. Конфликт нарушил судоходство в стратегически важном коридоре…",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт",
+        "#экономика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/58",
+      "src": "https://www.aljazeera.com/economy/2026/9/7/oil-prices-surge-as-us-iran-strikes-intensify-in-strait-of-hormuz?traffic_source=rss"
+    },
     {
       "id": 57,
       "date": "2026-09-07",
