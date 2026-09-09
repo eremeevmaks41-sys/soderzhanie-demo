@@ -1,11 +1,26 @@
 {
   "version": 1,
-  "updated_at": "2026-09-08T19:21:53+03:00",
+  "updated_at": "2026-09-09T13:20:41+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 63,
+      "date": "2026-09-09",
+      "time": "13:12",
+      "title": "Стив Уиткофф заработал $107 млн на криптопроекте World Liberty Financial",
+      "preview": "Спецпосланник Трампа Стив Уиткофф в 2025 году получил $107 млн через холдинг, владеющий его долей в криптовалютном стартапе World Liberty Financial. Проект запустили в 2024 году…",
+      "tags": [
+        "#россия",
+        "#экономика",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/63",
+      "src": "https://www.kommersant.ru/doc/8939845"
+    },
     {
       "id": 62,
       "date": "2026-09-08",
