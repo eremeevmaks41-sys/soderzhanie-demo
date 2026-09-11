@@ -1,11 +1,26 @@
 {
   "version": 1,
-  "updated_at": "2026-09-11T19:20:24+03:00",
+  "updated_at": "2026-09-12T01:18:18+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 68,
+      "date": "2026-09-12",
+      "time": "00:53",
+      "title": "Израильские сносы угрожают школам и домам в Масафер-Ятта",
+      "preview": "В районе Масафер-Ятта на Западном берегу Иордана израильские власти проводят снос домов и школ, лишая палестинских детей доступа к образованию. Студенты заявили, что продолжат…",
+      "tags": [
+        "#мировыеновости",
+        "#происшествия",
+        "#конфликт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/68",
+      "src": "https://www.aljazeera.com/features/2026/9/11/israeli-demolitions-threaten-schools-and-homes-in-masafer-yatta?traffic_source=rss"
+    },
     {
       "id": 67,
       "date": "2026-09-11",
