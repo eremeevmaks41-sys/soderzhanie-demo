@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-09-12T23:18:27+03:00",
+  "updated_at": "2026-09-13T01:18:41+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 74,
+      "date": "2026-09-13",
+      "time": "00:38",
+      "title": "Первый бой дронов в Черном море",
+      "preview": "В Черном море состоялся первый в истории бой между двумя без pilote суднами. Произошел обстрел и столкновение без pilote катеров.",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/74",
+      "src": "https://www.aljazeera.com/video/newsfeed/2026/9/12/first-naval-battle-between-drones-takes-place-in-the-black-sea?traffic_source=rss"
+    },
     {
       "id": 73,
       "date": "2026-09-12",
