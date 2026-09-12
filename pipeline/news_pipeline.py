@@ -46,10 +46,12 @@ GitHub Actions запускает скрипт каждые 2 часа:
     в невысоком разрешении (~4–8 МБ) — для канала достаточно.
 Дедуп: seen.json (hash) + ссылки в posts.json + нормализованные заголовки.
 
-Сверка оглавления (publish-запуски): последние ~120 постов опрашиваются в
+Сверка оглавления (publish-запуски): последние ~30 постов опрашиваются в
     канале editMessageText/Caption ТОМ ЖЕ текстом («message is not modified»
     = жив, и на экране ничего не меняется; старые посты без сохранённого
-    текста — t.me-эмбедом). Пост, удалённый в Telegram, вычищается из
+    текста — t.me-эмбедом). Пробы идут с паузами: у Telegram ~20 сообщений
+    в минуту на чат, плотная серия проб вводит флуд-окно, в котором тонет
+    сама публикация новостей. Пост, удалённый в Telegram, вычищается из
     posts.json — оглавление больше не ссылается на «Пост не найден».
     Ручная сверка без публикаций: Run workflow → sync_only=true.
 """
@@ -60,6 +62,7 @@ import json
 import os
 import re
 import sys
+import time
 import urllib.request
 import urllib.error
 import urllib.parse
@@ -76,16 +79,21 @@ GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/openai/chat/compl
 GEMINI_MODEL_DEFAULT = "gemini-2.5-flash"
 
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
-# Бесплатные модели (суффикс :free), пробуются по очереди, пока одна не ответит:
-# 1) GLM — лучший русский среди бесплатных + structured_outputs (надёжный JSON);
-# 2) MiniMax M3 — 1M контекста, response_format;
-# 3) Nemotron Super — компактная, structured_outputs;
-# 4) Nemotron Ultra — самый крупный резерв.
+# Бесплатные модели (суффикс :free), пробуются по очереди, пока одна не ответит.
+# Список живых сверяется с каталогом openrouter.ai/api/v1/models: у моделей,
+# с которых закрыли бесплатный доступ, КАЖДЫЙ запрос отвечает 404 — они съедают
+# попытки запуска впустую (так случилось с glm-5.2:free и minimax-m3:free).
+# 1) Nemotron Super — компактная, structured_outputs (надёжный JSON);
+# 2) Gemma 4 31B — свежая модель Google;
+# 3) Nemotron 3.5 Lightning — 1M контекста;
+# 4) Inkling — 1M контекста;
+# 5) Nemotron Ultra — самый крупный резерв.
 # Переопределить можно секретом/переменной AI_MODEL (можно списком через запятую).
 OPENROUTER_MODELS = [
-    "z-ai/glm-5.2:free",
-    "minimax/minimax-m3:free",
     "nvidia/nemotron-3-super-120b-a12b:free",
+    "google/gemma-4-31b-it:free",
+    "nvidia/nemotron-3.5-lightning:free",
+    "thinkingmachines/inkling:free",
     "nvidia/nemotron-3-ultra-550b-a55b:free",
 ]
 
@@ -732,6 +740,45 @@ def resolve_video(url):
         return url, "", 0
 
 
+def retry_after_seconds(exc, default=3, cap=60):
+    """Сколько Telegram просит ждать в теле ответа на HTTP 429 (retry_after).
+    Не 429 → 0. Плотная серия edit-проб сверки (или два запуска внахлёст)
+    вводит флуд-окно на чат — без этой паузы повторка тонет снова."""
+    if getattr(exc, "code", None) != 429:
+        return 0
+    delay = default
+    try:
+        body = exc.read(500).decode("utf-8", "ignore")
+        m = re.search(r'"retry_after"\s*:\s*(\d+)', body) \
+            or re.search(r"retry after (\d+)", body, re.I)
+        if m:
+            delay = int(m.group(1))
+    except Exception:
+        pass
+    return max(1, min(delay, cap))
+
+
+def wait_telegram_429(exc, cap=60):
+    """Исключение — HTTP 429 от Telegram? Ждём retry_after и True. Иначе False."""
+    secs = retry_after_seconds(exc, default=3, cap=cap)
+    if not secs:
+        return False
+    log(f"    · Telegram просит паузу {secs} c (429) — жду и повторяю")
+    time.sleep(secs + 1)
+    return True
+
+
+def tg_send_retry(send_fn, *args):
+    """Telegram-отправка с одной повторкой при 429: временный флуд-лимит
+    не должен превращать фото-пост в текст или убивать выпуск целиком."""
+    try:
+        return send_fn(*args)
+    except urllib.error.HTTPError as e:
+        if not wait_telegram_429(e):
+            raise
+        return send_fn(*args)
+
+
 def publish_item(token, chat, item, text, kind):
     """Видео → sendVideo (по URL или файлом); фото → sendPhoto;
     не получилось — фолбэк ниже (видео → фото → текст).
@@ -747,7 +794,7 @@ def publish_item(token, chat, item, text, kind):
             # по URL Telegram сам забирает файлы ≤20 МБ; больше — только файлом
             if clen == 0 or clen <= 20_000_000:
                 try:
-                    resp = tg_send_video(token, chat, url, text)
+                    resp = tg_send_retry(tg_send_video, token, chat, url, text)
                     if resp.get("ok"):
                         return True, "video", resp["result"]["message_id"]
                     log(f"    · видео по URL отклонено ({resp.get('description')}) — пробую файлом")
@@ -756,7 +803,7 @@ def publish_item(token, chat, item, text, kind):
             else:
                 log(f"    · видео ~{clen // 1_000_000} МБ — загружаю файлом")
             try:
-                resp = tg_send_video_upload(token, chat, url, text)
+                resp = tg_send_retry(tg_send_video_upload, token, chat, url, text)
                 if resp.get("ok"):
                     return True, "video", resp["result"]["message_id"]
                 log(f"    · видео файлом отклонено ({resp.get('description')}) — шлю как фото/текст")
@@ -764,21 +811,21 @@ def publish_item(token, chat, item, text, kind):
                 log(f"    · видео файлом не отправилось ({e}) — шлю как фото/текст")
     if kind in ("video", "photo") and item.get("image"):
         try:
-            resp = tg_send_photo(token, chat, item["image"], text)
+            resp = tg_send_retry(tg_send_photo, token, chat, item["image"], text)
             if resp.get("ok"):
                 return True, "photo", resp["result"]["message_id"]
             log(f"    · фото отклонено ({resp.get('description')}) — пробую файлом")
         except Exception as e:
             log(f"    · фото не отправилось ({e}) — пробую файлом")
         try:
-            resp = tg_send_photo_upload(token, chat, item["image"], text)
+            resp = tg_send_retry(tg_send_photo_upload, token, chat, item["image"], text)
             if resp.get("ok"):
                 return True, "photo", resp["result"]["message_id"]
             log(f"    · фото файлом отклонено ({resp.get('description')}) — шлю текстом")
         except Exception as e:
             log(f"    · фото файлом не отправилось ({e}) — шлю текстом")
     try:
-        resp = tg_send(token, chat, text)
+        resp = tg_send_retry(tg_send, token, chat, text)
     except Exception as e:
         log(f"    × Telegram отклонил («{e}»)")
         return False, "text", None
@@ -790,7 +837,9 @@ def publish_item(token, chat, item, text, kind):
 
 # ───────────────────── сверка оглавления с каналом ─────────────────────
 
-SYNC_PROBE_LIMIT = 120          # сколько свежих постов проверяем за запуск
+SYNC_PROBE_LIMIT = 30           # сколько свежих постов проверяем за запуск
+                                # (30 проб × пауза 3 с ≈ 1,5 мин — с запасом
+                                # внутри флуд-лимита Telegram ~20 сообщ/мин)
 
 
 def classify_probe_error(desc):
@@ -826,6 +875,11 @@ def probe_alive_api(token, chat, msg_id, meta):
         resp = http_json(f"https://api.telegram.org/bot{token}/{api}", payload, timeout=20)
         return "alive" if resp.get("ok") else "unknown"
     except urllib.error.HTTPError as e:
+        if e.code == 429:
+            # флуд-окно (в т.ч. от собственных проб) — ждём retry_after,
+            # чтобы следующая проба не продлила штраф
+            time.sleep(min(20, retry_after_seconds(e) + 1))
+            return "unknown"
         desc = ""
         try:
             desc = e.read(300).decode("utf-8", "ignore")
@@ -859,9 +913,15 @@ def sync_deleted(token, chat, posts, texts):
     Возвращает число вычищенных (0 — ничего, -1 — канал недоступен)."""
     with_id = [p for p in posts if p.get("id")]
     dead = []
+    api_probes = 0
     for p in with_id[-SYNC_PROBE_LIMIT:]:
         meta = texts.get(str(p["id"]))
         if meta and meta.get("text"):
+            # пауза между edit-пробами: серия без пауз (~20 проб за 20 секунд)
+            # вводит флуд-окно на чат, в котором тонет публикация после сверки
+            if api_probes:
+                time.sleep(3.0)
+            api_probes += 1
             state = probe_alive_api(token, chat, p["id"], meta)
         else:
             state = probe_alive_embed(chat, p["id"])
