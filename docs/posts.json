@@ -1,11 +1,26 @@
 {
   "version": 1,
-  "updated_at": "2026-09-12T11:19:02+03:00",
+  "updated_at": "2026-09-12T19:19:29+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 70,
+      "date": "2026-09-12",
+      "time": "19:06",
+      "title": "Хуситы и Мекканский пакт: Пакистан и Турция могут вмешаться по запросу Саудовской Аравии",
+      "preview": "Статья Al Jazeera рассматривает вероятность активации Мекканского пакта из-за атак хуситов. При официальном запросе Эр-Рияда Пакистан и Турция готовы вмешаться, однако прямое…",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/70",
+      "src": "https://www.aljazeera.com/opinions/2026/9/12/will-the-houthi-attacks-activate-the-mecca-pact?traffic_source=rss"
+    },
     {
       "id": 69,
       "date": "2026-09-12",
