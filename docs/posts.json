@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-13T01:18:41+03:00",
+  "updated_at": "2026-09-13T03:28:16+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -77,6 +77,21 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/70",
       "src": "https://www.aljazeera.com/opinions/2026/9/12/will-the-houthi-attacks-activate-the-mecca-pact?traffic_source=rss"
+    },
+    {
+      "id": 75,
+      "date": "2026-09-12",
+      "time": "15:15",
+      "title": "Саудовская Аравия остановила ключевой нефтепровод после атаки дронов из Ирака",
+      "preview": "Саудовская Аравия приостановила работу важного нефтепровода после атаки беспилотников, запущенной с территории Ирака. Иракские власти уволили военного командира и начали…",
+      "tags": [
+        "#мировыеновости",
+        "#энергетика",
+        "#конфликт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/75",
+      "src": "https://www.bbc.co.uk/news/articles/c62m933465eo?at_medium=RSS&at_campaign=rss"
     },
     {
       "id": 69,
