@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-09-13T03:28:16+03:00",
+  "updated_at": "2026-09-13T05:19:19+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 76,
+      "date": "2026-09-13",
+      "time": "04:47",
+      "title": "Россиянам назвали продукты, улучшающие память и концентрацию",
+      "preview": "Специалисты перечислили продукты, способные поддерживать когнитивные функции: улучшать память и концентрацию внимания. В список вошли жирная рыба, орехи, ягоды, темный шоколад и…",
+      "tags": [
+        "#россия",
+        "#здоровье"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/76",
+      "src": "https://lenta.ru/news/2026/09/13/rossiyanam-nazvali-uluchshayuschie-pamyat-i-kontsentratsiyu-produkty/"
+    },
     {
       "id": 74,
       "date": "2026-09-13",
