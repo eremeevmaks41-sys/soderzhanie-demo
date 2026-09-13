@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-13T05:19:19+03:00",
+  "updated_at": "2026-09-13T07:19:39+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -91,6 +91,21 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/70",
       "src": "https://www.aljazeera.com/opinions/2026/9/12/will-the-houthi-attacks-activate-the-mecca-pact?traffic_source=rss"
+    },
+    {
+      "id": 77,
+      "date": "2026-09-12",
+      "time": "18:09",
+      "title": "В Уганде похоронили самого молодого монарха мира, его преемник — новостной ведущий",
+      "preview": "В Уганде состоялись похороны короля Ойо Нымба Камба Игуру Рукиди IV, который был самым молодым монархом в мире. Его преемником назначен новостной ведущий Эдвард Рукиди…",
+      "tags": [
+        "#мировыеновости",
+        "#общество",
+        "#культура"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/77",
+      "src": "https://www.theguardian.com/world/2026/sep/12/burial-king-oyo-uganda"
     },
     {
       "id": 75,
