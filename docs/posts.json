@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-09-13T23:19:15+03:00",
+  "updated_at": "2026-09-14T01:18:45+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 85,
+      "date": "2026-09-14",
+      "time": "01:02",
+      "title": "Американские спортсмены выиграли спринтерский дубль на Ultimate Championship",
+      "preview": "Джефферсон-Вуден и Беднарек победили в беге на 100 м и 200 м на турнире Ultimate Championship. Каждый из спортсменов получил призовые в размере 150 000 долларов. Соревнования…",
+      "tags": [
+        "#мировыеновости",
+        "#спорт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/85",
+      "src": "https://www.aljazeera.com/sports/2026/9/13/jefferson-wooden-bednarek-complete-ultimate-championship-sprint-doubles?traffic_source=rss"
+    },
     {
       "id": 84,
       "date": "2026-09-13",
