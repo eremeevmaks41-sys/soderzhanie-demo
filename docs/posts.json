@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-14T01:18:45+03:00",
+  "updated_at": "2026-09-14T03:27:47+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -33,6 +33,21 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/84",
       "src": "https://lenta.ru/news/2026/09/14/tramp-podtverdil-namerenie-prekratit-torgovlyu-s-ryadom-stran/"
+    },
+    {
+      "id": 86,
+      "date": "2026-09-13",
+      "time": "21:49",
+      "title": "Трамп снизил значимость предупреждений о рисках ИИ, сославшись на соперничество с Китаем",
+      "preview": "Президент США Дональд Трамп заявил, что опасения по поводу рисков искусственного интеллекта исходят от «отрицательных сил» и касаются вещей, которые не произойдут. Он связал свою…",
+      "tags": [
+        "#мировыеновости",
+        "#технологии",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/86",
+      "src": "https://www.bbc.co.uk/news/articles/c7v48vp31mdo?at_medium=RSS&at_campaign=rss"
     },
     {
       "id": 83,
