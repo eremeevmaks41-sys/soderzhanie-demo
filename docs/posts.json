@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-14T19:20:14+03:00",
+  "updated_at": "2026-09-14T21:22:54+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -47,6 +47,20 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/92",
       "src": "https://ria.ru/20260914/gosduma-2117601437.html"
+    },
+    {
+      "id": 95,
+      "date": "2026-09-14",
+      "time": "14:31",
+      "title": "Китай отверг обвинения в злонамеренной конкуренции в сфере ИИ",
+      "preview": "Китай отверг заявления главы Anthropic о необходимости замедлить развитие ИИ, чтобы помешать Пекину обогнать Запад в гонке технологий. Пекин назвал такие обвинения необоснованными…",
+      "tags": [
+        "#мировыеновости",
+        "#технологии"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/95",
+      "src": "https://www.bbc.co.uk/news/articles/cn8me133119o?at_medium=RSS&at_campaign=rss"
     },
     {
       "id": 91,
