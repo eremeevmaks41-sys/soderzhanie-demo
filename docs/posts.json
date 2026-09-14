@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-14T05:20:04+03:00",
+  "updated_at": "2026-09-14T07:21:11+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -250,6 +250,21 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/77",
       "src": "https://www.theguardian.com/world/2026/sep/12/burial-king-oyo-uganda"
+    },
+    {
+      "id": 88,
+      "date": "2026-09-12",
+      "time": "17:05",
+      "title": "Шесть нигерийцев экстрадированы в США за онлайн-мошенничество на $6 млн",
+      "preview": "Шесть граждан Нигерии, связанных с преступной сетью Black Axe, были экстрадированы из ЮАР в США по обвинению в онлайн-романтических аферах, в результате которых американские…",
+      "tags": [
+        "#мировыеновости",
+        "#экономика",
+        "#общество"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/88",
+      "src": "https://www.theguardian.com/us-news/2026/sep/12/nigerians-extradited-online-romance-scams"
     },
     {
       "id": 75,
