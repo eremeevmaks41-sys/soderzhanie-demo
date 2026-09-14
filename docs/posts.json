@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-09-14T17:22:28+03:00",
+  "updated_at": "2026-09-14T19:20:14+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 94,
+      "date": "2026-09-14",
+      "time": "18:50",
+      "title": "Это'о обвиняют в растрате средств на посту президента федерации футбола Камеруна",
+      "preview": "Бывший нападающий Челси и Барселоны Самуэль Это'о сталкивается с новыми обвинениями в хищении средств во время его руководства Федерацией футбола Камеруна. Речь идёт о финансовых…",
+      "tags": [
+        "#мировыеновости",
+        "#экономика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/94",
+      "src": "https://www.aljazeera.com/sports/2026/9/14/etoo-faces-allegations-of-embezzlement-in-cameroon-fa-presidency-role?traffic_source=rss"
+    },
     {
       "id": 93,
       "date": "2026-09-14",
