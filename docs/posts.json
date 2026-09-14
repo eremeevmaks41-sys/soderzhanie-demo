@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-09-14T03:27:47+03:00",
+  "updated_at": "2026-09-14T05:20:04+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 87,
+      "date": "2026-09-14",
+      "time": "05:16",
+      "title": "Врач опровергла миф о вреде женской мастурбации",
+      "preview": "Врач заявила, что женская мастурбация не вредит здоровью и не приводит к бесплодию или гормональным нарушениям, опровергнув распространённый миф. Она подчеркнула, что это…",
+      "tags": [
+        "#россия",
+        "#здоровье"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/87",
+      "src": "https://lenta.ru/news/2026/09/14/vrach-oprovergla-populyarnyy-mif-o-zhenskoy-masturbatsii/"
+    },
     {
       "id": 85,
       "date": "2026-09-14",
