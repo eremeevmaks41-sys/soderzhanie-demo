@@ -65,7 +65,7 @@ header{display:flex;align-items:center;gap:12px;padding:10px 2px 14px}
   background:var(--search);color:var(--text);font-size:15px;outline:none;
 }
 .search input:focus{border-color:var(--accent)}
-/* iOS рисует у type=search свой крестик — скрываем, у нас есть свой */
+/* iOS рисует свой крестик для type=search — прячем: у нас свой */
 .search input{-webkit-appearance:none;appearance:none}
 .search input::-webkit-search-cancel-button,
 .search input::-webkit-search-decoration{-webkit-appearance:none;display:none}
@@ -95,7 +95,7 @@ header{display:flex;align-items:center;gap:12px;padding:10px 2px 14px}
 /* ── даты и карточки ── */
 .day{font-size:12.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin:16px 2px 8px}
 .card{
-  display:block;color:inherit;text-decoration:none; /* карточка — настоящая <a> */
+  display:block;color:inherit;text-decoration:none; /* карточка — настоящая ссылка <a> */
   background:var(--card);border:1px solid var(--line);border-radius:15px;
   padding:12px 14px;margin-bottom:9px;box-shadow:var(--shadow);cursor:pointer;
   transition:background .12s ease, transform .12s ease;
@@ -107,6 +107,11 @@ header{display:flex;align-items:center;gap:12px;padding:10px 2px 14px}
 .c-prev{font-size:13.8px;color:var(--muted);margin-top:3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .c-tags{margin-top:7px;display:flex;flex-wrap:wrap;gap:5px}
 .c-tag{font-size:11.5px;color:var(--accent);background:var(--accent-soft);border-radius:7px;padding:2.5px 8px;font-weight:600}
+/* ── длинные ссылки не ломают сетку (Task 124, репорт босса 15.9.2026:
+   посты-«голые ссылки» раздували Ленту шире экрана на телефоне) ── */
+html,body{overflow-x:hidden}
+header>div{min-width:0}
+.c-title,.c-prev,.c-tag,.t-title,.h-name{min-width:0;overflow-wrap:anywhere;word-break:break-word}
 
 /* ── переключатель вида: Оглавление / Лента ── */
 .views{display:flex;background:var(--chip);border:1.5px solid var(--line);border-radius:12px;padding:3px;margin-bottom:11px}
@@ -167,15 +172,17 @@ footer{margin-top:26px;padding-top:14px;border-top:1px solid var(--line);text-al
 footer b{color:var(--text);font-weight:600}
 footer .lic{font-size:11px;opacity:.75}
 </style>
-<!-- ═══ МОСТ TELEGRAM — официальный и ОБЯЗАТЕЛЬНЫЙ ═══
-     core.telegram.org/bots/webapps → «Initializing Mini Apps»:
-     «To connect your Mini App to the Telegram client, place the script
-     telegram-web-app.js in the <head> tag before any other scripts».
-     Без него window.Telegram.WebApp НЕ создаётся — на iPhone tg=НЕТ:
-     нет ни haptic, ни темы, ни openTelegramLink (корень бага
-     «перехода нет» в версиях 52-e…52-l). Тот же скрипт подключён
-     в head боевого MyRadio — и там переходы работают. ═══ -->
-<script src="https://telegram.org/js/telegram-web-app.js?63"></script>
+<!-- ═══ МОСТ TELEGRAM — официальный и ОБЯЗАТЕЛЬНЫЙ (async) ═══
+     core.telegram.org/bots/webapps → «Initializing Mini Apps»: скрипт
+     telegram-web-app.js подключается в <head>. Без него
+     window.Telegram.WebApp не создаётся у части клиентов (iPhone и др.) —
+     тап по карточке поста молча ничего не открывает. Ровно это было
+     причиной «не тапаются карточки поста» (12.9.2026).
+     АТРИБУТ async (кейс босса «открывалось быстрее»): страница НЕ ждёт
+     скрипт с telegram.org и рисуется мгновенно, мост доезжает параллельно;
+     ядро ниже само подхватывает его готовность (adoptBridge + подписка
+     load/error + страховочный таймер). ═══ -->
+<script async src="https://telegram.org/js/telegram-web-app.js?63"></script>
 </head>
 <body>
 <div class="wrap">
@@ -209,7 +216,7 @@ footer .lic{font-size:11px;opacity:.75}
   <div id="state" class="state" style="display:none"></div>
 
   <footer>
-    <div><b>Оглавление</b> · каталог постов Telegram-канала · <span id="ver">v55</span></div>
+    <div><b>Оглавление</b> · каталог постов Telegram-канала · <span id="ver">v56-ru</span></div>
     <div class="lic" id="licLine"></div>
   </footer>
 </div>
@@ -229,28 +236,63 @@ var PAGE_SIZE = 100;                            // карточек за одн�
 var cfg = window.SZ_CONFIG || {};
 
 /* ── Telegram WebApp: тема и открытие ссылок ──
-   Официальный скрипт (см. <head>) создаёт window.Telegram.WebApp даже
-   ВНЕ Telegram — но там это пустышка: в исходнике webAppVersion='6.0',
-   webAppPlatform='unknown', postEvent уходит в никуда. Настоящий клиент
-   всегда помечает мини-апп hash-параметрами tgWebApp* (tgWebAppPlatform,
-   tgWebAppData, tgWebAppVersion…). Поэтому мостом считаем только
-   настоящий контекст мини-аппа — иначе в обычном браузере ломаются
-   фолбэки (лестница ниже подменялась бы мёртвыми вызовами). */
-var rawTg = (window.Telegram && window.Telegram.WebApp) ? window.Telegram.WebApp : null;
-var tg = null;
-if (rawTg){
+   Официальный скрипт (см. <head>) создаёт window.Telegram.WebApp и ВНЕ
+   Telegram — но там он фиктивный: platform='unknown', postEvent уходит
+   в никуда. Настоящий клиент всегда помечает мини-апп параметрами
+   tgWebApp* в адресе страницы. Поэтому мостом считаем только настоящий
+   контекст мини-аппа — иначе фиктивные вызовы в обычном браузере
+   затмят рабочие обходные пути ниже. */
+var rawTg = null, tg = null, bridgePending = true, bridgeTimer = null;
+function adoptBridge(){
+  rawTg = (window.Telegram && window.Telegram.WebApp) ? window.Telegram.WebApp : null;
+  if (!rawTg) return false;   /* скрипт ещё едет — остаёмся в режиме ожидания */
   var realBridge = (rawTg.platform && rawTg.platform !== 'unknown') ||
                    (rawTg.initData && String(rawTg.initData).length > 0) ||
                    /[?&#]tgWebApp/.test(window.location.href);
-  tg = realBridge ? rawTg : null;
+  if (!realBridge){
+    bridgePending = false;   /* фиктивный — окончательно */
+    diagNote('фиктивный WebApp (вне Telegram) — мост игнорирую');
+    return false;
+  }
+  tg = rawTg; bridgePending = false;
+  try { tg.ready(); tg.expand(); } catch(e){}
+  themeApply();
+  headerColorApply();
+  wireTgBack();   /* кнопка «Назад» ставится на старте — при позднем приходе моста ставим снова */
+  if (tg.onEvent) { try { tg.onEvent('themeChanged', function(){ themeApply(); headerColorApply(); }); } catch(e){} }
+  var late = document.getElementById('tgBanner');
+  if (late && late.parentNode) late.parentNode.removeChild(late);
+  diagNote('мост подключён (async): platform=' + (tg.platform || '?') + ' · ver=' + (tg.version || '?'));
+  return true;
 }
-if (tg) { try { tg.ready(); tg.expand(); } catch(e){} }
+adoptBridge();
+if (bridgePending && !rawTg){
+  var settleBridge = function(){
+    if (settleBridge.done) return;   /* финал фиксируется ровно один раз */
+    settleBridge.done = true;
+    bridgePending = false;
+    clearTimeout(bridgeTimer);
+    if (!tg && !rawTg) diagNote('мост не доехал (ошибка/таймаут) — открываю как обычная страница');
+    maybeBridgeBanner();
+  };
+  var bridgeArrive = function(){
+    clearTimeout(bridgeTimer);
+    if (!tg) adoptBridge();
+    settleBridge();
+  };
+  var bridgeEl = document.querySelector('script[src*="telegram-web-app.js"]');
+  if (bridgeEl){
+    bridgeEl.addEventListener('load', bridgeArrive);
+    bridgeEl.addEventListener('error', settleBridge);
+  } else { settleBridge(); }
+  bridgeTimer = setTimeout(settleBridge, 3000);   /* скрипт завис: статус окончательный */
+}
 
-/* iOS Safari применяет :active только если на странице есть touchstart-обработчик */
+/* iOS Safari вешает :active только при обработчике touchstart */
 document.addEventListener('touchstart', function(){}, {passive:true});
 
-/* ── тактильный отклик: HapticFeedback есть в мобильном Telegram;
-   в обычном браузере и на десктопе вызовы тихо игнорируются ── */
+/* ── тактильная отдача: HapticFeedback есть в мобильном Telegram;
+   в обычном браузере и на десктопе вызовы молча игнорируются ── */
 function haptic(style){
   if (tg && tg.HapticFeedback && tg.HapticFeedback.impactOccurred) {
     try { tg.HapticFeedback.impactOccurred(style); } catch(e){}
@@ -267,7 +309,7 @@ function hapticNotify(type){
   }
 }
 
-/* ── нативная кнопка «Назад» Telegram: зеркалит внутреннюю «← …» ── */
+/* ── нативная кнопка «Назад» Telegram: дублирует внутреннюю кнопку «← …» ── */
 var tgBackWired = false;
 function wireTgBack(){
   if (!tg || !tg.BackButton || tgBackWired) return;
@@ -286,7 +328,7 @@ function updateTgBack(){
   try { if (need) tg.BackButton.show(); else tg.BackButton.hide(); } catch(e){}
 }
 
-/* ── тост + копирование ссылки (кнопка «поделиться») ── */
+/* ── тост + копирование ссылки (кнопка «Поделиться» в шапке) ── */
 var toastTimer = null;
 function toast(msg){
   var t = document.getElementById('toast');
@@ -343,7 +385,7 @@ function themeApply(){
     return (0.299*r + 0.587*g + 0.114*b) < 128;
   }
 }
-/* шапка Telegram и фон под контентом красятся под тему приложения,
+/* шапка Telegram и фон под контентом окрашиваются в тему приложения;
    meta theme-color — то же для обычного браузера */
 function headerColorApply(){
   var bg = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim();
@@ -352,97 +394,73 @@ function headerColorApply(){
   if (tg && tg.setHeaderColor) { try { tg.setHeaderColor(bg); } catch(e){ try { tg.setHeaderColor('bg_color'); } catch(e2){} } }
   if (tg && tg.setBackgroundColor) { try { tg.setBackgroundColor(bg); } catch(e){} }
 }
-themeApply();
-headerColorApply();
-if (tg && tg.onEvent) { try { tg.onEvent('themeChanged', function(){ themeApply(); headerColorApply(); }); } catch(e){} }
+if (!tg) { themeApply(); headerColorApply(); }   /* без моста тема по системной настройке; с мостом применил adoptBridge */
 
-/* iOS/iPadOS: переходы по target="_blank" и window.open во встроенном
-   браузере Telegram на iPhone МОЛЧА БЛОКИРУЮТСЯ (WKWebView не умеет
-   открывать новые вкладки) — единственный надёжный путь там: штатный
-   API мини-аппа или переход в той же вкладке. */
+/* iOS/iPadOS: переходы через target="_blank" и window.open во встроенном
+   браузере Telegram на iPhone блокируются молча — надёжные пути только
+   официальный API мини-аппа или навигация в той же вкладке. */
 var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent || '') ||
           (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1); /* iPadOS 13+ маскируется под Mac */
-/* ── ОТКРЫТИЕ ПОСТА — стратегия боевого приложения-оглавления MyRadio
-   (канал «От чтения к Преображению»), проверена вживую на iOS 9.6 и
-   Android 9.6 07.07.2026 (заметки из кода того проекта):
 
-     Desktop Telegram → tg.openTelegramLink (открывает внутри Telegram)
-     Telegram Web     → window.open (новая вкладка браузера)
-     Мобильные        → tg.openTelegramLink: переход происходит сразу
-                        в канал, мини-апп НЕ закрывается — Telegram сам
-                        показывает канал поверх аппа, возврат свайпом
-                        или системной кнопкой «Назад». Именно так это
-                        предусматривает сам Телеграм для айфонов.
-
-   Известная особенность iOS (наш случай «пост за аппом»): если мини-апп
-   запущен ИЗ ТОГО ЖЕ канала, на пост которого ведёт ссылка (у нас —
-   закреп с кнопкой оглавления), openTelegramLink НЕ делает видимого
-   перехода — нет ни вибрации, ни сворачивания. При этом сама навигация
-   в фоне происходит корректно. Отслеживается через visibilitychange:
-   если за 1.5 с апп так и не свернулся — тихий случай, лечим его, как
-   описано в блоке ниже (WebApp.close()). */
-/* ── КОРЕНЬ БАГА «перехода нет» (52-e…52-l): в <head> не был подключён
-   официальный telegram-web-app.js — единственный способ, которым клиент
-   Telegram создаёт window.Telegram.WebApp. Без него на iPhone tg всегда
-   НЕТ: haptic/тема/openTelegramLink не существуют, и ни одна стратегия
-   ниже не запускалась никогда. С 52-m скрипт подключён в <head> —
-   на iOS при входе через закреп/меню бота мост появляется (tg=есть).
-   Подтверждение: head боевого MyRadio содержит тот же скрипт. */
-/* ── строка самодиагностики в футере: фиксирует, в каком окружении
-   открыта страница и какая ветка перехода реально сработала. По ней
-   пользователь может точно сообщить, что происходит на его устройстве. */
+/* ── самодиагностика (Task 120: в футере только строки продукта —
+   линия скрыта, видна при ?diag=1, каждая заметка идёт в консоль):
+   записывает среду запуска и то, какая ветка открытия сработала ── */
 var diagEl = null, diagLog = [];
 function diagInit(){
   diagEl = document.createElement('div');
   diagEl.className = 'lic'; diagEl.id = 'diag';
+  /* Task 120 (директива босса 14.9): в футере только строки продукта —
+     линия самодиагностики скрыта; видна при ?diag=1, заметки всегда
+     дублируются в консоль (console.log) */
+  diagEl.style.display = /[?&]diag=/.test(location.search) ? '' : 'none';
   var f = document.querySelector('footer');
   if (f) f.appendChild(diagEl);
   diagNote('старт: tg=' + (tg
-    ? 'есть · платформа=' + (tg.platform || '?') + ' · ver=' + (tg.version || '?')
-    : (rawTg ? 'НЕТ (пустышка WebApp вне Telegram — игнорируем)' : 'НЕТ — обычная страница, моста нет')));
+    ? 'да · platform=' + (tg.platform || '?') + ' · ver=' + (tg.version || '?')
+    : (rawTg ? 'НЕТ (фиктивный WebApp вне Telegram — игнорирую)'
+       : (bridgePending ? 'мост ещё грузится (async)…' : 'НЕТ — обычная страница, моста нет'))));
 }
 function diagNote(msg){
+  try { console.log('[oglavlenie] ' + msg); } catch(e){}
   if (!diagEl) return;
   var d = new Date(), z = function(x){ return ('0'+x).slice(-2); };
   diagLog.push(z(d.getHours())+':'+z(d.getMinutes())+':'+z(d.getSeconds())+' '+msg);
   if (diagLog.length > 4) diagLog = diagLog.slice(-4);
-  diagEl.textContent = 'отладка: ' + diagLog.join(' | ');
+  diagEl.textContent = 'диагностика: ' + diagLog.join(' | ');
 }
 
-/* ── баннер-спасение: страница открыта БЕЗ моста Telegram (по прямой
-   ссылке — из переписки, истории браузера и т.п.). Мост изнутри страницы
-   создать невозможно (клиент инжектит среду только при открытии как
-   мини-апп — официальный контракт). Зато можно провести читателя к
-   правильному входу: закреп «Оглавление» в канале, кнопка меню бота
-   или кнопка баннера (t.me/<бот>?startapp из config.js). */
+/* ── без моста Telegram (открытие не как мини-апп): изнутри страницы мост
+   создать нельзя. Пугающую ошибку убрали (Task 114): веб-режим полноценно
+   открывает посты той же вкладкой, факт режима виден в футере-диагностике ── */
 function showBridgeBanner(){
   if (tg || !document.querySelector) return;
-  var rescue = cfg.bot_username
-    ? 'https://t.me/' + String(cfg.bot_username).replace(/^@/, '') + '?startapp'
-    : (cfg.channel_url || '');
-  if (!rescue) return;
-  var b = document.createElement('div');
-  b.className = 'banner'; b.id = 'tgBanner'; b.style.display = 'block';
-  b.innerHTML = '<b>Telegram-мост недоступен:</b> апп открыт как обычная страница, '
-    + 'поэтому посты так не открыть. Откройте оглавление кнопкой в закрепе '
-    + 'канала или кнопкой меню бота — либо <a href="' + esc(rescue) + '">нажмите '
-    + 'сюда для правильного входа</a>.';
-  var anchor = document.querySelector('.search');
-  if (anchor && anchor.parentNode) anchor.parentNode.insertBefore(b, anchor);
+  if (document.getElementById('tgBanner')) return;   /* уже показан — не дублируем */
+  /* Task 114: пугающего баннера больше нет — веб-режим полноценно открывает
+     посты той же вкладкой (routeOpen); режим виден в диагностике футера */
+  diagNote('веб-режим: посты открываются той же вкладкой');
+}
+/* async-мост мог ещё не доехать — раньше времени пугать пользователя нельзя:
+   баннер показываем только когда статус моста окончательный */
+function maybeBridgeBanner(){
+  if (bridgePending) return;
+  if (!tg) showBridgeBanner();
 }
 
-/* Тихий случай (тот же канал): openTelegramLink навигацию в ФОНЕ выполняет
-   корректно — подтверждено инспектором Safari (MyRadio, 08.07.2026) —,
-   но видимого перехода нет, апп остаётся поверх уже открытого поста.
-
-   ЧЕМ ЛЕЧИМ (по официальной документации core.telegram.org/bots/webapps):
-   1. openLink можно вызывать «only in response to user interaction» —
-      наш прежний фолбэк из setTimeout через 1.5 с этот контракт нарушал,
-      поэтому Telegram его молча отбрасывал (а на iOS openLink ещё и
-      всегда открывает внешний Safari — Telegram-iOS issue #1670).
-   2. Документированный WebApp.close() контракт не нарушает: закрытие
-      аппа выводит на экран уже открытый в фоне пост (ровно то, что
-      зафиксировано инспектором в MyRadio). */
+/* ── ОТКРЫТИЕ ПОСТОВ — стратегия живого приложения (проверена на
+   iOS и Android, 2026-07):
+     Telegram Desktop → tg.openTelegramLink (открывает внутри Telegram)
+     Telegram Web     → window.open (новая вкладка браузера)
+     Мобильные        → tg.openTelegramLink: переход прямо в канал,
+                        мини-апп НЕ закрывается — Telegram сам показывает
+                        пост поверх приложения; возврат свайпом или «Назад».
+   Тихий случай (пост из того же канала, откуда открыт мини-апп):
+   переход происходит корректно, НО без видимой смены экрана. Лечим по
+   официальной документации: нативный уход приложения в фон фиксируем
+   через visibilitychange; если за 1.5 с не свернулся:
+     iOS  → WebApp.close(): пост уже открыт позади, close() его покажет
+            (openLink вне жеста пользователя Telegram молча отбрасывает,
+            а на iOS он ещё и открывает внешний Safari);
+     иные → tg.openLink(): встроенный браузер, видимый рабочий путь. */
 var TG_LINK_FALLBACK_MS = 1500;
 function openInTelegram(url){
   var settled = false;
@@ -450,19 +468,19 @@ function openInTelegram(url){
     if (document.hidden){
       settled = true;
       document.removeEventListener('visibilitychange', onVisChange);
-      diagNote('апп свернулся — пост открыт, возврат свайпом');
+      diagNote('приложение свернулось — пост открыт, назад свайпом');
     }
   }
   document.addEventListener('visibilitychange', onVisChange);
   try { tg.openTelegramLink(url); diagNote('openTelegramLink отправлен'); }
-  catch(e){ diagNote('openTelegramLink ошибка: ' + (e && e.message ? e.message : '?')); }
+  catch(e){ diagNote('ошибка openTelegramLink: ' + (e && e.message ? e.message : '?')); }
   setTimeout(function(){
     document.removeEventListener('visibilitychange', onVisChange);
     if (settled) return;
     if (tg.platform === 'ios' && tg.close){
-      diagNote('за 1.5с не свернулся → close() (пост уже открыт в фоне)');
+      diagNote('не свернулся за 1.5 с → close() (пост уже открыт позади)');
       try { tg.close(); } catch(e){}
-      /* последняя страховка, если close не поддержан клиентом */
+      /* последний шанс, если close клиентом не поддержан */
       setTimeout(function(){
         if (!settled && tg.openLink){
           diagNote('close не сработал → openLink');
@@ -470,36 +488,49 @@ function openInTelegram(url){
         }
       }, 800);
     } else if (tg.openLink){
-      diagNote('за 1.5с не свернулся → openLink');
+      diagNote('не свернулся за 1.5 с → openLink');
       try { tg.openLink(url, {try_instant_view:false}); } catch(e){}
     }
   }, TG_LINK_FALLBACK_MS);
 }
-function openPost(url){
+function openUrl(url){
+  if (!url) return;
+  if (!tg && bridgePending){
+    /* мост ещё едет (async): коротко дождёмся, чтобы тап не ушёл в запасную
+       ветку раньше времени; если мост так и не приехал — прежние пути */
+    diagNote('мост ещё грузится — жду его до 1.2 с');
+    var t0 = Date.now();
+    (function again(){
+      if (tg){ diagNote('мост доехал — открываю штатно'); openUrl(url); return; }
+      if (!bridgePending || Date.now() - t0 > 1200){ routeOpen(url); return; }
+      setTimeout(again, 60);
+    })();
+    return;
+  }
+  routeOpen(url);
+}
+function routeOpen(url){
   if (!url) return;
   if (!tg){
-    /* вне мини-аппа: во встроенном браузере Telegram target="_blank" и
-       window.open молча блокируются (WKWebView не умеет новых вкладок) —
-       спасает переход в той же вкладке; обычный десктоп-браузер откроет
-       новую вкладку штатно */
-    if (iOS) { diagNote('tg нет → переход location.href (пост может открыться под окном)'); window.location.href = url; return; }
-    window.open(url, '_blank');
+    /* вне мини-аппа (в т.ч. встроенный браузер Telegram из кнопки канала):
+       window.open блокируется молча — единственный надёжный путь везде —
+       навигация в той же вкладке: в Telegram откроет пост прямо в приложении,
+       в обычном браузере — страницу t.me с кнопкой «открыть в приложении» */
+    diagNote('нет моста → навигация той же вкладкой');
+    window.location.href = url;
     return;
   }
   var plat = tg.platform || '';
-  /* Telegram Web (web/weba) — в новой вкладке браузера (как в MyRadio) */
+  /* Telegram Web (web/weba) — в новой вкладке браузера */
   if (plat === 'web' || plat === 'weba') { window.open(url, '_blank'); return; }
-  /* родные приложения (десктоп, macOS, iOS, Android) — переход сразу
-     внутрь Telegram через openTelegramLink, без внешнего браузера */
+  /* нативные приложения (десктоп, macOS, iOS, Android) — прямо в
+     Telegram через openTelegramLink, без внешнего браузера */
   var NATIVE_APP_PLATFORMS = {tdesktop:1, macos:1, ios:1, android:1, android_x:1};
   var canUseTelegramLink = !!tg.openTelegramLink
     && (!tg.isVersionAtLeast || tg.isVersionAtLeast('7.0'));
-  if (NATIVE_APP_PLATFORMS[plat] && canUseTelegramLink) {
-    openInTelegram(url);
-    return;
-  }
-  /* необычная/неопознанная платформа или клиент старше Bot API 7.0 —
-     страховка прежним openLink(): гарантированно видимый рабочий путь */
+  if (NATIVE_APP_PLATFORMS[plat] && canUseTelegramLink) { openInTelegram(url); return; }
+  /* неизвестная платформа или клиент старше Bot API 7.0 — старый добрый
+     openLink(): гарантированно видимый рабочий путь */
   try { tg.openLink(url, {try_instant_view:false}); } catch(e){}
 }
 
@@ -546,7 +577,7 @@ var TAGS = [];         // [{tag, n}]
 var TOPICS = null;     // [{id,title,icon,tags[]}] из topics.json (может не быть)
 var view = 'feed';     // 'toc' | 'feed'
 var filterTopic = null;// id выбранной темы (режим тем)
-var filterMode = null; // универсальная группировка: 'months' | 'alpha' | 'kind' | 'topics'
+var filterMode = null; // универсальная группировка: 'months' | 'alpha' | 'kind'
 var tocGroup = null;   // выбранная группа внутри filterMode
 var filterTag = null;  // выбранный тег-фильтр (в виде «Лента»)
 var filterQ = '';      // поисковая строка
@@ -564,7 +595,7 @@ function topicOf(p){
   return null;
 }
 
-/* ── универсальная группировка: месяцы / алфавит / тип постов ── */
+/* ── универсальная группировка без тегов: месяцы / алфавит / тип постов ── */
 var MODES = [
   {id:'months', icon:'📅', title:'По месяцам'},
   {id:'alpha',  icon:'🔤', title:'По алфавиту'},
@@ -623,9 +654,9 @@ function groupIcon(k){
   return k; // алфавит: буква сама — иконка
 }
 
-/* ── «По темам» (v54): счётчик для карточки в корне.
-   Если темы из topics.json покрывают посты — считаем карточки тем
-   (+ «Разное»), иначе — число тегов постов. */
+/* ── «По темам» (v56-ru): счётчик для карточки корня. Если темы из
+   topics.json покрывают посты — считаются карточки тем (+ «Разное»),
+   иначе — число тегов постов. ── */
 function topicCardCount(){
   if (TOPICS){
     var n = 0, covered = 0;
@@ -642,11 +673,10 @@ function topicCardCount(){
   }
   return { n: TAGS.length, word: pluralWord(TAGS.length, ['тег','тега','тегов']) };
 }
-
 /* ── шапка из конфига ── */
 function applyConfig(){
   var name = cfg.channel_name || 'Оглавление';
-  document.title = 'Оглавление · ' + name;
+  document.title = name;
   document.getElementById('hName').textContent = name;
   document.getElementById('hOpen').textContent = cfg.channel_button || 'Канал';
   if (cfg.channel_url) {
@@ -654,11 +684,11 @@ function applyConfig(){
     a.href = cfg.channel_url;
     a.addEventListener('click', function(ev){
       haptic('light');
-      // мини-апп → openPost: openTelegramLink, а при тихом сбое iOS —
-      // видимый фолбэк через браузер (стратегия MyRadio);
-      // десктоп-браузер без tg → НЕ перехватываем: сработает обычный href
+      // мини-апп → openUrl: openTelegramLink, при тихом сбое iOS —
+      // видимый запасной путь через браузер (стратегия живого приложения);
+      // десктоп-браузер без моста → НЕ перехватываем: работает обычный href
       if (tg || iOS) {
-        ev.preventDefault(); openPost(cfg.channel_url);
+        ev.preventDefault(); openUrl(cfg.channel_url);
       }
     });
   } else { document.getElementById('hOpen').style.display = 'none'; }
@@ -710,7 +740,7 @@ function renderChips(){
     box.appendChild(c);
   });
 }
-/* ── переключатель вида: Оглавление / Лента ── */
+/* ── вид «Оглавление»: темы либо универсальные разделы + возврат ── */
 function renderViews(){
   var box = document.getElementById('views');
   if (!POSTS.length){ box.style.display = 'none'; return; }
@@ -736,7 +766,6 @@ function hideBack(){
   if (b) b.style.display = 'none';
   updateTgBack();
 }
-/* ── иконки для карточек тегов (v54): частые теги → эмодзи, иначе ярлык ── */
 var TAG_ICONS = {
   russia:'🇷🇺', россия:'🇷🇺', worldnews:'🌍', мировыеновости:'🌍',
   conflict:'⚔️', конфликт:'⚔️', society:'🏙️', общество:'🏙️',
@@ -749,10 +778,9 @@ var TAG_ICONS = {
 function tagIcon(tag){
   return TAG_ICONS[normTag(tag)] || '🏷️';
 }
-/* ── экран «По темам» (v54): везде карточки. Подборки из topics.json
-   (только если они реально покрывают посты) + каждый тег поста — своя
-   карточка (иконка и счётчик). Тап по карточке → оглавление
-   соответствующих постов. ── */
+/* ── экран «По темам» (v54-ru): карточки тем из topics.json (если реально
+   покрывают посты) + каждый тег постов своей карточкой. Тап по карточке —
+   отфильтрованный список постов. ── */
 function renderTopicsScreen(){
   showBack('← Оглавление', function(){ filterMode = null; filterTopic = null; filterTag = null; tocGroup = null; shown = PAGE_SIZE; render(); });
   renderState(null);
@@ -821,9 +849,9 @@ function renderModeGrid(){
   hideBack();
   renderState(null);
   var list = document.getElementById('list');
-  /* v54: корень оглавления — ВСЕГДА четыре карточки на равных:
+  /* v54-ru: корень оглавления — ВСЕГДА четыре равные карточки:
      три универсальные (месяцы/алфавит/типы) + «По темам» (темы и теги).
-     Режима «темы вместо разделов» больше нет — карточки не исчезают. */
+     Карточки никогда не пропадают и не смешиваются с содержимым разделов. */
   var html = '<div class="tgrid">';
   MODES.forEach(function(m){
     var gn = groupCards(m.id).length;
@@ -904,18 +932,19 @@ function renderList(items){
   list.innerHTML = html;
   list.querySelectorAll('a.card[href]').forEach(function(el){
     el.addEventListener('click', function(ev){
-      if (ev.metaKey || ev.ctrlKey) return;   // ctrl/⌘+клик — новая вкладка силами браузера
+      if (ev.metaKey || ev.ctrlKey) return;   // ctrl/⌘+клик — новую вкладку открывает браузер
       haptic('light');
-      // мини-апп → openPost: переход внутрь Telegram, а при тихом сбое iOS
-      // (мини-апп открыт из того же канала) — видимый фолбэк через браузер;
-      // десктоп-браузер без tg → НЕ перехватываем: работает настоящий href
+      // мини-апп → openUrl: переход внутрь Telegram, при тихом сбое iOS
+      // (мини-апп открыт из того же канала) — видимый запасной путь через
+      // браузер; десктоп-браузер без моста → НЕ перехватываем: работает
+      // настоящая ссылка
       if (tg || iOS) {
         ev.preventDefault();
-        /* мгновенный визуальный отклик, пока Telegram выполняет переход
-           (до 1.5 с) — тап не кажется «провисшим» (опыт MyRadio) */
+        /* мгновенная визуальная отдача, пока Telegram выполняет переход
+           (до 1.5 с) — тап не ощущается «мёртвым» (опыт живого приложения) */
         el.classList.add('pressed');
         setTimeout(function(){ el.classList.remove('pressed'); }, 300);
-        openPost(el.getAttribute('href'));
+        openUrl(el.getAttribute('href'));
       }
     });
   });
@@ -953,7 +982,7 @@ function render(){
   var items = filtered();
   var q = filterQ.trim();
   var inToc = view === 'toc' && !q;
-  var sub = POSTS.length ? ('каталог постов · ' + POSTS.length + ' шт.') : 'каталог постов канала';
+  var sub = POSTS.length ? ('каталог постов · ' + POSTS.length + ' ' + plural(POSTS.length)) : 'каталог постов канала';
   if (inToc && filterMode && filterMode !== 'topics' && !tocGroup){
     var gn = groupCards().length;
     sub = gn + ' ' + pluralWord(gn, ['раздел','раздела','разделов']);
@@ -965,15 +994,15 @@ function render(){
   renderViews();
   document.getElementById('chips').style.display = inToc ? 'none' : '';
   if (!POSTS.length){ renderChips(); return renderState('empty'); }
-  if (inToc && !filterMode && !filterTopic && !tocGroup && !filterTag){ renderModeGrid(); return; }  // v54 корень: 4 карточки
+  if (inToc && !filterMode && !filterTopic && !tocGroup && !filterTag){ renderModeGrid(); return; }  // v54-ru корень: 4 карточки
   if (inToc && filterMode === 'topics' && !filterTopic && !filterTag){ renderTopicsScreen(); return; }
   if (inToc && filterMode && filterMode !== 'topics' && !tocGroup){ renderGroupCards(); return; }
   if (inToc && filterTopic){
-    showBack('← Темам', function(){ filterTopic = null; shown = PAGE_SIZE; render(); });
+    showBack('← По темам', function(){ filterTopic = null; shown = PAGE_SIZE; render(); });
   } else if (inToc && filterMode && tocGroup){
     showBack('← Разделы', function(){ tocGroup = null; shown = PAGE_SIZE; render(); });
   } else if (inToc && filterTag){
-    showBack('← Темам', function(){ filterTag = null; shown = PAGE_SIZE; render(); });
+    showBack('← По темам', function(){ filterTag = null; shown = PAGE_SIZE; render(); });
   } else { hideBack(); }
   renderChips();
   if (!items.length) return renderState('nomatch');
@@ -1012,7 +1041,7 @@ function tryApplyTopics(){
   var ts = (RAW_TOPICS && RAW_TOPICS.topics) || [];
   TOPICS = ts.filter(function(t){ return t && t.id && (t.tags||[]).length; });
   if (!TOPICS.length) TOPICS = null;
-  render();   // v54: темы живут внутри карточки «По темам» — корень всегда одинаков
+  render();   // v56-ru: темы живут внутри карточки «По темам» — корень всегда одинаковый
 }
 function loadTopics(){
   fetch('topics.json?v=' + Date.now(), {cache:'no-store'})
@@ -1048,9 +1077,9 @@ function boot(data){
 }
 
 /* ── загрузка данных: мгновенный старт из кэша + тихое обновление ──
-   posts.json сохраняется в localStorage после каждой успешной загрузки:
-   при медленной сети оглавление открывается мгновенно (сохранённая
-   копия), затем тихо обновляется; без сети показывается копия. */
+   posts.json после каждой успешной загрузки сохраняется в localStorage:
+   на медленной сети оглавление открывается мгновенно (сохранённая копия),
+   затем тихо обновляется; без сети показывается копия. */
 var CACHE_KEY = 'sz_posts_v1';
 function cacheRead(){
   try {
@@ -1099,9 +1128,9 @@ function load(){
 applyConfig();
 wireTgBack();
 diagInit();
-showBridgeBanner();
+maybeBridgeBanner();
 
-/* кнопка «поделиться»: копирует ссылку на этот мини-апп */
+/* кнопка «Поделиться»: копирует ссылку на этот мини-апп */
 document.getElementById('hShare').addEventListener('click', function(){
   haptic('light');
   var http = location.protocol === 'http:' || location.protocol === 'https:';
