@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-09-15T03:27:42+03:00",
+  "updated_at": "2026-09-15T05:21:37+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 98,
+      "date": "2026-09-15",
+      "time": "05:12",
+      "title": "Пушилин заявил о последствиях переписывания истории киевским режимом",
+      "preview": "Глава ДНР Денис Пушилин заявил, что киевский режим ведёт целенаправленную работу по переписыванию истории, что, по его мнению, приводит к искажению исторической памяти и подрыву…",
+      "tags": [
+        "#россия",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/98",
+      "src": "https://lenta.ru/news/2026/09/15/pushilin-rasskazal-o-posledstviyah-perepisyvaniya-istorii-kievskim-rezhimom/"
+    },
     {
       "id": 96,
       "date": "2026-09-14",
