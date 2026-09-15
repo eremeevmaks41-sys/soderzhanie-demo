@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-15T19:19:54+03:00",
+  "updated_at": "2026-09-15T21:21:01+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -47,6 +47,20 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/103",
       "src": "https://ria.ru/20260915/ukraina-2117824673.html"
+    },
+    {
+      "id": 106,
+      "date": "2026-09-15",
+      "time": "14:40",
+      "title": "Дания обвиняет Россию в неосторожном поведении",
+      "preview": "Премьер-министр Дании обвинил Россию в неосторожном поведении после инцидента с военным вертолётом. Кремль пока не комментирует ситуацию.",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/106",
+      "src": "https://www.bbc.co.uk/news/articles/cwn8mjl31p5yo?at_medium=RSS&at_campaign=rss"
     },
     {
       "id": 102,
