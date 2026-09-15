@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-09-15T17:21:03+03:00",
+  "updated_at": "2026-09-15T19:19:54+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 105,
+      "date": "2026-09-15",
+      "time": "19:13",
+      "title": "Кэш Паттель защищает изменения в найме ФБР из-за скандала",
+      "preview": "Новый директор ФБР Кэш Паттель оправдывается за изменения в политике найма, вызванные скандалом. Сенаторы критикуют инициативу на слушаниях, обсуждая сложности привлечения агентов.",
+      "tags": [
+        "#мировыеновости",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/105",
+      "src": "https://www.aljazeera.com/news/2026/9/15/fbis-kash-patel-defends-hiring-policy-change-on-bestiality-prostitution?traffic_source=rss"
+    },
     {
       "id": 104,
       "date": "2026-09-15",
