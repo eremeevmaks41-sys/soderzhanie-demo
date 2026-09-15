@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-14T23:20:10+03:00",
+  "updated_at": "2026-09-15T03:27:42+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -90,6 +90,20 @@
       "kind": "text",
       "url": "https://t.me/daily_news_digest/91",
       "src": "https://www.kommersant.ru/doc/8954232"
+    },
+    {
+      "id": 97,
+      "date": "2026-09-14",
+      "time": "11:36",
+      "title": "Левый блок Швеции впереди с минимальным отрывом",
+      "preview": "При подсчете более 90% бюллетеней левый блок опережает соперников на 20 000 голосов. Результат выборов остается неопределенным.",
+      "tags": [
+        "#мировыеновости",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/97",
+      "src": "https://www.bbc.co.uk/news/articles/c0qx5d79kdeo?at_medium=RSS&at_campaign=rss"
     },
     {
       "id": 90,
