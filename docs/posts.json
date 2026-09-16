@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-16T19:20:24+03:00",
+  "updated_at": "2026-09-16T21:22:20+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -33,6 +33,21 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/116",
       "src": "https://tass.ru/obschestvo/28118067"
+    },
+    {
+      "id": 118,
+      "date": "2026-09-16",
+      "time": "15:36",
+      "title": "ЕС поддерживает идею Канады стать ассоциированным членом",
+      "preview": "Глава Европейской комиссии выразил поддержку плану о предоставлении Канаде статуса ассоциированного члена ЕС. Это происходит на фоне ухудшения отношений Оттавы с Вашингтоном при…",
+      "tags": [
+        "#мировыеновости",
+        "#политика",
+        "#экономика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/118",
+      "src": "https://www.bbc.co.uk/news/articles/cjwyzrr9d3dko?at_medium=RSS&at_campaign=rss"
     },
     {
       "id": 115,
