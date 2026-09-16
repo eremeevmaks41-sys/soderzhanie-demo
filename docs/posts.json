@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-16T01:19:12+03:00",
+  "updated_at": "2026-09-16T03:25:46+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -20,6 +20,21 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/108",
       "src": "https://www.aljazeera.com/news/2026/9/15/algeria-faces-calls-to-drop-death-penalty-plans-after-wildfires?traffic_source=rss"
+    },
+    {
+      "id": 109,
+      "date": "2026-09-16",
+      "time": "00:07",
+      "title": "Все разогревающие акты ушли с тура Эда Ширана в США после исключения Маклемора",
+      "preview": "Эд Ширан заявил, что не несет ответственности за удаление Маклемора из тура после его про-палестинских заявлений на сцене. После этого все поддерживающие артисты отказались…",
+      "tags": [
+        "#мировыеновости",
+        "#культура",
+        "#общество"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/109",
+      "src": "https://www.bbc.co.uk/news/articles/c3vgyn49y4l7o?at_medium=RSS&at_campaign=rss"
     },
     {
       "id": 107,
