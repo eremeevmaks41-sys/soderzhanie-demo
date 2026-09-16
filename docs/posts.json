@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-09-16T21:22:20+03:00",
+  "updated_at": "2026-09-17T01:18:49+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 119,
+      "date": "2026-09-17",
+      "time": "00:41",
+      "title": "Манчестер Юнайтед проиграл Брайтону 2:3 и выбыл из Кубка Лиги",
+      "preview": "Брайтон переиграл Манчестер Юнайтед на своем поле, отыграв два гола отставания. Встреча прошла на Old Trafford и стала причиной выбытия «красных дьяволов» из турнира.",
+      "tags": [
+        "#мировыеновости",
+        "#спорт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/119",
+      "src": "https://www.aljazeera.com/sports/2026/9/16/manchester-united-lose-3-2-to-brighton-crash-out-of-league-cup?traffic_source=rss"
+    },
     {
       "id": 117,
       "date": "2026-09-16",
