@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-09-16T03:25:46+03:00",
+  "updated_at": "2026-09-16T05:20:04+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 110,
+      "date": "2026-09-16",
+      "time": "05:11",
+      "title": "Россиянам посоветовали лучший способ получить повышение зарплаты",
+      "preview": "Эксперты рекомендуют россиянам активно обсуждать свои достижения и вклад в работу с руководством как наиболее эффективный способ добиться повышения зарплаты. Подчеркивается…",
+      "tags": [
+        "#россия",
+        "#экономика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/110",
+      "src": "https://lenta.ru/news/2026/09/16/rossiyanam-posovetovali-luchshiy-sposob-poluchit-povyshenie-zarplaty/"
+    },
     {
       "id": 108,
       "date": "2026-09-16",
