@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-16T05:20:04+03:00",
+  "updated_at": "2026-09-16T07:20:15+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -176,6 +176,21 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/99",
       "src": "https://www.theguardian.com/world/2026/sep/15/white-south-africans-denied-refugee-status-us"
+    },
+    {
+      "id": 111,
+      "date": "2026-09-15",
+      "time": "07:00",
+      "title": "В ДРК вспышка Эболы достигла пика, заражения замедляются",
+      "preview": "Власти Демократической Республики Конго заявили, что эпидемия Эболы, объявленная в мае, достигла своего пика, а темпы новых заражений впервые начали снижаться. С начала вспышки…",
+      "tags": [
+        "#мировыеновости",
+        "#происшествия",
+        "#здоровье"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/111",
+      "src": "https://www.theguardian.com/global-development/2026/sep/15/ebola-outbreak-in-drc-has-peaked-say-authorities-as-infection-rates-slow"
     },
     {
       "id": 98,
