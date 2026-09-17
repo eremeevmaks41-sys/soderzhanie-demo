@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-09-17T05:19:44+03:00",
+  "updated_at": "2026-09-17T07:20:17+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 122,
+      "date": "2026-09-17",
+      "time": "07:00",
+      "title": "Три брата африканских диких собак прошли рекордные 2500 миль в поисках новой территории",
+      "preview": "Три брата африканских диких собак, вынужденные покинуть стаю по достижении зрелости, преодолели более 2500 миль (4100 км) за восемь месяцев в Замбии — это самый длинный…",
+      "tags": [
+        "#мировыеновости",
+        "#наука"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/122",
+      "src": "https://www.theguardian.com/environment/2026/sep/17/wildlife-african-wild-dogs-longest-journey-zambia-conservation-aoe"
+    },
     {
       "id": 121,
       "date": "2026-09-17",
