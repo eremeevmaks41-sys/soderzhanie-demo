@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-09-17T19:21:07+03:00",
+  "updated_at": "2026-09-18T01:18:38+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 129,
+      "date": "2026-09-18",
+      "time": "00:42",
+      "title": "Суд США обязал уведомлять за 30 дней о любых изменениях в здании Кеннеди-центра",
+      "preview": "Суд постановил, что перед любыми физическими изменениями в здании Кеннеди-центра в Вашингтоне необходимо уведомлять за 30 дней. Решение вынесено в рамках судебного спора о…",
+      "tags": [
+        "#мировыеновости",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/129",
+      "src": "https://www.aljazeera.com/news/2026/9/17/us-judge-orders-30-day-notice-prior-to-any-kennedy-center-physical-changes?traffic_source=rss"
+    },
     {
       "id": 128,
       "date": "2026-09-17",
