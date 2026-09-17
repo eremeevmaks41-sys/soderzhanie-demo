@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-09-17T17:23:48+03:00",
+  "updated_at": "2026-09-17T19:21:07+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 128,
+      "date": "2026-09-17",
+      "time": "19:10",
+      "title": "Пять человек погибли в обмене ударами между Саудовской Аравией и хуситами",
+      "preview": "В результате обмена атаками между Саудовской Аравией и йеменскими хуситами погибли пять человек. Лидер хуситов Абдель-Малик аль-Хути опроверг заявления Саудовской Аравии о том…",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/128",
+      "src": "https://www.aljazeera.com/news/2026/9/17/five-killed-as-saudi-arabia-and-yemens-houthis-trade-attacks?traffic_source=rss"
+    },
     {
       "id": 127,
       "date": "2026-09-17",
