@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-09-17T01:18:49+03:00",
+  "updated_at": "2026-09-17T03:26:34+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 120,
+      "date": "2026-09-17",
+      "time": "01:16",
+      "title": "Федеральная резервная система США повысила ставки впервые за 3 года",
+      "preview": "Резервный банк США повысил ключевую ставку в unanimous decision, несмотря на острое сопротивление президента Дональда Трампа, требовавшего снижения. Решение принято несмотря на…",
+      "tags": [
+        "#мировыеновости",
+        "#экономика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/120",
+      "src": "https://www.bbc.co.uk/news/articles/cw4gmlyvj422o?at_medium=RSS&at_campaign=rss"
+    },
     {
       "id": 119,
       "date": "2026-09-17",
