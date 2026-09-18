@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-18T05:19:17+03:00",
+  "updated_at": "2026-09-18T07:19:53+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -19,6 +19,21 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/131",
       "src": "https://lenta.ru/news/2026/09/18/eks-premier-ukrainy-rasskazal-o-komprometiruyuschih-zapisyah-na-zelenskogo/"
+    },
+    {
+      "id": 132,
+      "date": "2026-09-18",
+      "time": "03:23",
+      "title": "Почти 50 человек погибли в Нигерии после употребления алкоголя с метанолом",
+      "preview": "В южных районах Нигерии, штат Ондо, после употребления местного самогонного напитка, подозреваемого в содержании метанола, погибли не менее 48 человек, ещё около 100 находятся на…",
+      "tags": [
+        "#мировыеновости",
+        "#происшествия",
+        "#здоровье"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/132",
+      "src": "https://www.theguardian.com/world/2026/sep/18/nigeria-deaths-suspected-methanol-alcohol-brew-drink"
     },
     {
       "id": 129,
