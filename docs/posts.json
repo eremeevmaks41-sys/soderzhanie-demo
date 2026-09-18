@@ -1,11 +1,26 @@
 {
   "version": 1,
-  "updated_at": "2026-09-18T17:19:38+03:00",
+  "updated_at": "2026-09-18T19:18:35+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 138,
+      "date": "2026-09-18",
+      "time": "18:45",
+      "title": "Нигерийские силы открыли огонь по протестующим из-за гибели 37 шахтёров в полицейском заключении",
+      "preview": "В Нигерии силы безопасности открыли огонь по демонстрантам, требовавшим справедливости после смерти 37 шахтёров, находившихся под стражей в полиции штата Нигер. Власти пообещали…",
+      "tags": [
+        "#мировыеновости",
+        "#происшествия",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/138",
+      "src": "https://www.aljazeera.com/news/2026/9/18/nigerian-forces-fire-at-protesters-rallying-over-deaths-of-detained-miners?traffic_source=rss"
+    },
     {
       "id": 137,
       "date": "2026-09-18",
