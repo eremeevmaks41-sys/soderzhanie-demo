@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-18T01:18:38+03:00",
+  "updated_at": "2026-09-18T03:26:26+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -47,6 +47,20 @@
       "kind": "text",
       "url": "https://t.me/daily_news_digest/127",
       "src": "https://tass.ru/politika/28122085"
+    },
+    {
+      "id": 130,
+      "date": "2026-09-17",
+      "time": "15:27",
+      "title": "Канада готова стать ассоциированным членом ЕС",
+      "preview": "Премьер-министр Канады Марк Карни поддержал инициативу ЕС о статусе ассоциированного члена, заявив, что альянс станет «маяком для других демократий».",
+      "tags": [
+        "#мировыеновости",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/130",
+      "src": "https://www.bbc.co.uk/news/articles/cwly7vkke4jxo?at_medium=RSS&at_campaign=rss"
     },
     {
       "id": 126,
