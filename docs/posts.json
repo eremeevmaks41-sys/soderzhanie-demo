@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-09-18T03:26:26+03:00",
+  "updated_at": "2026-09-18T05:19:17+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 131,
+      "date": "2026-09-18",
+      "time": "05:10",
+      "title": "Экс-премьер Украины заявил о компрометирующих записях на Зеленского",
+      "preview": "Бывший премьер-министр Украины заявил о существовании компрометирующих аудио- или видеозаписей на президента Владимира Зеленского. Детали содержания записей и их источник не…",
+      "tags": [
+        "#россия",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/131",
+      "src": "https://lenta.ru/news/2026/09/18/eks-premier-ukrainy-rasskazal-o-komprometiruyuschih-zapisyah-na-zelenskogo/"
+    },
     {
       "id": 129,
       "date": "2026-09-18",
