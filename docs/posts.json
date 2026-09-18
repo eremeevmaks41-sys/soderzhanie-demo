@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-09-18T21:22:01+03:00",
+  "updated_at": "2026-09-19T01:18:25+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 140,
+      "date": "2026-09-19",
+      "time": "00:41",
+      "title": "Арсенал побеждает в семи матчах сезона",
+      "preview": "Лидеры Премьер-лиги Арсенал выиграли все семь матчей нового сезона. В следующем туре они встречаются с Брайтоном.",
+      "tags": [
+        "#мировыеновости",
+        "#спорт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/140",
+      "src": "https://www.aljazeera.com/sports/2026/9/18/brighton-vs-arsenal-premier-league-predictions-teams-lineups?traffic_source=rss"
+    },
     {
       "id": 139,
       "date": "2026-09-18",
