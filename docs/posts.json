@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-19T05:18:50+03:00",
+  "updated_at": "2026-09-19T07:19:24+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -19,6 +19,21 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/142",
       "src": "https://lenta.ru/news/2026/09/19/tainstvennoe-ischeznovenie-semi-usoltsevyh-svyazali-s-napadeniem/"
+    },
+    {
+      "id": 143,
+      "date": "2026-09-19",
+      "time": "02:08",
+      "title": "Два депортированных из США мужчины избили в отеле Экваториальной Гвинеи",
+      "preview": "Юристы и правозащитники заявили, что мужчины из Египта и Эритреи, deported из США администрацией Трампа, были связаны, избиты, надевали на головы мешки и сбрасывали с лестницы в…",
+      "tags": [
+        "#мировыеновости",
+        "#происшествия",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/143",
+      "src": "https://www.theguardian.com/us-news/2026/sep/18/us-men-deported-hotel-equatorial-guinea"
     },
     {
       "id": 141,
