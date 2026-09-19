@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-09-19T17:17:57+03:00",
+  "updated_at": "2026-09-19T19:19:04+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 148,
+      "date": "2026-09-19",
+      "time": "18:38",
+      "title": "Дети Газы вернулись в школы в первый официальный день занятий",
+      "preview": "В первый официальный день после перерыва дети из сектора Газа приступили к занятиям в школах. Это произошло в рамках восстановления образовательного процесса в регионе.…",
+      "tags": [
+        "#мировыеновости",
+        "#общество"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/148",
+      "src": "https://www.aljazeera.com/video/newsfeed/2026/9/19/jerusalem-daily-gazas-children-return-to-schools?traffic_source=rss"
+    },
     {
       "id": 147,
       "date": "2026-09-19",
