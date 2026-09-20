@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-09-20T17:18:09+03:00",
+  "updated_at": "2026-09-20T19:19:12+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 159,
+      "date": "2026-09-20",
+      "time": "18:30",
+      "title": "Кенийская бегунья Агнес Нгетич установила мировой рекорд в женском полумарафоне",
+      "preview": "Агнес Нгетич из Кении пробежала полумарафон за 1 час 2 минуты 52 секунды, улучшив предыдущий женский мировой рекорд на одну секунду. Она финишировала на 50 секунд впереди своей…",
+      "tags": [
+        "#мировыеновости",
+        "#спорт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/159",
+      "src": "https://www.aljazeera.com/sports/2026/9/20/kenyas-ngetich-breaks-women-only-half-marathon-world-record-by-a-second?traffic_source=rss"
+    },
     {
       "id": 158,
       "date": "2026-09-20",
