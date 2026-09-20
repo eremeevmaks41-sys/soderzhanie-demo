@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-20T05:19:17+03:00",
+  "updated_at": "2026-09-20T07:19:26+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -203,6 +203,21 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/139",
       "src": "https://www.bbc.co.uk/news/articles/cm2dw1w9d3yjo?at_medium=RSS&at_campaign=rss"
+    },
+    {
+      "id": 153,
+      "date": "2026-09-18",
+      "time": "20:27",
+      "title": "37 подозреваемых в нелегальной добыче золота погибли в тюремной камере в Нигерии",
+      "preview": "В городе Минна, столице штата Нигер, 37 человек, среди которых были дети, погибли в камере Нигерийского корпуса безопасности и гражданской обороны после задержания за подозрение…",
+      "tags": [
+        "#мировыеновости",
+        "#происшествия",
+        "#общество"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/153",
+      "src": "https://www.theguardian.com/world/2026/sep/18/survivor-panic-struggle-breathe-nigeria-prison-cell-died-minna"
     },
     {
       "id": 138,
