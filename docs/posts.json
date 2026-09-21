@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-21T17:20:20+03:00",
+  "updated_at": "2026-09-21T21:22:07+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -19,6 +19,20 @@
       "kind": "text",
       "url": "https://t.me/daily_news_digest/170",
       "src": "https://tass.ru/ekonomika/28136531"
+    },
+    {
+      "id": 171,
+      "date": "2026-09-21",
+      "time": "17:14",
+      "title": "Йеменцы бегутцы бегут через Красное море в Джибути из-за эскалации войны",
+      "preview": "Жители Йемена пересекают Красное море, спасаясь от боевых действий между хуситами и саудовскими поддерживаемыми силами. BBC поговорила с беженцами, достигшими Джибути. Точное…",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/171",
+      "src": "https://www.bbc.co.uk/news/articles/cw4gm7l742dmo?at_medium=RSS&at_campaign=rss"
     },
     {
       "id": 169,
