@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-09-21T03:26:40+03:00",
+  "updated_at": "2026-09-21T05:19:58+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 164,
+      "date": "2026-09-21",
+      "time": "05:06",
+      "title": "Проктолог назвала частые проблемы после анального секса",
+      "preview": "Проктолог перечислила наиболее распространённые осложнения после анального секса, включая боль, кровотечение и воспаление. Она подчеркнула важность подготовки, использования…",
+      "tags": [
+        "#россия",
+        "#здоровье"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/164",
+      "src": "https://lenta.ru/news/2026/09/21/proktolog-perechislila-samye-chastye-problemy-posle-analnogo-seksa/"
+    },
     {
       "id": 162,
       "date": "2026-09-21",
