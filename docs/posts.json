@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-21T05:19:58+03:00",
+  "updated_at": "2026-09-21T07:20:48+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -417,6 +417,20 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/136",
       "src": "https://ria.ru/20260918/shvydka-2118532267.html"
+    },
+    {
+      "id": 165,
+      "date": "2026-09-18",
+      "time": "14:21",
+      "title": "Британка, похищенная в Малави, освобождена после перестрелки с полицией",
+      "preview": "Нурат Осман была похищена у своего дома в Блантайре 11 сентября около 12:30. Во время операции по её освобождению полиция вступила в перестрелку, в результате которой погибли…",
+      "tags": [
+        "#мировыеновости",
+        "#происшествия"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/165",
+      "src": "https://www.theguardian.com/world/2026/sep/18/british-woman-kidnapped-malawi-police-shootout"
     },
     {
       "id": 135,
