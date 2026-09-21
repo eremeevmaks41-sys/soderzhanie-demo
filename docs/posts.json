@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-21T01:17:45+03:00",
+  "updated_at": "2026-09-21T03:26:40+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -91,6 +91,20 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/157",
       "src": "https://ria.ru/20260920/pamfilova-2118969630.html"
+    },
+    {
+      "id": 163,
+      "date": "2026-09-20",
+      "time": "13:45",
+      "title": "Москва пережила крупнейшую атаку дронов: сбито 450 БПЛА, два человека погибли",
+      "preview": "В ходе массированного ночного удара по Москве украинские силы запустили сотни дронов, из которых 450 были сбиты системами ПВО. По словам мэра Сергея Собянина, в результате атаки…",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/163",
+      "src": "https://www.bbc.co.uk/news/articles/c34gdjk1ne8yo?at_medium=RSS&at_campaign=rss"
     },
     {
       "id": 156,
