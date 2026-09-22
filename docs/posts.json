@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-09-22T23:18:20+03:00",
+  "updated_at": "2026-09-23T01:18:33+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 183,
+      "date": "2026-09-23",
+      "time": "01:10",
+      "title": "Братья Пол посетили Пентагон и вызвали критику в соцсетях",
+      "preview": "Логан и Джейк Пол посетили Пентагон в сопровождении министра обороны Пита Хегсета, что вызвало негативную реакцию в социальных сетях. Критики усмотрели в визите неуместное…",
+      "tags": [
+        "#мировыеновости",
+        "#общество"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/183",
+      "src": "https://www.aljazeera.com/economy/2026/9/22/celebrities-at-the-pentagon-how-unusual-was-the-paul-brothers-visit?traffic_source=rss"
+    },
     {
       "id": 182,
       "date": "2026-09-22",
