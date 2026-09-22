@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-22T05:19:31+03:00",
+  "updated_at": "2026-09-22T07:19:36+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -19,6 +19,21 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/173",
       "src": "https://lenta.ru/news/2026/09/22/rossiyanka-opisala-osobennosti-zhizni-v-turtsii-frazoy-ne-privyknut-dazhe-spustya-gody/"
+    },
+    {
+      "id": 174,
+      "date": "2026-09-22",
+      "time": "01:33",
+      "title": "Здравоохранение в Африке и глобальном Юге под растущей нагрузкой после сокращения USAID",
+      "preview": "Отчёт Accra Reset предупреждает, что вывод США из ключевых программ помощи, включая USAID, усилил нагрузку на системы здравоохранения в Африке и странах глобального Юга. Ситуация…",
+      "tags": [
+        "#мировыеновости",
+        "#здоровье",
+        "#экономика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/174",
+      "src": "https://www.theguardian.com/us-news/2026/sep/21/africa-healthcare-aid-program-withdrawl"
     },
     {
       "id": 172,
