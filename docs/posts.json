@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-22T19:20:07+03:00",
+  "updated_at": "2026-09-22T21:23:23+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -33,6 +33,20 @@
       "kind": "text",
       "url": "https://t.me/daily_news_digest/179",
       "src": "https://tass.ru/mezhdunarodnaya-panorama/28140033"
+    },
+    {
+      "id": 181,
+      "date": "2026-09-22",
+      "time": "17:03",
+      "title": "Шри-Ланка: суд признал виновными 15 человек в терактах на Пасху 2019 года",
+      "preview": "Суд Шри-Ланки вынес приговор 15 мужчинам за организацию серии взрывов в трёх церквях и трёх отелях в 2019 году. Атаки, проведённые в Пасхальное воскресенье, унесли жизни 270…",
+      "tags": [
+        "#мировыеновости",
+        "#происшествия"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/181",
+      "src": "https://www.bbc.co.uk/news/articles/cqy7z275yx65o?at_medium=RSS&at_campaign=rss"
     },
     {
       "id": 178,
