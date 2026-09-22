@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-09-22T17:20:10+03:00",
+  "updated_at": "2026-09-22T19:20:07+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 180,
+      "date": "2026-09-22",
+      "time": "18:33",
+      "title": "Трамп запустил собственное ТВ-шоу",
+      "preview": "Дональд Трамп создал собственное медиа-выходное издание amid раскола с Белым домом и пресс-корпусом.",
+      "tags": [
+        "#мировыеновости",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/180",
+      "src": "https://www.aljazeera.com/news/2026/9/22/trump-tv-can-the-us-president-bypass-mainstream-media?traffic_source=rss"
+    },
     {
       "id": 179,
       "date": "2026-09-22",
