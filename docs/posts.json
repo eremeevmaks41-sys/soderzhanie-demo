@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-09-22T21:23:23+03:00",
+  "updated_at": "2026-09-22T23:18:20+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 182,
+      "date": "2026-09-22",
+      "time": "23:12",
+      "title": "Норвегия оценила шансы Большунова вернуться в гонки после смягчения правил для россиян",
+      "preview": "Норвежские эксперты обсудили вероятность возвращения российского лыжника Александра Большунова на международные соревнования после обновления допусковых правил для спортсменов из…",
+      "tags": [
+        "#россия",
+        "#спорт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/182",
+      "src": "https://lenta.ru/news/2026/09/22/v-norvegii-otsenili-veroyatnost-vozvrascheniya-bolshunova-posle-obnovlennyh-pravil-dlya-rossiyan/"
+    },
     {
       "id": 180,
       "date": "2026-09-22",
