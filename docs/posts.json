@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-23T05:19:31+03:00",
+  "updated_at": "2026-09-23T07:20:16+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -288,6 +288,20 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/166",
       "src": "https://www.vedomosti.ru/politics/news/2026/09/21/1230407-kadirov-pobezhdaet"
+    },
+    {
+      "id": 186,
+      "date": "2026-09-21",
+      "time": "08:00",
+      "title": "Трамп тайно депортировал тысячи мигрантов в неизвестные страны Африки",
+      "preview": "Иранская женщина, депортированная из США в наручниках, оказалась в африканской стране, о существовании которой не знала. Её случай — часть масштабной программы тайных соглашений…",
+      "tags": [
+        "#мировыеновости",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/186",
+      "src": "https://www.theguardian.com/us-news/ng-interactive/2026/sep/21/trump-deportation-deals"
     },
     {
       "id": 164,
