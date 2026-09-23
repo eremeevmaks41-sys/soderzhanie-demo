@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-09-23T17:20:34+03:00",
+  "updated_at": "2026-09-23T19:20:54+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 191,
+      "date": "2026-09-23",
+      "time": "18:52",
+      "title": "Менеджер KPMG заявила об увольнении после преследований из-за палестинского платка",
+      "preview": "Менеджер KPMG заявила, что её уволили после того, как она столкнулась с преследованиями на работе из-за ношения палестинского платка — киффии. Инцидент произошёл в офисе…",
+      "tags": [
+        "#мировыеновости",
+        "#общество"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/191",
+      "src": "https://www.aljazeera.com/video/newsfeed/2026/9/23/kpmg-manager-says-she-was-fired-after-facing-harassment-over-her-keffiyeh?traffic_source=rss"
+    },
     {
       "id": 190,
       "date": "2026-09-23",
