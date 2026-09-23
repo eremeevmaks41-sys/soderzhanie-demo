@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-09-23T23:20:37+03:00",
+  "updated_at": "2026-09-24T01:18:54+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 194,
+      "date": "2026-09-24",
+      "time": "00:18",
+      "title": "Хакеры из ShinyHunters заявили о краже данных тысяч сотрудников ФБР",
+      "preview": "Группа хакеров ShinyHunters утверждает, что получила доступ к очень конфиденциальным данным тысяч сотрудников Федерального бюро расследований США. ФБР подтвердило, что проводит…",
+      "tags": [
+        "#мировыеновости",
+        "#технологии"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/194",
+      "src": "https://www.aljazeera.com/news/2026/9/23/fbi-says-investigating-breach-of-very-sensitive-data-by-hackers?traffic_source=rss"
+    },
     {
       "id": 193,
       "date": "2026-09-23",
