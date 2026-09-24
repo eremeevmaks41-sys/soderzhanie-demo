@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-09-24T17:20:38+03:00",
+  "updated_at": "2026-09-24T19:21:04+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 202,
+      "date": "2026-09-24",
+      "time": "19:01",
+      "title": "Кот-д'Ивуар и Гана играют в отборочном матче Кубка Африки",
+      "preview": "Матч отборочного турнира Кубка Африки между сборными Кот-д'Ивуара и Ганы ведётся в прямой текстовой трансляции. В центре внимания — выступление нападающего Яна Диоманде, который…",
+      "tags": [
+        "#мировыеновости",
+        "#спорт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/202",
+      "src": "https://www.aljazeera.com/sports/liveblog/2026/9/24/live-ivory-coast-vs-ghana-afcon-qualifying?traffic_source=rss"
+    },
     {
       "id": 201,
       "date": "2026-09-24",
