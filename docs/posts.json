@@ -1,11 +1,26 @@
 {
   "version": 1,
-  "updated_at": "2026-09-24T19:21:04+03:00",
+  "updated_at": "2026-09-24T21:23:41+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 203,
+      "date": "2026-09-24",
+      "time": "20:49",
+      "title": "Белый дом восстановил доступ CNN, Politico и MSNBC после судебного решения",
+      "preview": "Суд обязал администрацию вернуть аккредитацию журналистам CNN, Politico и MSNBC, которым ранее отказали во входе в Белый дом. Доступ был восстановлен после того, как некоторые…",
+      "tags": [
+        "#мировыеновости",
+        "#политика",
+        "#общество"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/203",
+      "src": "https://www.bbc.co.uk/news/articles/cqe8ek7608mlo?at_medium=RSS&at_campaign=rss"
+    },
     {
       "id": 202,
       "date": "2026-09-24",
