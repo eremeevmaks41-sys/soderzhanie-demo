@@ -1,11 +1,26 @@
 {
   "version": 1,
-  "updated_at": "2026-09-24T23:21:53+03:00",
+  "updated_at": "2026-09-25T01:19:24+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 205,
+      "date": "2026-09-25",
+      "time": "00:47",
+      "title": "Хорватский суд одобрил экстрадицию подозреваемого в подрыве Nord Stream",
+      "preview": "Хорватский суд принял решение об экстрадиции подозреваемого в sabotage Nord Stream, однако решение может быть обжаловано, а окончательное решение ещё не принято. Подозреваемый…",
+      "tags": [
+        "#мировыеновости",
+        "#происшествия",
+        "#конфликт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/205",
+      "src": "https://www.aljazeera.com/news/2026/9/24/croatian-court-approves-extradition-in-nord-stream-bombing-case?traffic_source=rss"
+    },
     {
       "id": 204,
       "date": "2026-09-24",
