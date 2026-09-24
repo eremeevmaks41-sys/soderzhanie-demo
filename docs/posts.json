@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-24T05:19:33+03:00",
+  "updated_at": "2026-09-24T07:20:34+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -119,6 +119,21 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/189",
       "src": "https://ria.ru/20260923/vsu-2119770974.html"
+    },
+    {
+      "id": 197,
+      "date": "2026-09-23",
+      "time": "14:08",
+      "title": "AirMoney планирует крупнейший лондонский IPO за годы",
+      "preview": "Airtel Money, мобильный платежный сервис Airtel Africa, контролируемый индийским миллиардером Сунилом Бирти Митталом, планирует IPO на Лондонской бирже. Ожидаемая стоимость…",
+      "tags": [
+        "#мировыеновости",
+        "#экономика",
+        "#технологии"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/197",
+      "src": "https://www.theguardian.com/business/2026/sep/23/indian-billionaire-payments-firm-london-flotation-airtel-money"
     },
     {
       "id": 188,
