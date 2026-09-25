@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-09-25T17:21:20+03:00",
+  "updated_at": "2026-09-25T19:21:06+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 214,
+      "date": "2026-09-25",
+      "time": "18:47",
+      "title": "Турция против Франции в матче Лиги наций УЕФА",
+      "preview": "Онлайн-трансляция матча Турция — Франция в рамках Лиги наций УЕФА ведётся в текстовом формате. Включает обновления состава команд, прогнозы и предматчевую аналитику. Точная дата…",
+      "tags": [
+        "#мировыеновости",
+        "#спорт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/214",
+      "src": "https://www.aljazeera.com/sports/liveblog/2026/9/25/live-turkiye-vs-france-uefa-nations-league?traffic_source=rss"
+    },
     {
       "id": 213,
       "date": "2026-09-25",
