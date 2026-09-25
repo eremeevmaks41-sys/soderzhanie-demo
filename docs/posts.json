@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-09-25T01:19:24+03:00",
+  "updated_at": "2026-09-25T03:28:17+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 206,
+      "date": "2026-09-25",
+      "time": "02:32",
+      "title": "Нетанияху защищает действия IDF перед УН",
+      "preview": "Израильский премьер Нафтали Нетанияху назвал уходящих делегатов «моральными трусами». В ходе выступления в Генеральной Ассамблее ООН несколько стран вышли из зала.",
+      "tags": [
+        "#мировыеновости",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/206",
+      "src": "https://www.bbc.co.uk/news/articles/c3y0z7kxlegdo?at_medium=RSS&at_campaign=rss"
+    },
     {
       "id": 205,
       "date": "2026-09-25",
