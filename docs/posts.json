@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-25T05:19:20+03:00",
+  "updated_at": "2026-09-25T07:20:27+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -91,6 +91,20 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/202",
       "src": "https://www.aljazeera.com/sports/liveblog/2026/9/24/live-ivory-coast-vs-ghana-afcon-qualifying?traffic_source=rss"
+    },
+    {
+      "id": 208,
+      "date": "2026-09-24",
+      "time": "18:29",
+      "title": "Тиграйские повстанцы начали наступление на Эфиопию, возобновив опасения гражданской войны",
+      "preview": "Повстанцы из Тиграя перешли в наступление на соседние регионы Афар и Амхара, создав новую коалицию с целью свержения правительства премьер-министра Абия Ахмеда. Боевые действия…",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/208",
+      "src": "https://www.theguardian.com/world/2026/sep/24/fears-return-to-war-tigray-rebels-launch-offensive-against-ethiopian-army"
     },
     {
       "id": 201,
