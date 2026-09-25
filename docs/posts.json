@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-25T19:21:06+03:00",
+  "updated_at": "2026-09-25T21:21:59+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -33,6 +33,21 @@
       "kind": "text",
       "url": "https://t.me/daily_news_digest/213",
       "src": "https://tass.ru/ekonomika/28152451"
+    },
+    {
+      "id": 215,
+      "date": "2026-09-25",
+      "time": "16:56",
+      "title": "Хакеры украли результаты анализов крови и мочи спецагентов ФБР",
+      "preview": "В результате кибератаки на ФБР злоумышленники получили доступ к результатам анализов крови и мочи специальных агентов. По мнению экспертов, эти данные могут быть использованы для…",
+      "tags": [
+        "#мировыеновости",
+        "#технологии",
+        "#происшествия"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/215",
+      "src": "https://www.bbc.co.uk/news/articles/cw62me2vlj07o?at_medium=RSS&at_campaign=rss"
     },
     {
       "id": 212,
