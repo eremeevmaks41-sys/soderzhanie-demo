@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-09-25T03:28:17+03:00",
+  "updated_at": "2026-09-25T05:19:20+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 207,
+      "date": "2026-09-25",
+      "time": "05:15",
+      "title": "Российский город подвергся крупной атаке украинских беспилотников",
+      "preview": "В результате атаки пострадали жилые дома и инфраструктура. Точные сведения о жертвах и масштабах разрушений уточняются.",
+      "tags": [
+        "#россия",
+        "#происшествия"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/207",
+      "src": "https://lenta.ru/news/2026/09/25/rossiyskiy-gorod-podvergsya-krupnoy-atake-ukrainskih-bespilotnikov/"
+    },
     {
       "id": 206,
       "date": "2026-09-25",
