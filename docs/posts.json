@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-09-26T01:19:03+03:00",
+  "updated_at": "2026-09-26T03:25:29+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 217,
+      "date": "2026-09-26",
+      "time": "02:38",
+      "title": "Иран предложил США открыть пролив Ормуз за 7 дней",
+      "preview": "Иран предложил США открыть пролив Ормуз в течение семи дней через посредников. По словам американского чиновника, ведутся конструктивные переговоры.",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/217",
+      "src": "https://www.bbc.co.uk/news/articles/cqgmrr9ekr7ko?at_medium=RSS&at_campaign=rss"
+    },
     {
       "id": 216,
       "date": "2026-09-26",
