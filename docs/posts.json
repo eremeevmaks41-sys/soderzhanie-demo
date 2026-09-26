@@ -1,11 +1,26 @@
 {
   "version": 1,
-  "updated_at": "2026-09-26T21:21:52+03:00",
+  "updated_at": "2026-09-27T01:18:40+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 227,
+      "date": "2026-09-27",
+      "time": "00:51",
+      "title": "Трамп отменит топливные стандарты эпохи Байдена для автомобилей",
+      "preview": "Президент США Дональд Трамп заявил, что отменит так называемый мандат на электромобили, введённый администрацией Байдена, который стимулировал переход потребителей на…",
+      "tags": [
+        "#мировыеновости",
+        "#энергетика",
+        "#экономика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/227",
+      "src": "https://www.aljazeera.com/news/2026/9/26/trump-says-he-is-rolling-back-biden-era-us-fuel-economy-rules-for-cars?traffic_source=rss"
+    },
     {
       "id": 226,
       "date": "2026-09-26",
