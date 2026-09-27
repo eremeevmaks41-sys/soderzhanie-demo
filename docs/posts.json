@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-27T19:19:51+03:00",
+  "updated_at": "2026-09-27T21:21:53+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -76,6 +76,21 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/232",
       "src": "https://www.interfax.ru/russia/1118742"
+    },
+    {
+      "id": 237,
+      "date": "2026-09-27",
+      "time": "10:44",
+      "title": "Иранский министр заявил, что только переговоры могут завершить конфликт после отказа Трампа от сделки по…",
+      "preview": "Министр иностранных дел Ирана Аббас Аракчи заявил, что Тегеран ждёт официального отказа от предложенной сделки по Ормузскому проливу, несмотря на заявления президента США…",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/237",
+      "src": "https://www.bbc.co.uk/news/articles/cmvgyyw2jeego?at_medium=RSS&at_campaign=rss"
     },
     {
       "id": 231,
