@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-27T01:18:40+03:00",
+  "updated_at": "2026-09-27T03:28:01+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -64,6 +64,20 @@
       "kind": "text",
       "url": "https://t.me/daily_news_digest/224",
       "src": "https://tass.ru/proisshestviya/28154765"
+    },
+    {
+      "id": 228,
+      "date": "2026-09-26",
+      "time": "15:47",
+      "title": "Взрыв у Акрополя в Афинах унёс жизни шести человек",
+      "preview": "Взрыв, предположительно газового происхождения, произошёл в здании рядом с Акрополем в Афинах. Среди погибших — четыре американца, один грек и один британец. Власти подтвердили…",
+      "tags": [
+        "#мировыеновости",
+        "#происшествия"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/228",
+      "src": "https://www.bbc.co.uk/news/articles/c6p3kk78l4l1o?at_medium=RSS&at_campaign=rss"
     },
     {
       "id": 223,
