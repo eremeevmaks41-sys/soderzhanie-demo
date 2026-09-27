@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-27T05:19:39+03:00",
+  "updated_at": "2026-09-27T07:19:28+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -49,6 +49,21 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/226",
       "src": "https://www.bbc.co.uk/news/articles/cm4gjjwvvlzro?at_medium=RSS&at_campaign=rss"
+    },
+    {
+      "id": 230,
+      "date": "2026-09-26",
+      "time": "19:00",
+      "title": "США взорвали рыболовецкое судно Эквадора в международных водах",
+      "preview": "8 сентября американский патрульный корабль перехватил и взорвал судно Don Rufo у берегов Эквадора. Десять рыбаков остались в открытом океане, потеряв источник дохода.…",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт",
+        "#происшествия"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/230",
+      "src": "https://www.theguardian.com/world/2026/sep/26/us-airstrikes-ecuador-fishers"
     },
     {
       "id": 225,
