@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-09-27T21:21:53+03:00",
+  "updated_at": "2026-09-28T01:18:48+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 238,
+      "date": "2026-09-28",
+      "time": "00:41",
+      "title": "Ирландия победила Израиль в матче Лиги наций УЕФА",
+      "preview": "Ирландская сборная одержала победу над Израилем в матче Лиги наций УЕФА. Игроки Ирландии выступили в поддержку Палестины: надели чёрные повязки, склонили головы и отказались от…",
+      "tags": [
+        "#мировыеновости",
+        "#спорт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/238",
+      "src": "https://www.aljazeera.com/sports/2026/9/27/ireland-defeats-israel-in-controversial-uefa-nations-league-match?traffic_source=rss"
+    },
     {
       "id": 236,
       "date": "2026-09-27",
