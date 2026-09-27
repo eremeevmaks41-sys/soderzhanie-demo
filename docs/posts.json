@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-09-27T03:28:01+03:00",
+  "updated_at": "2026-09-27T05:19:39+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 229,
+      "date": "2026-09-27",
+      "time": "05:13",
+      "title": "Участившиеся нападения медведей на россиян связали с неожиданным фактором",
+      "preview": "В России зафиксирован рост числа случаев нападений медведей на людей. Причиной эксперты называют неожиданный фактор — изменение привычного поведения животных из-за ранней весны и…",
+      "tags": [
+        "#россия",
+        "#общество"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/229",
+      "src": "https://lenta.ru/news/2026/09/27/uchastivshiesya-sluchai-napadeniy-medvedey-na-rossiyan-svyazali-s-neozhidannym-faktorom/"
+    },
     {
       "id": 227,
       "date": "2026-09-27",
