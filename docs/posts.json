@@ -1,11 +1,26 @@
 {
   "version": 1,
-  "updated_at": "2026-09-27T17:18:14+03:00",
+  "updated_at": "2026-09-27T19:19:51+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 236,
+      "date": "2026-09-27",
+      "time": "19:05",
+      "title": "Афганистан сообщил о гибели 28 боевиков в обмене обвинениями с Пакистаном",
+      "preview": "Кабул заявил, что 28 бойцов были убиты в результате действий пакистанских сил на границе. Обе страны обвиняют друг друга в поддержке терроризма и эскалации трансграничного…",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/236",
+      "src": "https://www.aljazeera.com/news/2026/9/27/afghanistan-says-28-fighters-killed-as-islamabad-kabul-trade-accusations?traffic_source=rss"
+    },
     {
       "id": 235,
       "date": "2026-09-27",
