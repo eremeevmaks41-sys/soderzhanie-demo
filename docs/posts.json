@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-09-28T17:23:53+03:00",
+  "updated_at": "2026-09-28T19:23:54+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 247,
+      "date": "2026-09-28",
+      "time": "19:00",
+      "title": "Бельгия и Франция сыграют в матче Лиги наций",
+      "preview": "Матч группы A1 Лиги наций между сборными Бельгии и Франции состоится в прямом эфире. Трансляция включает построение команд, анализ и текстовую онлайн-трансляцию хода игры. Точная…",
+      "tags": [
+        "#мировыеновости",
+        "#спорт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/247",
+      "src": "https://www.aljazeera.com/sports/liveblog/2026/9/28/live-belgium-vs-france-nations-league?traffic_source=rss"
+    },
     {
       "id": 246,
       "date": "2026-09-28",
