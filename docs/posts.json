@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-28T05:20:13+03:00",
+  "updated_at": "2026-09-28T07:22:01+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -76,6 +76,21 @@
       "kind": "text",
       "url": "https://t.me/daily_news_digest/235",
       "src": "https://tass.ru/sport/28156297"
+    },
+    {
+      "id": 241,
+      "date": "2026-09-27",
+      "time": "16:46",
+      "title": "В ЮАР два массовых расстрела унесли жизни как минимум 27 человек",
+      "preview": "В ЮАР зафиксированы два отдельных массовых расстрела: 17 человек убиты в баре в township Wedela вблизи Йоханнесбурга, ещё 10 — на барбекю-вечеринке рядом с Кейптауном. В первом…",
+      "tags": [
+        "#мировыеновости",
+        "#происшествия",
+        "#общество"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/241",
+      "src": "https://www.theguardian.com/world/2026/sep/27/mass-shootings-south-africa-johannesburg-cape-town"
     },
     {
       "id": 234,
