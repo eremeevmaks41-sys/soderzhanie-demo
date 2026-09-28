@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-09-28T21:23:28+03:00",
+  "updated_at": "2026-09-29T01:19:49+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 249,
+      "date": "2026-09-29",
+      "time": "00:34",
+      "title": "Золото упало до семинедельного минимума на фоне роста цен на нефть и укрепления доллара",
+      "preview": "Цена на золото достигла самого низкого уровня за семь недель, так как инвесторы переключились на более доходные активы amid роста нефтяных котировок и укрепления американского…",
+      "tags": [
+        "#мировыеновости",
+        "#экономика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/249",
+      "src": "https://www.aljazeera.com/economy/2026/9/28/gold-falls-amid-rising-oil-prices-and-higher-us-dollar?traffic_source=rss"
+    },
     {
       "id": 247,
       "date": "2026-09-28",
