@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-09-28T03:30:08+03:00",
+  "updated_at": "2026-09-28T05:20:13+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 240,
+      "date": "2026-09-28",
+      "time": "05:07",
+      "title": "На Украине начались молитвы из-за нехватки ракет для систем Patriot",
+      "preview": "На Украине верующие начали проводить молитвы с просьбой о поставках ракет для зенитных ракетных систем Patriot, которые критически важны для противовоздушной обороны. Инициатива…",
+      "tags": [
+        "#россия",
+        "#конфликт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/240",
+      "src": "https://lenta.ru/news/2026/09/28/na-ukraine-nachali-molitsya-za-otsutstvie-raket-dlya-patriot/"
+    },
     {
       "id": 238,
       "date": "2026-09-28",
