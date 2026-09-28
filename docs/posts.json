@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-28T19:23:54+03:00",
+  "updated_at": "2026-09-28T21:23:28+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -19,6 +19,21 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/247",
       "src": "https://www.aljazeera.com/sports/liveblog/2026/9/28/live-belgium-vs-france-nations-league?traffic_source=rss"
+    },
+    {
+      "id": 248,
+      "date": "2026-09-28",
+      "time": "17:57",
+      "title": "Сеул вызвал посла Украины из-за спора о северокорейских военнопленных",
+      "preview": "На прошлой неделе Владимир Зеленский заявил, что Украина передала двух захваченных северокорейских солдат в Южную Корею. Сеул утверждает, что эта передача должна была остаться…",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/248",
+      "src": "https://www.bbc.co.uk/news/articles/c8ly40xx0dr0o?at_medium=RSS&at_campaign=rss"
     },
     {
       "id": 246,
