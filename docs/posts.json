@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-28T01:18:48+03:00",
+  "updated_at": "2026-09-28T03:30:08+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -19,6 +19,20 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/238",
       "src": "https://www.aljazeera.com/sports/2026/9/27/ireland-defeats-israel-in-controversial-uefa-nations-league-match?traffic_source=rss"
+    },
+    {
+      "id": 239,
+      "date": "2026-09-28",
+      "time": "00:16",
+      "title": "BBC прошла на передовую Йемена с правительственными войсками",
+      "preview": "BBC получила редкий доступ к зоне боевых действий в Йемене и сопровождала про правительственных солдат на передовой, где хуситы ведут бои за контроль над городом. Репортаж…",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/239",
+      "src": "https://www.bbc.co.uk/news/articles/cw98005ndz7no?at_medium=RSS&at_campaign=rss"
     },
     {
       "id": 236,
