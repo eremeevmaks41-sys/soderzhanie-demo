@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-09-29T23:21:57+03:00",
+  "updated_at": "2026-09-30T01:20:19+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 261,
+      "date": "2026-09-30",
+      "time": "00:29",
+      "title": "Ямаль оформил дубль и голевую передачу в победе Испании над Хорватией",
+      "preview": "В матче Лиги наций УЕФА Испания обыграла Хорватию со счётом 4-1. Ламин Ямаль забил два гола и отдал одну результативную передачу.",
+      "tags": [
+        "#мировыеновости",
+        "#спорт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/261",
+      "src": "https://www.aljazeera.com/sports/2026/9/29/yamal-stars-as-spain-thrash-croatia?traffic_source=rss"
+    },
     {
       "id": 260,
       "date": "2026-09-29",
