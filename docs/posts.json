@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-29T01:19:49+03:00",
+  "updated_at": "2026-09-29T03:28:09+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -19,6 +19,21 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/249",
       "src": "https://www.aljazeera.com/economy/2026/9/28/gold-falls-amid-rising-oil-prices-and-higher-us-dollar?traffic_source=rss"
+    },
+    {
+      "id": 250,
+      "date": "2026-09-28",
+      "time": "20:26",
+      "title": "В ЮАР убиты 12 женщин в одном районе с июля",
+      "preview": "Президент ЮАР Цирилл Рамфоса назвал убийства пятном на национальной совести. По данным полиции, жертвами стали женщины в одном из регионов страны с июля. Мотивы и подробности…",
+      "tags": [
+        "#мировыеновости",
+        "#происшествия",
+        "#общество"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/250",
+      "src": "https://www.bbc.co.uk/news/articles/c6m27dprvzv7o?at_medium=RSS&at_campaign=rss"
     },
     {
       "id": 247,
