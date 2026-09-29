@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-29T05:18:44+03:00",
+  "updated_at": "2026-09-29T07:21:28+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -62,6 +62,21 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/247",
       "src": "https://www.aljazeera.com/sports/liveblog/2026/9/28/live-belgium-vs-france-nations-league?traffic_source=rss"
+    },
+    {
+      "id": 252,
+      "date": "2026-09-28",
+      "time": "18:54",
+      "title": "Политик ДР Конго убит после радиообращения о профилактике Эболы",
+      "preview": "В воскресенье в Бутембо, новом очаге вспышки Эболы в ДР Конго, неизвестные избили до смерти acting president регионального отделения правящей партии UDPS Мари-Селестин Карондву.…",
+      "tags": [
+        "#мировыеновости",
+        "#происшествия",
+        "#здоровье"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/252",
+      "src": "https://www.theguardian.com/world/2026/sep/28/drc-politician-beaten-death-radio-appearance-ebola"
     },
     {
       "id": 248,
