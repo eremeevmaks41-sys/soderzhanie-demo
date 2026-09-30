@@ -1,11 +1,26 @@
 {
   "version": 1,
-  "updated_at": "2026-09-30T20:58:36+03:00",
+  "updated_at": "2026-10-01T01:10:40+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 269,
+      "date": "2026-10-01",
+      "time": "00:34",
+      "title": "«Ближайшее к вакцине от ВИЧ», но кто получит доступ?",
+      "preview": "Двукратный в год инъекция может изменить профилактику ВИЧ, но вопросы доступности ставят под угрозу широкое внедрение.",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт",
+        "#наука"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/269",
+      "src": "https://www.aljazeera.com/video/newsfeed/2026/9/30/its-the-closest-thing-to-an-hiv-vaccine-but-who-gets-access?traffic_source=rss"
+    },
     {
       "id": 268,
       "date": "2026-09-30",
