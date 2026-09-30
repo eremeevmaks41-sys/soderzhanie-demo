@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-09-30T13:22:43+03:00",
+  "updated_at": "2026-09-30T20:58:36+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 268,
+      "date": "2026-09-30",
+      "time": "20:51",
+      "title": "На рейсе Flydubai в Израиль пилоты ранены в результате ножевого нападения",
+      "preview": "Капитан и второй пилот получили ранения в результате нападения с ножом на борту самолёта Flydubai, летевшего в Израиль. Один из пилотов задержан властями. Инцидент произошёл во…",
+      "tags": [
+        "#мировыеновости",
+        "#происшествия"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/268",
+      "src": "https://www.bbc.co.uk/news/articles/cqjdv7pmj9dno?at_medium=RSS&at_campaign=rss"
+    },
     {
       "id": 267,
       "date": "2026-09-30",
