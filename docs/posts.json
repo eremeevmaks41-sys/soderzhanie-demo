@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-30T05:19:51+03:00",
+  "updated_at": "2026-09-30T07:22:23+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -419,6 +419,20 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/234",
       "src": "https://ria.ru/20260927/ukraina-2120549701.html"
+    },
+    {
+      "id": 264,
+      "date": "2026-09-27",
+      "time": "14:00",
+      "title": "Кейптаун планирует стерилизовать и переселить две стаи бабуинов в убежище",
+      "preview": "Две стаи чакма-бабуинов регулярно проникают в дома и магазины Кейптауна, вызывая конфликты с жителями. Городской совет объявил о скором отлове животных для стерилизации и…",
+      "tags": [
+        "#мировыеновости",
+        "#общество"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/264",
+      "src": "https://www.theguardian.com/environment/2026/sep/27/baboons-cape-town-divided-over-plan-to-remove-its-monkeys-aoe"
     },
     {
       "id": 233,
