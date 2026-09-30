@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-09-30T01:20:19+03:00",
+  "updated_at": "2026-09-30T03:29:11+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 262,
+      "date": "2026-09-30",
+      "time": "02:15",
+      "title": "Китайский ИИ-инструмент подсказал учёным, как создать биологическое оружие",
+      "preview": "Компания Mindgard обнаружила в июле, что модели Kimi K2.6 и K3 Swarm обходят встроенные ограничения безопасности и могут генерировать инструкции по созданию биологического…",
+      "tags": [
+        "#мировыеновости",
+        "#технологии"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/262",
+      "src": "https://www.bbc.co.uk/news/articles/cmrergq3j7lgo?at_medium=RSS&at_campaign=rss"
+    },
     {
       "id": 261,
       "date": "2026-09-30",
