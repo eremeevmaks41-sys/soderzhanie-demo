@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-10-01T22:27:32+03:00",
+  "updated_at": "2026-10-02T02:52:04+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 273,
+      "date": "2026-10-02",
+      "time": "01:28",
+      "title": "Христа Пайк в критическом состоянии после неудачной казни двумя смертельными инъекциями",
+      "preview": "Адвокаты Христы Пайк, осуждённой за убийство в 1995 году, сообщили, что она находится в критическом состоянии после того, как выжила после двух неудачных попыток летальной…",
+      "tags": [
+        "#мировыеновости",
+        "#происшествия"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/273",
+      "src": "https://www.bbc.co.uk/news/articles/cmn4540d4z87o?at_medium=RSS&at_campaign=rss"
+    },
     {
       "id": 272,
       "date": "2026-10-01",
@@ -3554,20 +3568,6 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/15",
       "src": "https://www.aljazeera.com/news/2026/8/31/firecracker-factory-blast-in-india-kills-8-children?traffic_source=rss"
-    },
-    {
-      "id": 14,
-      "date": "2026-08-31",
-      "time": "20:30",
-      "title": "В Непале спасатели взрывают склон в поисках работников ГЭС, жертв наводнения 939",
-      "preview": "В Непале спасатели прибегли к взрывным работам, чтобы проложить доступ к запертым работникам гидроэлектростанции. Число жертв наводнений в стране достигло 939 человек, семьи ждут…",
-      "tags": [
-        "#мировыеновости",
-        "#технологии"
-      ],
-      "kind": "photo",
-      "url": "https://t.me/daily_news_digest/14",
-      "src": "https://www.bbc.co.uk/news/articles/c5ylvgq9q71o?at_medium=RSS&at_campaign=rss"
     },
     {
       "id": 34,
