@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-10-03T19:10:17+03:00",
+  "updated_at": "2026-10-04T00:07:51+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 281,
+      "date": "2026-10-03",
+      "time": "23:16",
+      "title": "Трамп усиливает давление на республиканцев для отмены перехода на летнее время",
+      "preview": "Президент США Дональд Трамп опубликовал номер телефона законодателя, призывая к принятию законопроекта, который сделает летнее время постоянным. Он усиливает давление на членов…",
+      "tags": [
+        "#мировыеновости",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/281",
+      "src": "https://www.aljazeera.com/news/2026/10/3/trump-ramps-up-pressure-on-us-republicans-to-end-us-clock-switching?traffic_source=rss"
+    },
     {
       "id": 280,
       "date": "2026-10-03",
