@@ -1,11 +1,26 @@
 {
   "version": 1,
-  "updated_at": "2026-10-03T14:33:45+03:00",
+  "updated_at": "2026-10-03T19:10:17+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 280,
+      "date": "2026-10-03",
+      "time": "18:39",
+      "title": "Со-пилот обвиняется в нападении на капитана Flydubai",
+      "preview": "Со-пилот Hamam al-Hammami обвиняется в нападении на капитана авиакомпании Flydubai. Инцидент произошёл во время полёта, детали пока не раскрываются. Al Jazeera сообщает, что…",
+      "tags": [
+        "#мировыеновости",
+        "#происшествия",
+        "#транспорт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/280",
+      "src": "https://www.aljazeera.com/video/newsfeed/2026/10/3/what-we-know-about-the-co-pilot-accused-in-flydubai-attack?traffic_source=rss"
+    },
     {
       "id": 279,
       "date": "2026-10-03",
