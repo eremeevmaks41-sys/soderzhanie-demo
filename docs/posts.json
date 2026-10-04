@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-04T00:07:51+03:00",
+  "updated_at": "2026-10-04T03:30:43+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -19,6 +19,20 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/281",
       "src": "https://www.aljazeera.com/news/2026/10/3/trump-ramps-up-pressure-on-us-republicans-to-end-us-clock-switching?traffic_source=rss"
+    },
+    {
+      "id": 282,
+      "date": "2026-10-03",
+      "time": "20:48",
+      "title": "Глава тюремной системы Теннесси уходит в отставку после неудачной казни Кристы Пайк",
+      "preview": "Глава департамента исправительных учреждений штата Теннесси объявил об отставке после того, как казнь заключённой Кристы Пайк не удалась из-за проблем с введением летального…",
+      "tags": [
+        "#мировыеновости",
+        "#происшествия"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/282",
+      "src": "https://www.bbc.co.uk/news/articles/c8zxl62yzxzxo?at_medium=RSS&at_campaign=rss"
     },
     {
       "id": 280,
