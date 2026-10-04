@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-04T22:32:38+03:00",
+  "updated_at": "2026-10-05T02:01:14+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -34,6 +34,21 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/284",
       "src": "https://www.aljazeera.com/news/2026/10/4/dodik-declared-bosnia-dead-irrelevant-rhetoric-or-serious-threat?traffic_source=rss"
+    },
+    {
+      "id": 286,
+      "date": "2026-10-04",
+      "time": "15:09",
+      "title": "Российский дрон ударил по Северному мосту в Киеве во время визита канцлера Германии",
+      "preview": "Видео показывает момент попадания дрона в Північний (Северный) мост в Киеве, когда по нему двигались автомобили. Удар привёл к большому пожару и огненному шару. Визит канцлера…",
+      "tags": [
+        "#мировыеновости",
+        "#происшествия",
+        "#конфликт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/286",
+      "src": "https://www.bbc.co.uk/news/articles/ckreyjzzzywqo?at_medium=RSS&at_campaign=rss"
     },
     {
       "id": 283,
