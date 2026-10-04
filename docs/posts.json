@@ -1,11 +1,26 @@
 {
   "version": 1,
-  "updated_at": "2026-10-04T11:20:48+03:00",
+  "updated_at": "2026-10-04T18:17:41+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 284,
+      "date": "2026-10-04",
+      "time": "17:21",
+      "title": "Лидер боснийских сербов заявил, что Босния и Герцеговина мертва перед выборами",
+      "preview": "Президент Республики Сербской Милорад Додик сделал controversial заявление, назвав Боснию и Герцеговину «мертвой» страной на фоне предстоящих высоких ставок выборов в стране. Его…",
+      "tags": [
+        "#мировыеновости",
+        "#политика",
+        "#общество"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/284",
+      "src": "https://www.aljazeera.com/news/2026/10/4/dodik-declared-bosnia-dead-irrelevant-rhetoric-or-serious-threat?traffic_source=rss"
+    },
     {
       "id": 283,
       "date": "2026-10-04",
