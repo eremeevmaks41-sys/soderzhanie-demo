@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-10-08T08:52:14+03:00",
+  "updated_at": "2026-10-08T16:18:49+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 298,
+      "date": "2026-10-08",
+      "time": "15:44",
+      "title": "Частичное обрушение здания в Стамбуле: два погибших, восемь спасённых",
+      "preview": "В районе Мальтепе в Стамбуле частично обрушилось здание, в результате чего погибли два человека. Восемь пострадавших были извлечены из завалов спасателями, однако операции…",
+      "tags": [
+        "#мировыеновости",
+        "#происшествия"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/298",
+      "src": "https://www.aljazeera.com/news/2026/10/8/two-killed-after-building-partially-collapses-in-turkiye-capital?traffic_source=rss"
+    },
     {
       "id": 297,
       "date": "2026-10-08",
