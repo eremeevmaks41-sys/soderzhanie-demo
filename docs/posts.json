@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-10-08T16:18:49+03:00",
+  "updated_at": "2026-10-08T22:50:26+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 299,
+      "date": "2026-10-08",
+      "time": "22:48",
+      "title": "Экс-игрок КХЛ назвал предательством использование латиницы на хоккейных свитерах",
+      "preview": "Бывший игрок клубов КХЛ выразил недовольство тем, что фамилии хоккеистов на игровой форме пишут латинскими буквами вместо кириллицы, считая это проявлением неуважения к русскому…",
+      "tags": [
+        "#россия",
+        "#спорт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/299",
+      "src": "https://lenta.ru/news/2026/10/08/eks-igrok-klubov-khl-schel-predatelstvom-napisanie-familiy-igrokov-na-sviterah-latinitsey/"
+    },
     {
       "id": 298,
       "date": "2026-10-08",
