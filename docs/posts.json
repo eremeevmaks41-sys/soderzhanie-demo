@@ -1,11 +1,26 @@
 {
   "version": 1,
-  "updated_at": "2026-10-09T11:53:27+03:00",
+  "updated_at": "2026-10-09T19:58:08+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 302,
+      "date": "2026-10-09",
+      "time": "19:07",
+      "title": "Тысячи протестуют против мер жесткой экономии в Брюсселе, столкновения с полицией",
+      "preview": "В Брюсселе тысячи человек вышли на антиаUSTERITY-протест, требуя отмены мер жесткой экономии. На окраинах основного митинга полиция применила слезоточивый газ, водометы и дубинки…",
+      "tags": [
+        "#мировыеновости",
+        "#общество",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/302",
+      "src": "https://www.aljazeera.com/news/2026/10/9/thousands-rally-for-anti-austerity-protest-in-brussels-amid-clashes?traffic_source=rss"
+    },
     {
       "id": 301,
       "date": "2026-10-09",
