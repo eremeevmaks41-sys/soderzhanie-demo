@@ -1,11 +1,26 @@
 {
   "version": 1,
-  "updated_at": "2026-10-09T19:58:08+03:00",
+  "updated_at": "2026-10-10T01:34:26+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 303,
+      "date": "2026-10-10",
+      "time": "00:53",
+      "title": "Трамп подтвердил расстрел убийцы из форта Худ",
+      "preview": "Президент США Дональд Трамп подтвердил, что приговоренный к смерти за расстрел в форте Худ в 2009 году Нидал Малик Хасан будет казнён через расстрел. Пентагон уточнил, что…",
+      "tags": [
+        "#мировыеновости",
+        "#происшествия",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/303",
+      "src": "https://www.aljazeera.com/video/newsfeed/2026/10/9/trump-confirms-fort-hood-shooters-execution-will-be-by-firing-squad?traffic_source=rss"
+    },
     {
       "id": 302,
       "date": "2026-10-09",
