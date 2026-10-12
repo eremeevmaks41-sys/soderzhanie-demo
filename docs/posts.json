@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-10-12T18:12:29+03:00",
+  "updated_at": "2026-10-13T01:53:28+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 314,
+      "date": "2026-10-13",
+      "time": "01:44",
+      "title": "Польша заявляет о задержании двух турок в Германии по подозрению в поджоге станции Starlink, связанной с…",
+      "preview": "Варшава сообщила, что два подозреваемых, гражданина Турции, задержаны в Германии и будут преданы суду по обвинению в саботаже. Инцидент связан с поджогом станции спутникового…",
+      "tags": [
+        "#мировыеновости",
+        "#происшествия"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/314",
+      "src": "https://www.aljazeera.com/news/2026/10/12/poland-says-two-turks-arrested-over-russia-linked-starlink-station-fire?traffic_source=rss"
+    },
     {
       "id": 313,
       "date": "2026-10-12",
