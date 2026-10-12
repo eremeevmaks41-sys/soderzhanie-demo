@@ -1,11 +1,26 @@
 {
   "version": 1,
-  "updated_at": "2026-10-12T08:45:51+03:00",
+  "updated_at": "2026-10-12T18:12:29+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 313,
+      "date": "2026-10-12",
+      "time": "17:27",
+      "title": "Иран и Саудовская Аравия обсуждают роль хуситов в Йемене",
+      "preview": "Тегеран ведёт переговоры с Эр-Риядом по поводу хуситов в Йемене, предупреждая, что военное решение конфликта может усугубить нестабильность в регионе. Иран стремится к диалогу…",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/313",
+      "src": "https://www.aljazeera.com/news/2026/10/12/iran-saudi-talks-on-yemens-houthis-whats-in-it-for-tehran?traffic_source=rss"
+    },
     {
       "id": 312,
       "date": "2026-10-12",
