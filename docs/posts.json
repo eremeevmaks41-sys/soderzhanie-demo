@@ -1,11 +1,26 @@
 {
   "version": 1,
-  "updated_at": "2026-10-13T18:53:28+03:00",
+  "updated_at": "2026-10-14T00:11:13+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 317,
+      "date": "2026-10-13",
+      "time": "23:46",
+      "title": "Суд приговорил Дуэйна 'Keffe D' Дэвиса к 40 годам за убийство Тупака Шакура",
+      "preview": "Суд в Неваде приговорил Дуэйна 'Keffe D' Дэвиса к 40 годам до пожизненного заключения за участие в убийстве рэп-иконы Тупака Шакура в 1996 году. Дэвис признал свою роль в…",
+      "tags": [
+        "#мировыеновости",
+        "#происшествия",
+        "#культура"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/317",
+      "src": "https://www.aljazeera.com/video/newsfeed/2026/10/13/tupac-shakur-killer-sentenced-to-40-years-in-prison?traffic_source=rss"
+    },
     {
       "id": 316,
       "date": "2026-10-13",
