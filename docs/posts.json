@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-10-13T09:40:41+03:00",
+  "updated_at": "2026-10-13T18:53:28+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 316,
+      "date": "2026-10-13",
+      "time": "18:37",
+      "title": "Посол США в Греции ушёл в отставку из-за обвинений в неправомерном поведении",
+      "preview": "Кимберли Гилфойл, посол США в Греции, подала в отставку после обвинений в том, что предлагала доступ к чиновникам администрации Трампа за деньги. Она отрицает все обвинения.…",
+      "tags": [
+        "#мировыеновости",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/316",
+      "src": "https://www.aljazeera.com/news/2026/10/13/trumps-ambassador-to-greece-asked-to-resign-amid-misconduct-allegations?traffic_source=rss"
+    },
     {
       "id": 315,
       "date": "2026-10-13",
