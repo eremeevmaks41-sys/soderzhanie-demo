@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-10-14T00:11:13+03:00",
+  "updated_at": "2026-10-14T04:07:52+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 318,
+      "date": "2026-10-14",
+      "time": "04:00",
+      "title": "Звезда с идеальными ягодицами опубликовала обнажённое фото",
+      "preview": "Модель, известная как обладательница самых идеальных ягодиц в мире, разместила в соцсетях обнажённое фото. Снимок привлёк широкое внимание публики и обсуждения в интернете.…",
+      "tags": [
+        "#россия",
+        "#культура"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/318",
+      "src": "https://lenta.ru/news/2026/10/14/zvezda-s-samymi-idealnymi-yagoditsami-v-mire-opublikovala-obnazhennoe-foto/"
+    },
     {
       "id": 317,
       "date": "2026-10-13",
