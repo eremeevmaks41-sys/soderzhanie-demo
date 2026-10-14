@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-14T16:37:38+03:00",
+  "updated_at": "2026-10-14T21:31:10+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -20,6 +20,21 @@
       "kind": "text",
       "url": "https://t.me/daily_news_digest/320",
       "src": "https://tass.ru/mezhdunarodnaya-panorama/28214103"
+    },
+    {
+      "id": 321,
+      "date": "2026-10-14",
+      "time": "16:11",
+      "title": "Ограничения Starlink в Украине связаны с политической ситуацией, заявил советник Зеленского",
+      "preview": "Советник президента Украины заявил, что ограничения в работе спутниковой системы Starlink на фронте связаны с текущей политической ситуацией. Система Илона Маска обеспечивает…",
+      "tags": [
+        "#мировыеновости",
+        "#технологии",
+        "#конфликт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/321",
+      "src": "https://www.bbc.co.uk/news/articles/cm2d6e62p49do?at_medium=RSS&at_campaign=rss"
     },
     {
       "id": 319,
