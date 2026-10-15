@@ -1,11 +1,26 @@
 {
   "version": 1,
-  "updated_at": "2026-10-15T14:19:15+03:00",
+  "updated_at": "2026-10-15T19:51:17+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 325,
+      "date": "2026-10-15",
+      "time": "19:32",
+      "title": "Израильская ad-tech компания помогла установить шпионское ПО на устройства Al Jazeera через рекламу",
+      "preview": "Следственная группа Citizen Lab обнаружила, что десятки устройств сотрудников Al Jazeera были заражены вредоносным ПО, внедрённым через рекламные сети. Инфекция произошла с…",
+      "tags": [
+        "#мировыеновости",
+        "#технологии",
+        "#происшествия"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/325",
+      "src": "https://www.aljazeera.com/news/2026/10/15/israeli-ad-tech-firm-helped-spy-on-al-jazeera-devices?traffic_source=rss"
+    },
     {
       "id": 324,
       "date": "2026-10-15",
