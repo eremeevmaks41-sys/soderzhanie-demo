@@ -1,11 +1,26 @@
 {
   "version": 1,
-  "updated_at": "2026-10-15T19:51:17+03:00",
+  "updated_at": "2026-10-16T00:17:49+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 326,
+      "date": "2026-10-15",
+      "time": "23:29",
+      "title": "Два химических танкера атакованы дронами в Чёрном море, пропали 7 членов экипажа",
+      "preview": "В Чёрном море после атаки беспилотников на два химических танкера пропали без вести семь членов экипажа. Спасательные команды ведут поиски в районе инцидента. Информация о…",
+      "tags": [
+        "#мировыеновости",
+        "#происшествия",
+        "#конфликт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/326",
+      "src": "https://www.aljazeera.com/video/newsfeed/2026/10/15/at-least-7-crew-members-missing-after-drone-attacks-on-ships-in-black-sea?traffic_source=rss"
+    },
     {
       "id": 325,
       "date": "2026-10-15",
