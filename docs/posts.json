@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-15T02:09:02+03:00",
+  "updated_at": "2026-10-15T07:25:24+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -20,6 +20,20 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/322",
       "src": "https://www.bbc.co.uk/news/articles/c8wy9veedgygo?at_medium=RSS&at_campaign=rss"
+    },
+    {
+      "id": 323,
+      "date": "2026-10-14",
+      "time": "22:01",
+      "title": "Зимбабвийский писатель опроверг обвинения в использовании ИИ для написания победившей истории",
+      "preview": "Зимбабвийский автор Simbarashe Kundizeza заявил, что не использовал искусственный интеллект при написании рассказа The Blue Fighter, который выиграл престижную премию Caine для…",
+      "tags": [
+        "#мировыеновости",
+        "#культура"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/323",
+      "src": "https://www.theguardian.com/technology/2026/oct/14/zimbabwean-author-simbarashe-kundizeza-denies-ai-story"
     },
     {
       "id": 320,
