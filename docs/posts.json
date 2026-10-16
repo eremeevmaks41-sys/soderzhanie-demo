@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-16T00:17:49+03:00",
+  "updated_at": "2026-10-16T03:16:59+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -20,6 +20,21 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/326",
       "src": "https://www.aljazeera.com/video/newsfeed/2026/10/15/at-least-7-crew-members-missing-after-drone-attacks-on-ships-in-black-sea?traffic_source=rss"
+    },
+    {
+      "id": 327,
+      "date": "2026-10-15",
+      "time": "20:47",
+      "title": "Трамп отменил прямую трансляцию казни Насала Хасана расстрелом",
+      "preview": "Президент США Дональд Трамп отменил планы по прямой трансляции казни Нidal Хасана, виновного в атаке на военную базу Форт-Худ в 2009 году. Это будет первая военная казнь в США за…",
+      "tags": [
+        "#мировыеновости",
+        "#происшествия",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/327",
+      "src": "https://www.bbc.co.uk/news/articles/crx23qlnj27qo?at_medium=RSS&at_campaign=rss"
     },
     {
       "id": 325,
