@@ -1,11 +1,26 @@
 {
   "version": 1,
-  "updated_at": "2026-10-16T16:12:21+03:00",
+  "updated_at": "2026-10-16T20:58:21+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 330,
+      "date": "2026-10-16",
+      "time": "19:00",
+      "title": "Украинская операция Vivaldi возвращает территории в Донбассе при поддержке Starlink",
+      "preview": "Украинские силы в рамках операции Vivaldi восстанавливают контроль над ключевыми территориями в Донбассе, используя спутниковый интернет Starlink для координации. Однако успехи…",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт",
+        "#технологии"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/330",
+      "src": "https://www.bbc.co.uk/news/articles/cvx284w16z1po?at_medium=RSS&at_campaign=rss"
+    },
     {
       "id": 329,
       "date": "2026-10-16",
