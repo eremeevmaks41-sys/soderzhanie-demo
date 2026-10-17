@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-17T15:08:45+03:00",
+  "updated_at": "2026-10-17T20:01:36+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -19,6 +19,20 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/334",
       "src": "https://ria.ru/20261017/dni-2125122081.html"
+    },
+    {
+      "id": 335,
+      "date": "2026-10-17",
+      "time": "14:56",
+      "title": "Трамп отменил ряд санкций против России на фоне обострения с Зеленским",
+      "preview": "Президент США Дональд Трамп временно приостановил действие множества недавно введённых Конгрессом ограничений против Москвы, ссылаясь на вопросы национальной безопасности.…",
+      "tags": [
+        "#мировыеновости",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/335",
+      "src": "https://www.bbc.co.uk/news/articles/cxr5yvzv7rp0o?at_medium=RSS&at_campaign=rss"
     },
     {
       "id": 333,
