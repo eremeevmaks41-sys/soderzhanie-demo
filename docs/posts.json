@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-18T18:47:36+03:00",
+  "updated_at": "2026-10-18T21:35:53+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -20,6 +20,21 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/340",
       "src": "https://www.aljazeera.com/gallery/2026/10/18/photos-antigovernment-protesters-clash-with-police-in-albanias-capital?traffic_source=rss"
+    },
+    {
+      "id": 341,
+      "date": "2026-10-18",
+      "time": "15:07",
+      "title": "В Париже после протестов начались беспорядки с поджогами машин и разграблением",
+      "preview": "По всей Франции прошли протесты, которые переросли в насилия и погромы. В Париже на улицах оказались сожжённые автомобили и разбитое стекло. Задержаны около 1800 человек.",
+      "tags": [
+        "#мировыеновости",
+        "#происшествия",
+        "#общество"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/341",
+      "src": "https://www.bbc.co.uk/news/articles/c574pdzl0k4no?at_medium=RSS&at_campaign=rss"
     },
     {
       "id": 339,
