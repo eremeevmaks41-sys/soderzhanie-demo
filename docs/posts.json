@@ -1,11 +1,26 @@
 {
   "version": 1,
-  "updated_at": "2026-10-18T21:35:53+03:00",
+  "updated_at": "2026-10-19T01:23:54+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 342,
+      "date": "2026-10-19",
+      "time": "00:53",
+      "title": "Сепаратисты Альберты готовятся к поражению на референдуме о независимости",
+      "preview": "Движение за независимость канадской провинции Альберта сталкивается с вероятным поражением на референдуме, однако исторический опыт показывает, что проигрыш в голосовании не…",
+      "tags": [
+        "#мировыеновости",
+        "#политика",
+        "#общество"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/342",
+      "src": "https://www.aljazeera.com/news/2026/10/18/alberta-independence-referendum-will-separatists-survive-a-loss?traffic_source=rss"
+    },
     {
       "id": 340,
       "date": "2026-10-18",
