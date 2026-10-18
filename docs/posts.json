@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-18T02:57:39+03:00",
+  "updated_at": "2026-10-18T07:18:38+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -207,6 +207,21 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/324",
       "src": "https://ria.ru/20261015/ege-2124689854.html"
+    },
+    {
+      "id": 338,
+      "date": "2026-10-15",
+      "time": "11:00",
+      "title": "В Сенегале задержаны более 320 человек за гомосексуальность после ужесточения закона",
+      "preview": "С февраля по данным HRW и HIV Justice Network в Сенегале арестованы более 320 человек по обвинению в «противоправных действиях против природы» после ужесточения закона против…",
+      "tags": [
+        "#мировыеновости",
+        "#общество",
+        "#здоровье"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/338",
+      "src": "https://www.theguardian.com/global-development/2026/oct/15/senegal-homosexuality-criminalised-anti-lgbtq-arrests-hiv-testing-human-rights-watch"
     },
     {
       "id": 322,
