@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-19T01:23:54+03:00",
+  "updated_at": "2026-10-19T07:28:01+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -64,6 +64,20 @@
       "kind": "text",
       "url": "https://t.me/daily_news_digest/339",
       "src": "https://www.kommersant.ru/doc/9041333"
+    },
+    {
+      "id": 343,
+      "date": "2026-10-18",
+      "time": "12:00",
+      "title": "Нигерийские хайпмены переопределяют Afrobeats через импровизированные кричалки и энергичное взаимодействие с…",
+      "preview": "Стиль импровизированного эмсинг с высокооктановыми вокальными импровизациями стал популярен благодаря способности зажигать толпу. Примером стал Toby Shang, студент Университета…",
+      "tags": [
+        "#мировыеновости",
+        "#культура"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/343",
+      "src": "https://www.theguardian.com/world/2026/oct/18/lagos-hypemen-redefining-afrobeats-music-afrohype"
     },
     {
       "id": 337,
