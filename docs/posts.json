@@ -1,11 +1,26 @@
 {
   "version": 1,
-  "updated_at": "2026-10-20T14:25:00+03:00",
+  "updated_at": "2026-10-20T19:49:35+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 349,
+      "date": "2026-10-20",
+      "time": "19:23",
+      "title": "Кипр становится backyard-ом Израиля",
+      "preview": "Иерусалимская столица, технологии водоснабжения и недвижимость делают Кипр стратегическим и экономическим продолжением Израиля.",
+      "tags": [
+        "#мировыеновости",
+        "#политика",
+        "#экономика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/349",
+      "src": "https://www.aljazeera.com/video/newsfeed/2026/10/20/aje-onl-nf_is-cyprus-becoming-israels-backyard-201026?traffic_source=rss"
+    },
     {
       "id": 348,
       "date": "2026-10-20",
