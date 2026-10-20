@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-10-20T19:49:35+03:00",
+  "updated_at": "2026-10-21T00:32:29+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 350,
+      "date": "2026-10-21",
+      "time": "00:19",
+      "title": "Американская компания суes Trump из-за тарифов на канадские товары",
+      "preview": "Импортер пищевых продуктов подал иск против президента США, обвинив его в обходе Конгресса и неправомерном использовании закона Депрессии для введения тарифов на канадские товары",
+      "tags": [
+        "#мировыеновости",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/350",
+      "src": "https://www.aljazeera.com/economy/2026/10/20/us-food-importer-sues-trump-over-50-percent-tariffs-on-canadian-goods?traffic_source=rss"
+    },
     {
       "id": 349,
       "date": "2026-10-20",
