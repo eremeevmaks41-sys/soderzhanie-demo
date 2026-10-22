@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-22T02:11:51+03:00",
+  "updated_at": "2026-10-22T07:29:20+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -33,6 +33,20 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/354",
       "src": "https://www.bbc.co.uk/news/articles/cq3djn5nxx12o?at_medium=RSS&at_campaign=rss"
+    },
+    {
+      "id": 356,
+      "date": "2026-10-21",
+      "time": "20:18",
+      "title": "Остановка спонсируемого США испытания вакциной против гепатита в Африке",
+      "preview": "Исследование гепатита B в Гвинее-Бисау, финансируемое CDC, приостановлено из-за отсутствия гос승인. Автор исследования заявил, что проект «не будет продвигаться вперед».",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/356",
+      "src": "https://www.theguardian.com/world/2026/oct/21/us-vaccine-trial-african-newborns-hepatitis-b"
     },
     {
       "id": 353,
