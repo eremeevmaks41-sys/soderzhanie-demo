@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-10-22T14:39:43+03:00",
+  "updated_at": "2026-10-22T20:04:19+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 358,
+      "date": "2026-10-22",
+      "time": "20:02",
+      "title": "Трамп обязан отвечать на вопросы в суде по делу против BBC",
+      "preview": "Бывший президент США Дональд Трамп подал иск в BBC из-за выпуска программы Panorama. По версии истца, журналисты склеили фрагменты его речи 2021 года, искажая смысл",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/358",
+      "src": "https://www.bbc.co.uk/news/articles/cmy0ryjx7741o?at_medium=RSS&at_campaign=rss"
+    },
     {
       "id": 357,
       "date": "2026-10-22",
