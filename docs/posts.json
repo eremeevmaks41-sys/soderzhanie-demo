@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-10-22T20:04:19+03:00",
+  "updated_at": "2026-10-23T00:28:47+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 359,
+      "date": "2026-10-22",
+      "time": "23:51",
+      "title": "Шеф МЭА предупредил: энергия становится геополитическим оружием",
+      "preview": "Джахир Бирол, руководитель Международного агентства по энергии, предупредил, что энергетика используется как геополитический инструмент. По его словам, кризис в энергетическом…",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/359",
+      "src": "https://www.aljazeera.com/video/newsfeed/2026/10/22/aje-onl-nf_iea-warns-energy-becoming-a-geopolitical-weapon-221026?traffic_source=rss"
+    },
     {
       "id": 358,
       "date": "2026-10-22",
