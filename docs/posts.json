@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-10-23T00:28:47+03:00",
+  "updated_at": "2026-10-23T03:34:28+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 360,
+      "date": "2026-10-23",
+      "time": "02:16",
+      "title": "Больницы deliberately targeted RSF fighters",
+      "preview": "Главный юрист ООН Волкер Türk заявил, что множественные удары по больницам могут квалифицироваться как военные преступления. По данным расследования BBC, силы быстрого…",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/360",
+      "src": "https://www.bbc.co.uk/news/articles/c54g1kxw4nvvo?at_medium=RSS&at_campaign=rss"
+    },
     {
       "id": 359,
       "date": "2026-10-22",
