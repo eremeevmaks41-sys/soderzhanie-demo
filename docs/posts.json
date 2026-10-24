@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-24T18:51:17+03:00",
+  "updated_at": "2026-10-24T21:44:59+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -19,6 +19,20 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/367",
       "src": "https://www.aljazeera.com/news/2026/10/24/security-forces-deploy-as-milan-braces-for-another-day-of-protests?traffic_source=rss"
+    },
+    {
+      "id": 368,
+      "date": "2026-10-24",
+      "time": "15:12",
+      "title": "Украина: связь Starlink стабилизировалась после ограничений сети",
+      "preview": "Украина сообщила, что работающая связь Starlink восстановлена после недельного замедления, которое влияло на военные операции и дроны",
+      "tags": [
+        "#мировыеновости",
+        "#технологии"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/368",
+      "src": "https://www.bbc.co.uk/news/articles/cwkg5md14j8go?at_medium=RSS&at_campaign=rss"
     },
     {
       "id": 366,
