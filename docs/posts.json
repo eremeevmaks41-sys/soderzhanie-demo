@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-10-24T21:44:59+03:00",
+  "updated_at": "2026-10-25T01:25:34+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 369,
+      "date": "2026-10-25",
+      "time": "00:39",
+      "title": "Lula и Булсонаро притягивают тысячи на предвыборные митинги",
+      "preview": "Ключевой второй тур выборов определит, останется ли Бразилия при левом лидере или сменит его на правого соперника. Граждане вышли на улицы перед началом голосования.",
+      "tags": [
+        "#мировыеновости",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/369",
+      "src": "https://www.aljazeera.com/news/2026/10/24/brazils-lula-bolsonaro-draw-thousands-to-election-eve-rallies?traffic_source=rss"
+    },
     {
       "id": 367,
       "date": "2026-10-24",
