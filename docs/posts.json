@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-10-24T13:48:39+03:00",
+  "updated_at": "2026-10-24T18:51:17+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 367,
+      "date": "2026-10-24",
+      "time": "18:05",
+      "title": "Силы безопасности развертываются в Милане перед очередными протестами",
+      "preview": "Итальянское правительство отправило сотни солдат в финансовую столицу страны в предвкушении беспорядков.",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/367",
+      "src": "https://www.aljazeera.com/news/2026/10/24/security-forces-deploy-as-milan-braces-for-another-day-of-protests?traffic_source=rss"
+    },
     {
       "id": 366,
       "date": "2026-10-24",
