@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-24T02:04:08+03:00",
+  "updated_at": "2026-10-24T07:25:10+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -33,6 +33,21 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/363",
       "src": "https://www.bbc.co.uk/news/articles/c6ev38dj1g8zo?at_medium=RSS&at_campaign=rss"
+    },
+    {
+      "id": 365,
+      "date": "2026-10-23",
+      "time": "16:57",
+      "title": "В Нигерии выявлен первый случай Эбола за 10 лет",
+      "preview": "Швейцарка, жена дипломата, заразилась Эболой в Уганде. В Нигерии ищут источник infection, опасаясь распространения вируса по Африке. Зараженная не ехала в Демократическую…",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/365",
+      "src": "https://www.theguardian.com/world/2026/oct/23/ebola-swiss-patient-nigeria-dr-congo-concerns-virus-spread"
     },
     {
       "id": 362,
