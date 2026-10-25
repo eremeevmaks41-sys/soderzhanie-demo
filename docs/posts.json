@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-25T01:25:34+03:00",
+  "updated_at": "2026-10-25T07:28:50+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -146,6 +146,20 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/360",
       "src": "https://www.bbc.co.uk/news/articles/c54g1kxw4nvvo?at_medium=RSS&at_campaign=rss"
+    },
+    {
+      "id": 370,
+      "date": "2026-10-23",
+      "time": "00:53",
+      "title": "Льюис Хэмилтон хочет доехать до 2030-х для гонок в Руанде",
+      "preview": "Четырехкратный чемпион Формулы-1 Льюис Хэмилтон планирует продолжать карьеру до начала 2030-х, чтобы принять участие в первом в истории Руандском Гран-при. seven-time world…",
+      "tags": [
+        "#мировыеновости",
+        "#спорт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/370",
+      "src": "https://www.theguardian.com/sport/2026/oct/22/lewis-hamilton-aims-to-extend-career-till-early-2030s-so-he-can-race-in-african-grand-prix"
     },
     {
       "id": 359,
