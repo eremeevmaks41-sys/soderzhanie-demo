@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-10-25T21:55:30+03:00",
+  "updated_at": "2026-10-26T01:28:10+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 374,
+      "date": "2026-10-26",
+      "time": "00:50",
+      "title": "Мarine Le Pen обещает французский «возрождение»",
+      "preview": "Лидер Национального собрания Лepen запускает президентскую кампанию на фоне протестов и социально-экономического недовольства.",
+      "tags": [
+        "#мировыеновости",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/374",
+      "src": "https://www.aljazeera.com/news/2026/10/25/marine-le-pen-vows-a-french-renaissance-as-far-right-eyes-seat-of-power?traffic_source=rss"
+    },
     {
       "id": 372,
       "date": "2026-10-25",
