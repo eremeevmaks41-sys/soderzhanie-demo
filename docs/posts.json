@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-25T19:01:23+03:00",
+  "updated_at": "2026-10-25T21:55:30+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -33,6 +33,20 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/371",
       "src": "https://ria.ru/20261025/zelenskiy-2126866443.html"
+    },
+    {
+      "id": 373,
+      "date": "2026-10-25",
+      "time": "12:00",
+      "title": "Musk: SpaceX ограничил Starlink в Украине",
+      "preview": "Технологический миллиардер обвинил Украину в нарушении условий использования сети для военных целей. Служба связи восстановлена после ограничений.",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/373",
+      "src": "https://www.bbc.co.uk/news/articles/cvx28ljp8n4xo?at_medium=RSS&at_campaign=rss"
     },
     {
       "id": 369,
