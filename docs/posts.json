@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-26T01:28:10+03:00",
+  "updated_at": "2026-10-26T07:31:55+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -300,6 +300,20 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/356",
       "src": "https://www.theguardian.com/world/2026/oct/21/us-vaccine-trial-african-newborns-hepatitis-b"
+    },
+    {
+      "id": 375,
+      "date": "2026-10-21",
+      "time": "16:40",
+      "title": "Гражданин США депортирован в Гвинею",
+      "preview": "Адвокаты сообщают, что тяжелобольные заключенные ICE планируют депортировать в неизвестные африканские страны еще в среду. Родственники detainees в южнофлоридских лагерях…",
+      "tags": [
+        "#мировыеновости",
+        "#происшествия"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/375",
+      "src": "https://www.theguardian.com/us-news/2026/oct/21/ice-detention-illness-deportation-florida"
     },
     {
       "id": 353,
