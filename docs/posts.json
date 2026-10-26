@@ -1,11 +1,24 @@
 {
   "version": 1,
-  "updated_at": "2026-10-26T22:52:09+03:00",
+  "updated_at": "2026-10-27T02:45:54+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 378,
+      "date": "2026-10-27",
+      "time": "00:02",
+      "title": "Лула побеждает на выборах: возвращение левого лидера",
+      "preview": "Лула gewann die Stichwahl und sicherte sich einen vierten Wahlsieg. Der Amtsinhaber besiegte rechten Herausforderer Flávio Bolsonaro in einem dramatischen Rennen.",
+      "tags": [
+        "#мировыеновости"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/378",
+      "src": "https://www.bbc.co.uk/news/articles/ckm23y3mg1yyo?at_medium=RSS&at_campaign=rss"
+    },
     {
       "id": 377,
       "date": "2026-10-26",

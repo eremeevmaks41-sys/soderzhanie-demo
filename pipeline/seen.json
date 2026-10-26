@@ -1,5 +1,6 @@
 {
   "seen": {
+    "29b1a18ff89dc9c74947568fdb0fa81aa1338ad5": "2026-10-27",
     "d10ce73800920d5faf723aa0c69d19e2bab40311": "2026-10-26",
     "24f125c321bdc817c250766cb0f9b003006aafdb": "2026-10-26",
     "d6d24a7f650abac58a327787eef178f8c784efc4": "2026-10-26",
@@ -1741,6 +1742,10 @@
     "377": {
       "kind": "photo",
       "text": "📊 <b>Минобрнауки назвало специальности с наибольшим числом бюджетных мест</b>\n\nМинистерство образования и науки определило специальности, на которые приходится больше всего бюджетных мест в вузах. Данные раскрывают предпочтение абитуриентов и планы госзаказа.\n\nисточник: <a href=\"https://lenta.ru/news/2026/10/26/v-minobrnauki-nazvali-spetsialnosti-s-naibolshim-chislom-byudzhetnyh-mest/\">Lenta.ru</a>"
+    },
+    "378": {
+      "kind": "photo",
+      "text": "🌍 <b>Лула побеждает на выборах: возвращение левого лидера</b>\n\nЛула gewann die Stichwahl und sicherte sich einen vierten Wahlsieg. Der Amtsinhaber besiegte rechten Herausforderer Flávio Bolsonaro in einem dramatischen Rennen.\n\n• Lula besiegte Flávio Bolsonaro in der Stichwahl\n• Der Wahlsieg sichert dem linken Kurs eine weitere Periode\n\nисточник: <a href=\"https://www.bbc.co.uk/news/articles/ckm23y3mg1yyo?at_medium=RSS&amp;at_campaign=rss\">BBC</a>"
     }
   }
 }
