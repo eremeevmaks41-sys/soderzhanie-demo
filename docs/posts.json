@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-10-26T15:48:51+03:00",
+  "updated_at": "2026-10-26T22:52:09+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 377,
+      "date": "2026-10-26",
+      "time": "22:50",
+      "title": "Минобрнауки назвало специальности с наибольшим числом бюджетных мест",
+      "preview": "Министерство образования и науки определило специальности, на которые приходится больше всего бюджетных мест в вузах. Данные раскрывают предпочтение абитуриентов и планы госзаказа.",
+      "tags": [
+        "#россия",
+        "#общество"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/377",
+      "src": "https://lenta.ru/news/2026/10/26/v-minobrnauki-nazvali-spetsialnosti-s-naibolshim-chislom-byudzhetnyh-mest/"
+    },
     {
       "id": 376,
       "date": "2026-10-26",
