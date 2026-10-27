@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-27T02:45:54+03:00",
+  "updated_at": "2026-10-27T07:50:49+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -32,6 +32,21 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/377",
       "src": "https://lenta.ru/news/2026/10/26/v-minobrnauki-nazvali-spetsialnosti-s-naibolshim-chislom-byudzhetnyh-mest/"
+    },
+    {
+      "id": 379,
+      "date": "2026-10-26",
+      "time": "18:07",
+      "title": "Великобритания ввела санкции против сандуanese военных лидеров в связи с кампанией изнасилований в Эль-Фашере",
+      "preview": "Британское правительство ввело санкции против командиров обоих сторон конфликта в Судане. Под санкции попали лица, подозреваемые в сексуальном насилии во время осады Эль-Фашера…",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/379",
+      "src": "https://www.theguardian.com/global-development/2026/oct/26/uk-sanctions-sudanese-military-leaders-implicated-in-el-fasher-campaign-of"
     },
     {
       "id": 376,
