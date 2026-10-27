@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-10-27T20:55:06+03:00",
+  "updated_at": "2026-10-28T01:06:44+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 382,
+      "date": "2026-10-28",
+      "time": "00:47",
+      "title": "Болссонар улетает из Бразилии после поражения",
+      "preview": "Бразильский最高院 (СТФ) обязал экс-президента تسليم паспорта в рамках дела о отмывании денег. США заявили, что выдадут визу.",
+      "tags": [
+        "#мировыеновости",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/382",
+      "src": "https://www.aljazeera.com/news/2026/10/27/flavio-bolsonaro-flees-brazil-after-election-loss-us-says-will-grant-visa?traffic_source=rss"
+    },
     {
       "id": 381,
       "date": "2026-10-27",
