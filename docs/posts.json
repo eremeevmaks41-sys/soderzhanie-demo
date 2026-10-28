@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-10-28T19:34:47+03:00",
+  "updated_at": "2026-10-29T01:30:15+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 386,
+      "date": "2026-10-29",
+      "time": "00:36",
+      "title": "Коста-Рика открыла мега-тюрьмо",
+      "preview": "Президент Лора Фернандес открыла тюрьму за 35 млн долларов, рассчитанную на 5100 заключенных неподалеку от Сан-Хосе.",
+      "tags": [
+        "#мировыеновости",
+        "#общество"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/386",
+      "src": "https://www.aljazeera.com/news/2026/10/28/costa-ricas-mega-prison-receives-first-inmates?traffic_source=rss"
+    },
     {
       "id": 385,
       "date": "2026-10-28",
