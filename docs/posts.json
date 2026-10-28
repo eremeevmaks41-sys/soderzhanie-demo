@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-10-28T11:18:14+03:00",
+  "updated_at": "2026-10-28T19:34:47+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 385,
+      "date": "2026-10-28",
+      "time": "19:12",
+      "title": "Кремль: Европейские страны не приглашены на переговоры по Украине",
+      "preview": "Президентские переговоры по Украине будут проходить без представителей Европы. Это заявление прозвучало на фоне обещаний Великобритании и Нидерландов о дополнительной военной…",
+      "tags": [
+        "#мировыеновости",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/385",
+      "src": "https://www.aljazeera.com/news/2026/10/28/kremlin-says-european-countries-not-included-in-next-ukraine-talks?traffic_source=rss"
+    },
     {
       "id": 384,
       "date": "2026-10-28",
