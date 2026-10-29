@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-10-29T15:50:10+03:00",
+  "updated_at": "2026-10-29T22:32:29+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 389,
+      "date": "2026-10-29",
+      "time": "22:30",
+      "title": "МИД осудил давление на страны при голосовании в ООН по резолюции о блокаде Кубы",
+      "preview": "Министерство иностранных дел РФ выразило протест против давления, оказываемого на страны при голосовании за резолюцию о блоке Кубы в ООН.",
+      "tags": [
+        "#россия",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/389",
+      "src": "https://lenta.ru/news/2026/10/29/mid-rossii-osudil-davlenie-na-strany-pri-golosovanii-v-oon-po-rezolyutsii-o-blokade-kuby/"
+    },
     {
       "id": 388,
       "date": "2026-10-29",
