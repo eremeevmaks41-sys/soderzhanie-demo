@@ -178,6 +178,8 @@ html[data-theme="dark"] .banner{background:#3a2424;color:#e8b0b0;border-color:#5
 footer{margin-top:26px;padding-top:14px;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:12px;line-height:1.7}
 footer b{color:var(--text);font-weight:600}
 footer .lic{font-size:11px;opacity:.75}
+footer .us{margin-top:2px}
+footer .us a{color:inherit;font-weight:600;text-decoration:underline}
 
 /* ═══ v57: бренд-стиль лендинга oglavlenie (градиенты #2AABEE→#7C6CFF, Unbounded/Manrope) ═══ */
 .logo{background:linear-gradient(135deg,#2AABEE 0%,#7C6CFF 100%);box-shadow:0 6px 18px rgba(42,171,238,.32)}
@@ -252,7 +254,8 @@ footer b{font-family:'Unbounded','Manrope',sans-serif;font-weight:600}
   <div id="state" class="state" style="display:none"></div>
 
   <footer>
-    <div><b>Оглавление</b> · каталог постов Telegram-канала · <span id="ver">v57-ru</span></div>
+    <div><b>Оглавление</b> · каталог постов Telegram-канала · <span id="ver">v59-ru</span></div>
+    <div class="us">Такой же каталог для своего канала: <a id="footBot" href="https://t.me/oglavlenie_shop_bot" target="_blank" rel="noopener">🤖 бот «Оглавление»</a> · <a id="footSite" href="https://eremeevmaks41-sys.github.io/oglavlenie/" target="_blank" rel="noopener">🌐 сайт</a></div>
     <div class="lic" id="licLine"></div><div class="lic"><a id="refLine" href="#" target="_blank" rel="noopener" style="display:none;color:inherit"></a></div>
   </footer>
 </div>
@@ -586,6 +589,68 @@ function licenseValid(licensee, key){
 }
 
 /* ── утилиты ── */
+/* ── авторство — часть лицензии (босс 31.10.2026: «наличие ссылок в футере
+   привязать к работоспособности, как и лицензию — убрал из кода — программа
+   перестаёт работать»). Проверяется фактический DOM: правка config.js не
+   помогает, сверяется то, что реально стоит в футере. ── */
+var _szSite = 'eremeevmaks41-sys.github' + '.io/oglavlenie';
+var _szMark = 'каталог для своего канала';
+function _szBrandOK(){
+  try {
+    var f = document.querySelector('footer');
+    if (!f) return false;
+    var us = f.querySelector('.us');
+    if (!us) return false;
+    if (!us.offsetParent) return false;   /* блок спрятан (display:none и т.п.) */
+    var cs = getComputedStyle(us);
+    if (cs.display === 'none' || cs.visibility === 'hidden' || parseInt(cs.opacity, 10) === 0) return false;
+    if (us.textContent.indexOf(_szMark) === -1) return false;
+    var b = document.getElementById('footBot');
+    var s = document.getElementById('footSite');
+    if (!b || !s) return false;
+    var bh = String(b.getAttribute('href') || '');
+    var sh = String(s.getAttribute('href') || '');
+    var okBot = bh.indexOf('https://t.me/') === 0 && (
+      bh.indexOf('oglavlenie') !== -1 ||
+      (cfg.ref_bot && cfg.ref_code && bh.indexOf('https://t.me/' + cfg.ref_bot + '?start=r' + cfg.ref_code) === 0));
+    var okSite = sh.indexOf('https://') === 0 && sh.indexOf(_szSite) !== -1;
+    return okBot && okSite;
+  } catch(e){ return true; }   /* экзотическое окружение — не блокируем каталог */
+}
+function _szBrandStop(){
+  try {
+    var old = document.getElementById('szBrandStop');
+    if (old) old.parentNode.removeChild(old);
+    var ov = document.createElement('div');
+    ov.id = 'szBrandStop';
+    ov.setAttribute('style', 'position:fixed;left:0;top:0;right:0;bottom:0;'
+      + 'z-index:99999;background:#F3F7FD;display:flex;align-items:center;'
+      + 'justify-content:center;padding:24px');
+    ov.innerHTML = '<div style="background:#fff;border-radius:24px;'
+      + 'box-shadow:0 12px 40px rgba(42,171,238,.14);padding:40px 32px;'
+      + 'max-width:430px;text-align:center;'
+      + "font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif\">"
+      + '<div style="width:64px;height:64px;border-radius:50%;margin:0 auto 18px;'
+      + 'background:linear-gradient(135deg,#2AABEE,#7C6CFF);display:flex;'
+      + 'align-items:center;justify-content:center">'
+      + '<svg width="30" height="30" viewBox="0 0 24 24" fill="none">'
+      + '<path d="M7 10V8a5 5 0 0 1 10 0v2h1a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h1Zm2 0h6V8a3 3 0 0 0-6 0v2Z" fill="#fff"/></svg></div>'
+      + '<h1 style="font-size:20px;color:#0F2437;margin:0 0 10px">Оглавление недоступно</h1>'
+      + '<p style="font-size:15px;line-height:1.55;color:#48607A;margin:0">'
+      + 'Нарушена комплектация продукта: из страницы удалён или изменён блок авторства.'
+      + '<br>Каталог работает только в исходной комплектации — с подписью и ссылками на автора.'
+      + '<br>Для восстановления напишите в чат бота, из которого вы открыли эту страницу.</p>'
+      + '</div>';
+    document.body.appendChild(ov);
+    ['list','chips','state'].forEach(function(id){
+      var el = document.getElementById(id);
+      if (el) el.innerHTML = '';
+    });
+  } catch(e){}
+  throw new Error('SZ branding guard');   /* прерываем текущий поток загрузки */
+}
+setInterval(function(){ if (!_szBrandOK()) { try { _szBrandStop(); } catch(e){} } }, 25000);
+
 function esc(s){
   return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){
     return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
@@ -732,12 +797,21 @@ function applyConfig(){
   var lic = cfg.licensee ? ('экземпляр для: ' + cfg.licensee + (cfg.license_id ? ' · лицензия ' + cfg.license_id : '')) : '';
   document.getElementById('licLine').textContent = lic;
 }
-   var refA = document.getElementById('refLine');
-   if (refA && cfg.ref_bot) {
-     refA.style.display = '';
-     refA.href = 'https://t.me/' + cfg.ref_bot + (cfg.ref_code ? ('?start=r' + cfg.ref_code) : '');
-     refA.textContent = '\u26a1 \u041a\u0430\u0442\u0430\u043b\u043e\u0433 \u043e\u0442 \u041e\u0433\u043b\u0430\u0432\u043b\u0435\u043d\u0438\u0435';
+   /* ── футер «о нас» (босс 30.10.2026: «во всех экземплярах миниаппов в футере —
+      информация про нас и ссылки как на сайт, так и в бота»). Адреса можно
+      переопределить в config.js (footer_bot/footer_site); у комплекта с рефкодом
+      ссылка на бот несёт payload владельца (start=r<код>) — билборд Task 142 жив. ── */
+   var fB = document.getElementById('footBot');
+   if (fB) {
+     var fHref = cfg.footer_bot || 'https://t.me/oglavlenie_shop_bot';
+     if (cfg.ref_bot) {
+       fHref = 'https://t.me/' + cfg.ref_bot + (cfg.ref_code ? ('?start=r' + cfg.ref_code) : '');
+       fB.textContent = '\u26a1 \u041a\u0430\u0442\u0430\u043b\u043e\u0433 \u043e\u0442 \u041e\u0433\u043b\u0430\u0432\u043b\u0435\u043d\u0438\u0435';
+     }
+     fB.href = fHref;
    }
+   var fS = document.getElementById('footSite');
+   if (fS) fS.href = cfg.footer_site || 'https://eremeevmaks41-sys.github.io/oglavlenie/';
 
 /* ── фильтрация и рендер ── */
 function pluralWord(n, forms){
@@ -1152,6 +1226,7 @@ function bootFromCache(){
   } catch(e){ return null; }
 }
 function load(){
+  if (!_szBrandOK()) _szBrandStop();   /* авторство: без блока «о нас» данные не грузим */
   var cached = bootFromCache();
   fetch('posts.json?v=' + Date.now(), {cache:'no-store'})
     .then(function(r){ if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
@@ -1184,12 +1259,15 @@ document.getElementById('hShare').addEventListener('click', function(){
 });
 
 licenseValid(cfg.licensee, cfg.license_key).then(function(ok){
+  if (!_szBrandOK()) _szBrandStop();   /* дубль-проверка авторства: вырезание одной проверки не спасает */
   if (!ok){
     var b = document.getElementById('banner');
     b.style.display = 'block';
     b.textContent = 'Лицензионный ключ не подтверждён. Работает демонстрационный режим — впишите корректные данные в config.js или обратитесь к продавцу.';
   }
 });
+
+
 load();
 loadTopics();
 })();
