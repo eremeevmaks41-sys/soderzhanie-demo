@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-10-30T15:42:07+03:00",
+  "updated_at": "2026-10-30T22:10:51+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 393,
+      "date": "2026-10-30",
+      "time": "22:06",
+      "title": "Путин встретился с президентом Эритреи в Кремле",
+      "preview": "Президент РФ встретился с Иссайом Афворки в Кремле. Обсуждены вопросы двустороннего сотрудничества.",
+      "tags": [
+        "#россия",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/393",
+      "src": "https://lenta.ru/news/2026/10/30/putin-vstretilsya-s-prezidentom-eritrei-v-kremle/"
+    },
     {
       "id": 392,
       "date": "2026-10-30",
