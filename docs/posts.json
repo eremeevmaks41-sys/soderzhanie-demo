@@ -1,11 +1,26 @@
 {
   "version": 1,
-  "updated_at": "2026-10-31T15:11:43+03:00",
+  "updated_at": "2026-10-31T21:27:36+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 397,
+      "date": "2026-10-31",
+      "time": "20:53",
+      "title": "Олешки: эвакуированные встретились с семьей после лет в okupatsii",
+      "preview": "Жители Олешки годами находились в российской okupatsii, лишены еды, воды и электричества. Многие готовили на травах из сада, чтобы выжить.",
+      "tags": [
+        "#мировыеновости",
+        "#происшествия",
+        "#конфликт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/397",
+      "src": "https://www.bbc.co.uk/news/articles/cqx2818elrnzo?at_medium=RSS&at_campaign=rss"
+    },
     {
       "id": 396,
       "date": "2026-10-31",
