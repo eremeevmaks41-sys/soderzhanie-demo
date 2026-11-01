@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-11-01T08:50:15+03:00",
+  "updated_at": "2026-11-01T16:11:09+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 400,
+      "date": "2026-11-01",
+      "time": "15:50",
+      "title": "Binance возобновляет выводы после взлома на $6,3 млрд",
+      "preview": "ФБР обвиняет хакеров из Северной Кореи в краже $6,3 млрд с биржи Binance. Выводы приостанавливали для расследования инцидента.",
+      "tags": [
+        "#мировыеновости",
+        "#экономика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/400",
+      "src": "https://www.aljazeera.com/news/2026/11/1/binance-restarts-withdrawals-after-6-3bn-heist?traffic_source=rss"
+    },
     {
       "id": 399,
       "date": "2026-11-01",
