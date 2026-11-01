@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-01T16:11:09+03:00",
+  "updated_at": "2026-11-01T21:52:50+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -19,6 +19,20 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/400",
       "src": "https://www.aljazeera.com/news/2026/11/1/binance-restarts-withdrawals-after-6-3bn-heist?traffic_source=rss"
+    },
+    {
+      "id": 401,
+      "date": "2026-11-01",
+      "time": "14:57",
+      "title": "Магазины грабят на фоне насильственных протестов в Германии",
+      "preview": "В Берлине, Гамбурге и Франкфурте тысячи человек вышли на улицы против роста цен. Протесты прошли параллельно с митингами во Франции, где также участвовали сотни тысяч человек.",
+      "tags": [
+        "#мировыеновости",
+        "#общество"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/401",
+      "src": "https://www.bbc.co.uk/news/articles/cqj34gnd3n30o?at_medium=RSS&at_campaign=rss"
     },
     {
       "id": 399,
