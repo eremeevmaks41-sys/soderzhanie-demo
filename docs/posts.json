@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-11-01T21:52:50+03:00",
+  "updated_at": "2026-11-02T02:30:28+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 402,
+      "date": "2026-11-02",
+      "time": "00:55",
+      "title": "Удары по Украине: отключили свет тысячам",
+      "preview": "Российские атаки прекратили перемирие в Херсоне, оставив без электричества тысячи жителей. Civilians were evacuated from Oleshky before the ceasefire ended.",
+      "tags": [
+        "#мировыеновости",
+        "#происшествия"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/402",
+      "src": "https://www.bbc.co.uk/news/articles/c64g1y90p71eo?at_medium=RSS&at_campaign=rss"
+    },
     {
       "id": 400,
       "date": "2026-11-01",
