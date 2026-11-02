@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-11-02T08:52:21+03:00",
+  "updated_at": "2026-11-02T18:35:19+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 404,
+      "date": "2026-11-02",
+      "time": "18:13",
+      "title": "Джек Пол встретится с Cedric Doumbe в боксе",
+      "preview": "YouTuber Jake Paul примет участие в боксерском матче с чемпионом MMA Cedric Doumbe в Дубае. Бой обещает стать встречей стилей",
+      "tags": [
+        "#мировыеновости",
+        "#спорт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/404",
+      "src": "https://www.aljazeera.com/sports/2026/11/2/jake-paul-to-fight-mma-star-cedric-doumbe?traffic_source=rss"
+    },
     {
       "id": 403,
       "date": "2026-11-02",

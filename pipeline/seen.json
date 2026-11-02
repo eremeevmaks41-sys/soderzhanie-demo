@@ -2,6 +2,7 @@
   "seen": {
     "3e86e5ed3f68040c6a8e1cab503141fbb09ab529": "2026-11-02",
     "93f5ef4cac4c6735abf646020b914712bde098e1": "2026-11-02",
+    "7db94b1ec7f870fb99816698d8562c07fcfac280": "2026-11-02",
     "8e732c9b495632cfe294f32895c067b1864e858e": "2026-11-01",
     "2a310d6b68f7ebc0fadd65f5d2c85908983e922b": "2026-11-01",
     "ff745a7d3f795b93e35ffb0f9069e5ffd6597501": "2026-11-01",
@@ -1871,6 +1872,10 @@
     "403": {
       "kind": "photo",
       "text": "⚡ <b>В Литве призвали ЕС преодолеть энергокризис</b>\n\nЛитва призывает Европейский союз справиться с энергетическим кризисом, усилив поддержку стран-доноров.\n\nисточник: <a href=\"https://www.vedomosti.ru/business/news/2026/11/02/1241907-litve-prizvali\">Ведомости</a>"
+    },
+    "404": {
+      "kind": "photo",
+      "text": "🌐 <b>Джек Пол встретится с Cedric Doumbe в боксе</b>\n\nYouTuber Jake Paul примет участие в боксерском матче с чемпионом MMA Cedric Doumbe в Дубае. Бой обещает стать встречей стилей\n\n• Дата и детали боя пока не announced\n• Дубай выбран как место проведения события\n\nисточник: <a href=\"https://www.aljazeera.com/sports/2026/11/2/jake-paul-to-fight-mma-star-cedric-doumbe?traffic_source=rss\">Al Jazeera</a>"
     }
   }
 }
