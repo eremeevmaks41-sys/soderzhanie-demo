@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-11-02T02:30:28+03:00",
+  "updated_at": "2026-11-02T08:52:21+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 403,
+      "date": "2026-11-02",
+      "time": "08:43",
+      "title": "В Литве призвали ЕС преодолеть энергокризис",
+      "preview": "Литва призывает Европейский союз справиться с энергетическим кризисом, усилив поддержку стран-доноров.",
+      "tags": [
+        "#россия",
+        "#энергетика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/403",
+      "src": "https://www.vedomosti.ru/business/news/2026/11/02/1241907-litve-prizvali"
+    },
     {
       "id": 402,
       "date": "2026-11-02",
