@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-11-03T09:30:58+03:00",
+  "updated_at": "2026-11-03T19:06:06+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 407,
+      "date": "2026-11-03",
+      "time": "18:52",
+      "title": "Mbappe спорит о свободе слова в спорте",
+      "preview": "Кризис Кайла Mbappe показал, как рыночная сила в спорте используется для давления на спортсменов и принуждения к конформизму.",
+      "tags": [
+        "#мировыеновости",
+        "#общество"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/407",
+      "src": "https://www.aljazeera.com/opinions/2026/11/3/do-sports-stars-have-the-right-to-free-speech?traffic_source=rss"
+    },
     {
       "id": 406,
       "date": "2026-11-03",
