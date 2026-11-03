@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-11-03T19:06:06+03:00",
+  "updated_at": "2026-11-04T00:43:30+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 408,
+      "date": "2026-11-04",
+      "time": "00:19",
+      "title": "Кандидату Нетаньяху не хватает 8 мест для власти",
+      "preview": "Лидер ликуда и его блок победили на выборах, но создание правительства обещает сложные переговоры. Партии не смогли сформировать коалицию, не хватает голосов для большинства в…",
+      "tags": [
+        "#мировыеновости",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/408",
+      "src": "https://www.aljazeera.com/video/newsfeed/2026/11/3/netanyahus-eight-seat-problem?traffic_source=rss"
+    },
     {
       "id": 407,
       "date": "2026-11-03",
