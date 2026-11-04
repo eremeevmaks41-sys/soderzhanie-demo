@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-11-04T00:43:30+03:00",
+  "updated_at": "2026-11-04T05:09:41+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 409,
+      "date": "2026-11-04",
+      "time": "05:01",
+      "title": "Ответим отказом. Канада не выдаст визы российским спортсменам",
+      "preview": "Премьер-министр Канады объявил о запрете выдачи виз спортсменам из России. Решение связано с предстоящим зимним Чемпионатом мира по хоккею (МЧМ).",
+      "tags": [
+        "#россия",
+        "#конфликт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/409",
+      "src": "https://lenta.ru/news/2026/11/04/long-otvetim-otkazom-premier-ministr-kanady-prigrozil-ne-vydat-vizy-sportsmenam-iz-rossii-zimoy-tam-proydet-mchm-po-hokkeyu/"
+    },
     {
       "id": 408,
       "date": "2026-11-04",
