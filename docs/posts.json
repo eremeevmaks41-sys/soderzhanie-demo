@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-11-04T15:00:43+03:00",
+  "updated_at": "2026-11-04T22:41:22+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 411,
+      "date": "2026-11-04",
+      "time": "22:27",
+      "title": "Умер актер из фильма «Утомленные солнцем 2»",
+      "preview": "В сети подтвердили смерть актера, сыгравшего в сиквеле культового фильма",
+      "tags": [
+        "#россия",
+        "#культура"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/411",
+      "src": "https://lenta.ru/news/2026/11/04/umer-akter-iz-filma-utomlennye-solntsem-2/"
+    },
     {
       "id": 410,
       "date": "2026-11-04",
