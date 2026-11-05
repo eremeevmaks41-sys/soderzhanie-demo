@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-05T12:22:39+03:00",
+  "updated_at": "2026-11-05T20:58:15+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -19,6 +19,20 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/413",
       "src": "https://www.kommersant.ru/doc/9080741"
+    },
+    {
+      "id": 414,
+      "date": "2026-11-05",
+      "time": "06:47",
+      "title": "Ванс критикует Трампа после поражения республиканцев",
+      "preview": "Вице-президент США Vance дал резкую оценку поражения республиканцев в выборах, отметив одну из самых острых разрывов с действующим президентом в recent memory.",
+      "tags": [
+        "#мировыеновости",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/414",
+      "src": "https://www.bbc.co.uk/news/articles/crz98zqkz7z0o?at_medium=RSS&at_campaign=rss"
     },
     {
       "id": 411,
