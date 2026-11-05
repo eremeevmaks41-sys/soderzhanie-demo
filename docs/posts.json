@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-11-05T20:58:15+03:00",
+  "updated_at": "2026-11-06T02:33:25+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 415,
+      "date": "2026-11-06",
+      "time": "02:21",
+      "title": "Тех株 упали на новостях о возможном усилении контроля после midterms",
+      "preview": "Рынок реагирует на возможные ограничения в сфере центров обработки данных и индустрии ИИ после выборов в США",
+      "tags": [
+        "#мировыеновости",
+        "#технологии"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/415",
+      "src": "https://www.bbc.co.uk/news/articles/cmn04705rd8jo?at_medium=RSS&at_campaign=rss"
+    },
     {
       "id": 413,
       "date": "2026-11-05",
