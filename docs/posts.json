@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-04T22:41:22+03:00",
+  "updated_at": "2026-11-05T03:52:04+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -19,6 +19,20 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/411",
       "src": "https://lenta.ru/news/2026/11/04/umer-akter-iz-filma-utomlennye-solntsem-2/"
+    },
+    {
+      "id": 412,
+      "date": "2026-11-04",
+      "time": "16:33",
+      "title": "Гневные республиканцы обвиняют Трампа в поражении на midterms",
+      "preview": "Республиканцы считают, что фокус Трампа на наследии и безразличие избирателям привели к поражению на промежуточных выборах",
+      "tags": [
+        "#мировыеновости",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/412",
+      "src": "https://www.bbc.co.uk/news/articles/c6x29rr8djy3o?at_medium=RSS&at_campaign=rss"
     },
     {
       "id": 410,
