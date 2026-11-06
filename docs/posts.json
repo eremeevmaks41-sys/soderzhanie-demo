@@ -1,11 +1,26 @@
 {
   "version": 1,
-  "updated_at": "2026-11-06T09:23:16+03:00",
+  "updated_at": "2026-11-06T18:52:51+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 417,
+      "date": "2026-11-06",
+      "time": "18:14",
+      "title": "Женщина задержала за ложь про камеру пыток в Украине",
+      "preview": "Женщина, утверждавшая, что мужчин насильно избивают за уклонение от армии, была арестована. Инцидент вызвал общественный резонанс, но проверка показала иные обстоятельства.",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт",
+        "#общество"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/417",
+      "src": "https://www.aljazeera.com/news/2026/11/6/claims-of-a-ukrainian-torture-chamber-went-viral-what-really-happened?traffic_source=rss"
+    },
     {
       "id": 416,
       "date": "2026-11-06",
