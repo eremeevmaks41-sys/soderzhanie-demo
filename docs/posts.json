@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-11-06T18:52:51+03:00",
+  "updated_at": "2026-11-07T00:27:26+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 418,
+      "date": "2026-11-06",
+      "time": "23:48",
+      "title": "Трамп продвигает Миллера в главныйchief of staff",
+      "preview": "Президент США Дональд Трамп назначил Стивена Миллера главой исполнительного офиса, заменив Сузи Уайлс. Миллер известен своими консервативными взглядами на иммиграцию.",
+      "tags": [
+        "#мировыеновости",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/418",
+      "src": "https://www.aljazeera.com/video/newsfeed/2026/11/6/trump-promotes-stephen-miller-to-chief-of-staff-to-run-things?traffic_source=rss"
+    },
     {
       "id": 417,
       "date": "2026-11-06",
