@@ -254,8 +254,8 @@ footer b{font-family:'Unbounded','Manrope',sans-serif;font-weight:600}
   <div id="state" class="state" style="display:none"></div>
 
   <footer>
-    <div><b>Оглавление</b> · каталог постов Telegram-канала · <span id="ver">v62-ru</span></div>
-    <div class="us">Такой же каталог для своего канала: <a id="footBot" href="https://t.me/oglavlenie_shop_bot" target="_blank" rel="noopener">🤖 бот «Оглавление»</a> · <a id="footSite" href="https://oglavlenie.github.io/" target="_blank" rel="noopener">🌐 сайт</a></div>
+    <div><b>Оглавление</b> · каталог постов Telegram-канала · <span id="ver">v63-ru</span></div>
+    <div class="us">Такой же каталог для своего канала: <a id="footBot" href="https://t.me/oglavlenie_shop_bot" target="_blank" rel="noopener">🤖 бот «Оглавление»</a> · <a id="footSite" href="https://oglavlenie.github.io/" target="_blank" rel="noopener">🌐 сайт</a> · <a id="footTry" href="https://t.me/oglavlenie_try_bot" target="_blank" rel="noopener">🧪 примерь на своём</a></div>
     <div class="lic" id="licLine"></div><div class="lic"><a id="refLine" href="#" target="_blank" rel="noopener" style="display:none;color:inherit"></a></div>
   </footer>
 </div>
@@ -651,6 +651,8 @@ function _szBrandOK(){
     var b = document.getElementById('footBot');
     var s = document.getElementById('footSite');
     if (!b || !s) return false;
+    var tr = document.getElementById('footTry');   /* v1.7.42: примерка — тоже бренд */
+    if (!tr || String(tr.getAttribute('href') || '').indexOf('https://t.me/oglavlenie_try_bot') !== 0) return false;
     var bh = String(b.getAttribute('href') || '');
     var sh = String(s.getAttribute('href') || '');
     var okBot = bh.indexOf('https://t.me/') === 0 && (
