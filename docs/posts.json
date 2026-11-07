@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-11-07T11:40:31+03:00",
+  "updated_at": "2026-11-07T19:19:02+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 421,
+      "date": "2026-11-07",
+      "time": "18:34",
+      "title": "ИРГК строит подземные объекты для производства и хранения оружия",
+      "preview": "Исламская гвардия Революции Ирана заявила, что подземные военные комплексы позволяют продолжать производство ракет даже при сильном обстреле.",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/421",
+      "src": "https://www.aljazeera.com/news/2026/11/7/irans-irgc-says-building-underground-sites-for-weapons-production-storage?traffic_source=rss"
+    },
     {
       "id": 420,
       "date": "2026-11-07",
