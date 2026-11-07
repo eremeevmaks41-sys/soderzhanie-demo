@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-11-07T19:19:02+03:00",
+  "updated_at": "2026-11-08T00:43:46+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 422,
+      "date": "2026-11-07",
+      "time": "23:53",
+      "title": "Мелenchon обещает действия против аннексии Израиля",
+      "preview": "Лидер левой коалиции Франции Жан-Люк Мелenchon заявил, что придет в власть примет меры против аннексии Израиля. Политик подчеркнул необходимость защиты права Palestinцев на…",
+      "tags": [
+        "#мировыеновости",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/422",
+      "src": "https://www.aljazeera.com/video/newsfeed/2026/11/7/melenchon-promises-action-against-israeli-annexation-if-elected-president?traffic_source=rss"
+    },
     {
       "id": 421,
       "date": "2026-11-07",
