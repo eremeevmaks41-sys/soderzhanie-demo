@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-11-08T00:43:46+03:00",
+  "updated_at": "2026-11-08T04:17:55+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 423,
+      "date": "2026-11-08",
+      "time": "04:03",
+      "title": "Марочко: ВСУ усиливают контратаки в Сумской области",
+      "preview": "Главный редактор РИА Новости Марочко сообщил об усилении контратаktiv ВСУ в Сумской области. Факты подтверждаются на месте, ситуация на фронте динамична.",
+      "tags": [
+        "#россия",
+        "#конфликт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/423",
+      "src": "https://lenta.ru/news/2026/11/08/marochko-rasskazal-ob-usilenii-kontratak-vsu-v-sumskoy-oblasti/"
+    },
     {
       "id": 422,
       "date": "2026-11-07",
