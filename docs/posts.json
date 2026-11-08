@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-11-08T19:37:57+03:00",
+  "updated_at": "2026-11-09T00:57:53+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 426,
+      "date": "2026-11-09",
+      "time": "00:05",
+      "title": "Обрушившийся песчаный склон убил переселенцев в Газе",
+      "preview": "В Газе обрушился песчаный склон, под которым находились переселенцы. Пострадавшие и масштабы разрушений уточняются.",
+      "tags": [
+        "#мировыеновости",
+        "#происшествия"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/426",
+      "src": "https://www.aljazeera.com/video/newsfeed/2026/11/8/deadly-sand-cliff-collapses-on-displaced-families-in-gaza?traffic_source=rss"
+    },
     {
       "id": 425,
       "date": "2026-11-08",
