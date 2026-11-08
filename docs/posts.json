@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-11-08T11:54:30+03:00",
+  "updated_at": "2026-11-08T19:37:57+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 425,
+      "date": "2026-11-08",
+      "time": "19:18",
+      "title": "Израиль освободил журналиста Палестины Абу Шхаде",
+      "preview": "Журналист Абд Абу Шхаде сообщил, что его задержание стало частью политических мер Израиля для запугивания арабского общества. Событие произошло на фоне усиления давления на…",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/425",
+      "src": "https://www.aljazeera.com/news/2026/11/8/israeli-forces-release-palestinian-journalist-abou-shhadeh?traffic_source=rss"
+    },
     {
       "id": 424,
       "date": "2026-11-08",
