@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-11-09T12:39:33+03:00",
+  "updated_at": "2026-11-09T23:39:31+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 429,
+      "date": "2026-11-09",
+      "time": "23:31",
+      "title": "Бывшая пресс-секретарь Зеленского сообщила о плачевном состоянии Киева",
+      "preview": "Бывшая пресс-секретарь Офила президента Китая сообщила о критическом состоянии столицы, отметив разрушения и проблемы с инфраструктурой",
+      "tags": [
+        "#россия",
+        "#конфликт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/429",
+      "src": "https://lenta.ru/news/2026/11/09/byvshaya-press-sekretar-zelenskogo-soobschila-o-plachevnom-sostoyanii-kieva/"
+    },
     {
       "id": 428,
       "date": "2026-11-09",
