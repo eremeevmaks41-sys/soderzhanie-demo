@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-11-10T15:29:32+03:00",
+  "updated_at": "2026-11-10T23:46:51+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 432,
+      "date": "2026-11-10",
+      "time": "23:39",
+      "title": "Названа причина смерти Сергея Соседова",
+      "preview": "Согласно информации, уточненной в ходе следствия, причиной смерти известного деятеля стала...",
+      "tags": [
+        "#россия",
+        "#общество"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/432",
+      "src": "https://lenta.ru/news/2026/11/10/nazvana-prichina-smerti-sergeya-sosedova/"
+    },
     {
       "id": 431,
       "date": "2026-11-10",
