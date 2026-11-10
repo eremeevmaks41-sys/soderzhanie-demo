@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-09T23:39:31+03:00",
+  "updated_at": "2026-11-10T07:04:05+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -61,6 +61,20 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/426",
       "src": "https://www.aljazeera.com/video/newsfeed/2026/11/8/deadly-sand-cliff-collapses-on-displaced-families-in-gaza?traffic_source=rss"
+    },
+    {
+      "id": 430,
+      "date": "2026-11-08",
+      "time": "20:51",
+      "title": "Поезд столкнулся с поездом в Египте",
+      "preview": "Две поезда столкнулись на юге Каира. По меньшей мере семь человек погибли, 125 получили травмы. Авария произошла в районе аль-Айят в провинции Гиза, поезд направлялся в Фаюм и…",
+      "tags": [
+        "#мировыеновости",
+        "#происшествия"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/430",
+      "src": "https://www.theguardian.com/world/2026/nov/08/egypt-two-trains-deadly-collision"
     },
     {
       "id": 425,
