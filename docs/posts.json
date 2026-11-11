@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-11-10T23:46:51+03:00",
+  "updated_at": "2026-11-11T04:51:34+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 433,
+      "date": "2026-11-11",
+      "time": "04:47",
+      "title": "Врач назвала самую вредную еду в фастфуде",
+      "preview": "Диетолог назвала гамбургеры и картошку фри самым вредным продуктом в меню фастфуда из-за высокого содержания жиров и углеводов.",
+      "tags": [
+        "#россия",
+        "#общество"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/433",
+      "src": "https://lenta.ru/news/2026/11/11/vrach-perechislila-samuyu-vrednuyu-edu-v-fastfude/"
+    },
     {
       "id": 432,
       "date": "2026-11-10",
