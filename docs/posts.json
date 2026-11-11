@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-11-11T12:16:02+03:00",
+  "updated_at": "2026-11-11T20:50:45+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 435,
+      "date": "2026-11-11",
+      "time": "20:44",
+      "title": "Spain sees widespread disruption in first general strike for 14 years",
+      "preview": "Protests are also expected in the biggest cities less than three weeks before Spaniards vote in parliamentary elections.",
+      "tags": [
+        "#мировыеновости",
+        "#общество"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/435",
+      "src": "https://www.bbc.co.uk/news/articles/cwvg25nypmrvo?at_medium=RSS&at_campaign=rss"
+    },
     {
       "id": 434,
       "date": "2026-11-11",

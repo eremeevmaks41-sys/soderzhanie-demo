@@ -2,6 +2,7 @@
   "seen": {
     "1b1fadf861b23884effe545a62a519b0d85818be": "2026-11-11",
     "daaa923a6289a70a19ea0aa205e21ef4e8e60631": "2026-11-11",
+    "ad31eb20a7019cefcc0ae6f694d59cfb400a8768": "2026-11-11",
     "dd26397da77f79123a5b82b21118c0ab7feab438": "2026-11-10",
     "3d8715b864d570973eb14df46d9b96fe4f2042b6": "2026-11-10",
     "8fa54a395f18b1f26eb597a115c2e068bcc5a1ed": "2026-11-09",
@@ -1622,6 +1623,10 @@
     "434": {
       "kind": "photo",
       "text": "🎭 <b>В Москве прощаются с Лидией Федосеевой-Шукшиной</b>\n\nЦеремония прощания с народной артисткой РСФСР Лидией Федосеевой-Шукшиной проходит в храме Воскресения Словущего. С последними почестями попрощались коллеги и знакомые актрисы.\n\nисточник: <a href=\"https://www.kommersant.ru/doc/9094434\">Коммерсантъ</a>"
+    },
+    "435": {
+      "kind": "photo",
+      "text": "⚠️ <b>Spain sees widespread disruption in first general strike for 14 years</b>\n\nProtests are also expected in the biggest cities less than three weeks before Spaniards vote in parliamentary elections.\n\nисточник: <a href=\"https://www.bbc.co.uk/news/articles/cwvg25nypmrvo?at_medium=RSS&amp;at_campaign=rss\">BBC</a>"
     }
   }
 }
