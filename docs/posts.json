@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-11-12T12:41:59+03:00",
+  "updated_at": "2026-11-12T21:08:18+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 438,
+      "date": "2026-11-12",
+      "time": "19:31",
+      "title": "Украина: нарушение связи Starlink снова",
+      "preview": "Власти Украины сообщают о проблемах с работой спутниковой системы Starlink. Встреча послов США Jared Kushner и Steve Witkoff с президентом Путиным проходит в Москве. Планируется…",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/438",
+      "src": "https://www.bbc.co.uk/news/articles/cwrkgmymk55zo?at_medium=RSS&at_campaign=rss"
+    },
     {
       "id": 437,
       "date": "2026-11-12",
