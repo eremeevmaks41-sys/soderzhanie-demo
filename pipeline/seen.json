@@ -1,5 +1,6 @@
 {
   "seen": {
+    "6bb0c9dab320e2d6a4fcfdc1266d880709fb00fd": "2026-11-13",
     "5c5b8d25804d6680322a9ede66b4dff158bed783": "2026-11-12",
     "cc8c5fe3414864526b0d8edaf437a9e4afe78e0e": "2026-11-12",
     "838175149a2b52650d8358b3df268c1fc01e611b": "2026-11-12",
@@ -1642,6 +1643,10 @@
     "438": {
       "kind": "photo",
       "text": "⚠️ <b>Украина: нарушение связи Starlink снова</b>\n\nВласти Украины сообщают о проблемах с работой спутниковой системы Starlink. Встреча послов США Jared Kushner и Steve Witkoff с президентом Путиным проходит в Москве. Планируется встреча Jared Kushner и Steve Witkoff с Володомыром Зеленским в Дублине.\n\n• Встреча Jared Kushner и Steve Witkoff с Владимиром Путиным проходит в Москве\n• Планируется встреча послов США с Володомырой Зеленской в Дублине\n\nисточник: <a href=\"https://www.bbc.co.uk/news/articles/cwrkgmymk55zo?at_medium=RSS&amp;at_campaign=rss\">BBC</a>"
+    },
+    "439": {
+      "kind": "photo",
+      "text": "⚖️ <b>Скандальный уход Дженсена Хуanga: глава Nvidia уходит в отставку</b>\n\nПрезидент Nvidia Джуэнс Хуан под давлением скандалов и вопросов американских законодателей уходит в отставку. Сенаторы хотят interro (интеррогировать) его по поводу alleged (у alleged) отношений с китайским шпионом.\n\nисточник: <a href=\"https://www.bbc.co.uk/news/articles/cmq5vd1wdgz6o?at_medium=RSS&amp;at_campaign=rss\">BBC</a>"
     }
   }
 }

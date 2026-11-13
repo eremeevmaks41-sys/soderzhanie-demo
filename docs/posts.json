@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-11-12T21:08:18+03:00",
+  "updated_at": "2026-11-13T03:59:52+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 439,
+      "date": "2026-11-13",
+      "time": "02:34",
+      "title": "Скандальный уход Дженсена Хуanga: глава Nvidia уходит в отставку",
+      "preview": "Президент Nvidia Джуэнс Хуан под давлением скандалов и вопросов американских законодателей уходит в отставку. Сенаторы хотят interro (интеррогировать) его по поводу alleged (у…",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/439",
+      "src": "https://www.bbc.co.uk/news/articles/cmq5vd1wdgz6o?at_medium=RSS&at_campaign=rss"
+    },
     {
       "id": 438,
       "date": "2026-11-12",
