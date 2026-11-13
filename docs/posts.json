@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-11-13T20:38:23+03:00",
+  "updated_at": "2026-11-14T02:28:02+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 442,
+      "date": "2026-11-14",
+      "time": "00:14",
+      "title": "Microsoft извиняется за глобальный сбой",
+      "preview": "Компания признала ответственность за масштабный сбой, затронувший системы по всему миру. По словам экспертов, это напоминает о зависимости от крупных IT-провайдеров.",
+      "tags": [
+        "#мировыеновости",
+        "#технологии"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/442",
+      "src": "https://www.bbc.co.uk/news/articles/c6rrg51rkz09o?at_medium=RSS&at_campaign=rss"
+    },
     {
       "id": 441,
       "date": "2026-11-13",
