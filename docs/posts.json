@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-11-13T12:25:21+03:00",
+  "updated_at": "2026-11-13T20:38:23+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 441,
+      "date": "2026-11-13",
+      "time": "20:12",
+      "title": "Microsoft восстанавливает службы после глобального сбоя",
+      "preview": "Компания Microsoft продолжает восстановление сервисов Outlook и Teams после масштабного сбоя. Причины сбоя и возможные потери данных выясняются",
+      "tags": [
+        "#мировыеновости",
+        "#технологии"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/441",
+      "src": "https://www.bbc.co.uk/news/articles/cwvg238zrnm5o?at_medium=RSS&at_campaign=rss"
+    },
     {
       "id": 440,
       "date": "2026-11-13",
