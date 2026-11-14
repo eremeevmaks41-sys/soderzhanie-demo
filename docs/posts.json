@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-11-14T16:24:54+03:00",
+  "updated_at": "2026-11-14T22:01:59+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 445,
+      "date": "2026-11-14",
+      "time": "21:57",
+      "title": "Клебо отказался рассуждать о допуске российских лыжников",
+      "preview": "Глава лыжного комитета отказался комментировать вопрос о допуске российских спортсменов к международным турнирам. Детали решения не раскрыл.",
+      "tags": [
+        "#россия",
+        "#спорт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/445",
+      "src": "https://lenta.ru/news/2026/11/14/klebo-otkazalsya-rassuzhdat-o-dopuske-rossiyskih-lyzhnikov-k-turniram/"
+    },
     {
       "id": 444,
       "date": "2026-11-14",
