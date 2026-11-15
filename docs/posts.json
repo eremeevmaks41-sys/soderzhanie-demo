@@ -1,11 +1,26 @@
 {
   "version": 1,
-  "updated_at": "2026-11-15T09:10:41+03:00",
+  "updated_at": "2026-11-15T18:35:29+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 448,
+      "date": "2026-11-15",
+      "time": "18:16",
+      "title": "Записный приток мигрантов в Канарские острова",
+      "preview": "В 2024 году в Испанию и её территории через Канарские острова прибыло рекордное число мигрантов. Новые правила ЕС не смогли остановить приток.",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/448",
+      "src": "https://www.aljazeera.com/news/2026/11/15/record-number-of-migrants-arrive-in-spains-canary-islands?traffic_source=rss"
+    },
     {
       "id": 447,
       "date": "2026-11-15",
