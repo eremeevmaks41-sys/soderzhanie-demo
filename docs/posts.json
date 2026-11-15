@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-11-15T18:35:29+03:00",
+  "updated_at": "2026-11-15T23:58:50+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 449,
+      "date": "2026-11-15",
+      "time": "23:56",
+      "title": "Оценены шансы Гвардиолы возглавить сборную США",
+      "preview": "Специалисты оценили вероятность назначения пепси-менеджмента сборной США. Футбол",
+      "tags": [
+        "#россия",
+        "#спорт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/449",
+      "src": "https://lenta.ru/news/2026/11/15/otseneny-shansy-gvardioly-vozglavit-sbornuyu-ssha/"
+    },
     {
       "id": 448,
       "date": "2026-11-15",
