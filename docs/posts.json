@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-15T23:58:50+03:00",
+  "updated_at": "2026-11-16T04:51:08+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -174,6 +174,21 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/438",
       "src": "https://www.bbc.co.uk/news/articles/cwrkgmymk55zo?at_medium=RSS&at_campaign=rss"
+    },
+    {
+      "id": 450,
+      "date": "2026-11-12",
+      "time": "16:14",
+      "title": "Зимбабвийского писателя Кундизея оправдали от обвинений в использовании ИИ",
+      "preview": "Престижная премия Caine подтвердила, что короткий рассказ «Синий боец» автора Симбараше Кундизея написан человеком. История о семейных бедах из-за инвестиций отца в аквариум…",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт",
+        "#общество"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/450",
+      "src": "https://www.theguardian.com/books/2026/nov/12/zimbabwean-author-simbarashe-kundizeza-cleared-ai-caine-prize-winning-story"
     },
     {
       "id": 437,
