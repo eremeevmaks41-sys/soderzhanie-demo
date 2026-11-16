@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-11-16T12:26:51+03:00",
+  "updated_at": "2026-11-16T23:17:54+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 452,
+      "date": "2026-11-16",
+      "time": "23:11",
+      "title": "Экс-премьер Украины рассказал об угрозах своему бывшему советнику Заворотному",
+      "preview": "Экс-премьер Украины сообщил о получении угрозами в адрес бывшего советника Заворотного. Источник угроз и具体 детали не уточнялись.",
+      "tags": [
+        "#россия",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/452",
+      "src": "https://lenta.ru/news/2026/11/17/eks-premier-ukrainy-rasskazal-ob-ugrozah-svoemu-byvshemu-sovetniku-zavorotnomu/"
+    },
     {
       "id": 451,
       "date": "2026-11-16",
