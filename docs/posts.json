@@ -1,11 +1,26 @@
 {
   "version": 1,
-  "updated_at": "2026-11-17T07:25:41+03:00",
+  "updated_at": "2026-11-17T18:53:49+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 454,
+      "date": "2026-11-17",
+      "time": "18:26",
+      "title": "Хуси advancing on Aden: возрождение южносепаратистов",
+      "preview": "Южносепаратисты пытаются вернуть контроль над Аденом, пока Саудовская Arabia перегруппировывает военные силы против хуситов.",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/454",
+      "src": "https://www.aljazeera.com/news/2026/11/17/houthi-advance-on-aden-sparks-resurgence-of-yemens-southern-separatists?traffic_source=rss"
+    },
     {
       "id": 453,
       "date": "2026-11-17",
