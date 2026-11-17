@@ -1,11 +1,26 @@
 {
   "version": 1,
-  "updated_at": "2026-11-17T18:53:49+03:00",
+  "updated_at": "2026-11-18T02:27:36+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 455,
+      "date": "2026-11-18",
+      "time": "00:24",
+      "title": "Крымский мост частично рухнул после удара",
+      "preview": "Украина сообщила, что удар по Крымскому мосту, контролируемой Россией стратегическому объекту, планировался неделями. Президент Зеленский назвал атаку unprecedented",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт",
+        "#происшествия"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/455",
+      "src": "https://www.bbc.co.uk/news/articles/cw772jk4rvmxo?at_medium=RSS&at_campaign=rss"
+    },
     {
       "id": 454,
       "date": "2026-11-17",
