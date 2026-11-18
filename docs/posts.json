@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-11-18T10:08:44+03:00",
+  "updated_at": "2026-11-18T20:10:16+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 457,
+      "date": "2026-11-18",
+      "time": "20:00",
+      "title": "Подземная война: Украина борется в старом газопроводе",
+      "preview": "BBC сообщает, что украинские силы ведут боевые действия под землей, скрываясь от российских дронов. Журналист Jonathan Beale присоединился к войскам в подземных коридорах.",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/457",
+      "src": "https://www.bbc.co.uk/news/videos/c8p3vw4q6nzzo?at_medium=RSS&at_campaign=rss"
+    },
     {
       "id": 456,
       "date": "2026-11-18",
