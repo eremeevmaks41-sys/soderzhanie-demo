@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-18T20:10:16+03:00",
+  "updated_at": "2026-11-19T03:13:32+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -19,6 +19,20 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/457",
       "src": "https://www.bbc.co.uk/news/videos/c8p3vw4q6nzzo?at_medium=RSS&at_campaign=rss"
+    },
+    {
+      "id": 458,
+      "date": "2026-11-18",
+      "time": "20:00",
+      "title": "Битва в старом советском туннеле на Харьковщине",
+      "preview": "Украинские силы ведут бой с российскими войсками внутри старого советского туннеля в Харьковской области. Источник BBC сообщает о новом направлении фронта.",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/458",
+      "src": "https://www.bbc.co.uk/news/articles/c32l507ev4v4o?at_medium=RSS&at_campaign=rss"
     },
     {
       "id": 456,
