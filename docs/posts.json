@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-11-20T15:43:40+03:00",
+  "updated_at": "2026-11-21T00:45:36+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 463,
+      "date": "2026-11-21",
+      "time": "00:28",
+      "title": "Иракский премьер атакует укрепления милиций",
+      "preview": "Премьер Ирака Али аль-Зади объявил о начале операции в Юрф аль-Сахкар. Цель — утвердить контроль государства над всей страной.",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/463",
+      "src": "https://www.aljazeera.com/video/newsfeed/2026/11/20/aje-onl-nf_iraq-pm-targets-militia-stronghold-jurf-al-sakhar-201126?traffic_source=rss"
+    },
     {
       "id": 462,
       "date": "2026-11-20",
