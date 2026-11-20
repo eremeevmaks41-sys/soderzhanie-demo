@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-11-19T23:26:56+03:00",
+  "updated_at": "2026-11-20T05:59:08+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 461,
+      "date": "2026-11-20",
+      "time": "05:58",
+      "title": "Угроза ВСУ из-за русского языка",
+      "preview": "Известны сведения о угрозах украинским военным из-за использования русского языка. Детали угроз и контекст события уточняются.",
+      "tags": [
+        "#россия",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/461",
+      "src": "https://lenta.ru/news/2026/11/20/stalo-izvestno-ob-ugrozah-vsu-iz-za-russkogo-yazyka/"
+    },
     {
       "id": 460,
       "date": "2026-11-19",
