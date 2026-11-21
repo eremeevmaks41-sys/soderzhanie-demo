@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-21T00:45:36+03:00",
+  "updated_at": "2026-11-21T06:06:09+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -33,6 +33,20 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/462",
       "src": "https://ria.ru/20261120/samolet-2132976387.html"
+    },
+    {
+      "id": 464,
+      "date": "2026-11-20",
+      "time": "12:03",
+      "title": "Калифорния в тревоге: самые высокие волны за 30 лет",
+      "preview": "В Калифорнии закрыты пляжи и пирсы из-за волн до 9 метров. Предупреждения о опасных волнах действуют всю неделю, ожидаются дожди и снег.",
+      "tags": [
+        "#мировыеновости",
+        "#происшествия"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/464",
+      "src": "https://www.theguardian.com/us-news/2026/nov/20/california-coastal-communities-alert-big-waves-hit-state"
     },
     {
       "id": 461,
