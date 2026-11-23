@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-11-23T10:22:23+03:00",
+  "updated_at": "2026-11-23T23:04:16+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 472,
+      "date": "2026-11-23",
+      "time": "22:57",
+      "title": "В Ливии заявили об объявлении войны Украиной",
+      "preview": "Власти Ливии заявили о том, что Киев объявил им войну. Источники и детали конфликта не уточнялись.",
+      "tags": [
+        "#россия",
+        "#конфликт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/472",
+      "src": "https://lenta.ru/news/2026/11/23/v-livii-zayavili-ob-ob-yavlenii-voyny-ukrainoy/"
+    },
     {
       "id": 471,
       "date": "2026-11-23",
