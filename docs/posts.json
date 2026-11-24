@@ -1,11 +1,26 @@
 {
   "version": 1,
-  "updated_at": "2026-11-24T07:42:41+03:00",
+  "updated_at": "2026-11-24T20:28:56+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 474,
+      "date": "2026-11-24",
+      "time": "13:53",
+      "title": "Трамп подверг критике после заявления о переустановке CEO Nvidia Хуанга",
+      "preview": "Президент США заявил, что убедил Nvidia вернуть на пост гендиректора Дженса Хуанга. Это решение помогло компании добавить trillion долларов к капитализации.",
+      "tags": [
+        "#мировыеновости",
+        "#политика",
+        "#технологии"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/474",
+      "src": "https://www.bbc.co.uk/news/articles/cq5y1k8ez407o?at_medium=RSS&at_campaign=rss"
+    },
     {
       "id": 472,
       "date": "2026-11-23",
