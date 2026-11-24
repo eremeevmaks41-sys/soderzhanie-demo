@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-23T23:04:16+03:00",
+  "updated_at": "2026-11-24T07:42:41+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -19,6 +19,20 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/472",
       "src": "https://lenta.ru/news/2026/11/23/v-livii-zayavili-ob-ob-yavlenii-voyny-ukrainoy/"
+    },
+    {
+      "id": 473,
+      "date": "2026-11-23",
+      "time": "14:42",
+      "title": "Украина подтвердила удар дронами по российским кораблям у Ливии",
+      "preview": "СБУ сообщила о гибели российского корвета Меркури и повреждении другого судна. В операции участвовали семь морских дронов, запущенных с материнского корабля. Президент Зеленский…",
+      "tags": [
+        "#мировыеновости",
+        "#конфликт"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/473",
+      "src": "https://www.theguardian.com/world/2026/nov/23/ukraine-naval-drones-strike-russian-warship-libya"
     },
     {
       "id": 471,
