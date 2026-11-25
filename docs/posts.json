@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-11-24T20:28:56+03:00",
+  "updated_at": "2026-11-25T05:14:54+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 475,
+      "date": "2026-11-25",
+      "time": "05:11",
+      "title": "В Германии сделали заявление о войне с Россией",
+      "preview": "Германские чиновники заявили о состоянии войны с Россией, усиливая риторику в контекте текущих геополитических напряжений.",
+      "tags": [
+        "#россия",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/475",
+      "src": "https://lenta.ru/news/2026/11/25/v-germanii-sdelali-zayavlenie-o-voyne-s-rossiey/"
+    },
     {
       "id": 474,
       "date": "2026-11-24",
