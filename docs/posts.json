@@ -1,11 +1,25 @@
 {
   "version": 1,
-  "updated_at": "2026-11-26T13:43:58+03:00",
+  "updated_at": "2026-11-27T00:23:21+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
   },
   "posts": [
+    {
+      "id": 479,
+      "date": "2026-11-27",
+      "time": "00:08",
+      "title": "Водитель задержан в связи с пожаром танкера в Каире",
+      "preview": "Водитель танкера с бензином задержан в Египте после столкновения, в результате которого погибли 31 человек. Прокурор требует пройти наркотест подозреваемому, ему 21 год. По его…",
+      "tags": [
+        "#мировыеновости",
+        "#происшествия"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/479",
+      "src": "https://www.aljazeera.com/news/2026/11/26/egypt-detains-driver-over-cairo-fuel-tanker-fire-that-killed-31?traffic_source=rss"
+    },
     {
       "id": 478,
       "date": "2026-11-26",
