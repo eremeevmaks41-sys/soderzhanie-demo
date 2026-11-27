@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-27T00:23:21+03:00",
+  "updated_at": "2026-11-27T07:05:34+03:00",
   "channel": {
     "name": "Добрые вести",
     "url": "https://t.me/daily_news_digest"
@@ -19,6 +19,20 @@
       "kind": "photo",
       "url": "https://t.me/daily_news_digest/479",
       "src": "https://www.aljazeera.com/news/2026/11/26/egypt-detains-driver-over-cairo-fuel-tanker-fire-that-killed-31?traffic_source=rss"
+    },
+    {
+      "id": 480,
+      "date": "2026-11-26",
+      "time": "15:37",
+      "title": "Британские министры встречают кандидата в главу ООН с прошлым в Судане",
+      "preview": "Лана Нусейб, кандидат США и России на пост генсека ООН, прибыла в Лондон. Она пытается отстраниться от роли дипломата ОАЭ, который отрицал вовлечение Арабских эмиратов в поставки…",
+      "tags": [
+        "#мировыеновости",
+        "#политика"
+      ],
+      "kind": "photo",
+      "url": "https://t.me/daily_news_digest/480",
+      "src": "https://www.theguardian.com/world/2026/nov/26/lana-nusseibeh-uae-sudan-un-secretary-general"
     },
     {
       "id": 478,
